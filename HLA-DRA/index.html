@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HLA-DRA — TREAT-AD TEP Summary</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #f0f4ff;
+    color: #1c1917;
+    line-height: 1.65;
+  }
+
+  /* ---- Header ---- */
+  .page-header {
+    background: linear-gradient(135deg, #1e3461 0%, #2d4d8a 55%, #3d6ab3 100%);
+    color: #fff;
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+  }
+  .gene-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.65;
+    margin-bottom: 0.4rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .gene-title { font-size: 3rem; font-weight: bold; letter-spacing: 0.05em; }
+  .gene-subtitle {
+    font-size: 0.95rem;
+    opacity: 0.82;
+    margin-top: 0.4rem;
+    font-style: italic;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .chip-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .chip {
+    display: inline-block;
+    padding: 0.25rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .chip-neuroimmune { background: #dce7f9; color: #1e3461; }
+  .chip-plaque      { background: #fee2e2; color: #7f1d1d; }
+  .chip-mhcii       { background: #e0e7ff; color: #312e81; }
+
+  /* ---- Neuroimmune banner ---- */
+  .neuroimmune-banner {
+    background: #dce7f9;
+    border-left: 5px solid #3d6ab3;
+    padding: 0.8rem 1.4rem;
+    margin: 1.4rem auto;
+    max-width: 860px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.87rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #1e3461;
+  }
+  .neuroimmune-banner strong { font-weight: 700; }
+
+  /* ---- Container ---- */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
+  }
+
+  /* ---- Section headings ---- */
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #2d4d8a;
+    border-bottom: 2px solid #93c5fd;
+    padding-bottom: 0.4rem;
+    margin: 2rem 0 1rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  /* ---- Overview ---- */
+  .overview-text { font-size: 0.97rem; color: #292524; max-width: 820px; }
+
+  /* ---- Figure ---- */
+  .figure-wrap {
+    background: #fff;
+    border: 1px solid #a8bce8;
+    border-radius: 10px;
+    padding: 1rem 0.5rem 0.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 2px 8px rgba(30,52,97,0.08);
+    overflow-x: auto;
+  }
+  .figure-wrap figcaption {
+    text-align: center;
+    font-size: 0.78rem;
+    color: #6b7280;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+
+  /* ---- Insight cards ---- */
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  @media (max-width: 640px) { .cards { grid-template-columns: 1fr; } }
+  .card {
+    background: #fff;
+    border: 1px solid #c7d7f0;
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    box-shadow: 0 1px 4px rgba(30,52,97,0.05);
+  }
+  .card h3 {
+    font-size: 0.92rem;
+    font-weight: bold;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin-bottom: 0.35rem;
+  }
+  .card p { font-size: 0.85rem; color: #374151; line-height: 1.55; }
+
+  /* Per-domain card accents matching SVG node colors */
+  .card-mhcii    { border-left: 4px solid #3d6ab3; }
+  .card-mhcii    h3 { color: #2d4d8a; }
+  .card-plaque   { border-left: 4px solid #b91c1c; }
+  .card-plaque   h3 { color: #b91c1c; }
+  .card-tau      { border-left: 4px solid #c2410c; }
+  .card-tau      h3 { color: #c2410c; }
+  .card-bridge   { border-left: 4px solid #0f766e; }
+  .card-bridge   h3 { color: #0f766e; }
+  .card-genetics { border-left: 4px solid #b45309; }
+  .card-genetics h3 { color: #b45309; }
+  .card-inflam   { border-left: 4px solid #7c3aed; }
+  .card-inflam   h3 { color: #7c3aed; }
+
+  /* ---- Takeaways ---- */
+  .takeaways {
+    background: #fff;
+    border: 1px solid #a8bce8;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-top: 0.5rem;
+  }
+  .takeaways ul { padding-left: 1.3rem; }
+  .takeaways li {
+    font-size: 0.88rem;
+    color: #1c1917;
+    margin-bottom: 0.65rem;
+    padding-left: 0.2rem;
+  }
+  .takeaways li::marker { color: #3d6ab3; }
+  .takeaways li:last-child { margin-bottom: 0; }
+
+  /* ---- Verdict ---- */
+  .verdict {
+    background: linear-gradient(135deg, #2d4d8a, #1e3461);
+    color: #fff;
+    border-radius: 10px;
+    padding: 1.4rem 1.8rem;
+    margin-top: 2rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .verdict-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 0.5rem;
+  }
+  .verdict p { font-size: 0.95rem; line-height: 1.6; opacity: 0.95; }
+
+  /* ---- Footer ---- */
+  footer {
+    text-align: center;
+    font-size: 0.75rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #9ca3af;
+    padding: 1.5rem 0;
+    border-top: 1px solid #a8bce8;
+    margin-top: 2.5rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="page-header">
+  <p class="gene-label">TREAT-AD Target Enabling Package</p>
+  <h1 class="gene-title">HLA-DRA</h1>
+  <p class="gene-subtitle">HLA Class II Histocompatibility Antigen, DR Alpha Chain &nbsp;|&nbsp; MHC Class II &nbsp;|&nbsp; Plaque Microglial Marker</p>
+  <div class="chip-row">
+    <span class="chip chip-neuroimmune">Neuroimmune Marker</span>
+    <span class="chip chip-plaque">Plaque-Associated</span>
+    <span class="chip chip-mhcii">MHC Class II</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Neuroimmune banner -->
+  <div class="neuroimmune-banner">
+    <strong>Candidate Neuroimmune Biomarker:</strong> HLA-DRA shows direct AD brain expression changes, plaque-associated microglial co-expression (with TREM2, TYROBP, APOE), superior temporal gyrus transcriptomic enrichment, and links to tau pathology and cognitive decline. Stronger AD evidence than most candidate immune genes, but not yet a validated therapeutic target.
+  </div>
+
+  <!-- ===== OVERVIEW ===== -->
+  <h2 class="section-title">Overview</h2>
+  <p class="overview-text">
+    HLA-DRA encodes the invariant alpha chain of HLA-DR, the MHC class II heterodimer that presents peptides to CD4+ T cells and coordinates antigen-processing activity across microglia, macrophages, monocytes, dendritic cells, and B cells. Its AD relevance is more direct than most candidate immune genes: HLA-DRA expression is significantly altered in AD brains in immune-mediated disease overlap studies; the HLA-region signal associates with neurofibrillary tangle pathology and longitudinal cognitive decline; and HLA-DRA appears as part of a replicated AD superior temporal gyrus transcriptomic signature enriched for microglial/immune genes (CD74, TREM2, C3AR1, ITGAX, OLR1). Most notably, HLA-DRA is elevated in laser-captured Aβ plaque regions alongside APOE, AXL, TREM2, and TYROBP—especially in early-onset AD plaques—while remaining low in non-plaque parenchyma, suggesting a localized plaque-associated antigen-presenting microglial state. Through the HLA-DRα1/CD74/MIF axis, HLA-DRA also connects to tractable inflammatory signaling. Its most defensible role is as a biomarker and pathway node marking activated plaque-associated microglia, not as a direct drug target; broad MHC class II inhibition could impair phagocytosis, host defense, and potentially beneficial microglial clearance functions.
+  </p>
+
+  <!-- ===== FIGURE ===== -->
+  <h2 class="section-title">Mechanistic Summary Figure</h2>
+  <figure class="figure-wrap">
+    <!--
+      Verified hexagonal layout — no overlapping objects or text
+      Canvas: 860 × 590   Hub: cx=430 cy=300 r=63   Ring: 185px   Ellipses: rx=115 ry=38
+
+      Node centres (60° intervals; 185·sin60°=160, 185·cos60°=92):
+        Top         (430, 115)
+        Top-right   (590, 208)
+        Bot-right   (590, 392)
+        Bottom      (430, 485)
+        Bot-left    (270, 392)
+        Top-left    (270, 208)
+
+      Overlap check (adjacent, rx=115, ry=38):
+        Top ↔ TR:  (160/115)²+(93/38)² = 1.94+5.99 = 7.93 > 1  ✓
+        TR  ↔ BR:  (0/115)²+(184/38)²  = 23.4 > 1              ✓
+      Hub clearance: 237−153 = 84px ✓ (top);  447−363 = 84px ✓ (bottom)
+      Canvas: top ellipse top=77px; bottom ellipse bottom=523px (<590) ✓
+    -->
+    <svg viewBox="0 0 860 590" width="860" height="590" xmlns="http://www.w3.org/2000/svg"
+         font-family="'Helvetica Neue', Arial, sans-serif" text-anchor="middle">
+
+      <!-- Background -->
+      <rect width="860" height="590" fill="#f0f4ff" rx="8"/>
+
+      <!-- Figure title -->
+      <text x="430" y="38" font-size="13.5" font-weight="bold" fill="#1e3461">
+        HLA-DRA · MHC Class II Immune Hub — Six AD-Relevant Domains
+      </text>
+
+      <!-- ===== SPOKES — solid: direct AD brain evidence exists ===== -->
+      <line x1="430" y1="300" x2="430" y2="115" stroke="#93c5fd" stroke-width="2"/>
+      <line x1="430" y1="300" x2="590" y2="208" stroke="#93c5fd" stroke-width="2"/>
+      <line x1="430" y1="300" x2="590" y2="392" stroke="#93c5fd" stroke-width="2"/>
+      <line x1="430" y1="300" x2="430" y2="485" stroke="#93c5fd" stroke-width="2"/>
+      <line x1="430" y1="300" x2="270" y2="392" stroke="#93c5fd" stroke-width="2"/>
+      <line x1="430" y1="300" x2="270" y2="208" stroke="#93c5fd" stroke-width="2"/>
+
+      <!-- ===== CENTRAL HUB ===== -->
+      <circle cx="430" cy="300" r="63" fill="#1e3461" stroke="#93c5fd" stroke-width="3"/>
+      <text x="430" y="291" font-size="14"  font-weight="bold" fill="#fff">HLA-DRA</text>
+      <text x="430" y="308" font-size="8.5" fill="#bfdbfe">MHC Class II</text>
+      <text x="430" y="321" font-size="8.5" fill="#93c5fd">DR Alpha Chain</text>
+
+      <!-- ===== NODE 1 — TOP: MHC II Antigen Presentation (Periwinkle) ===== -->
+      <ellipse cx="430" cy="115" rx="115" ry="38" fill="#3d6ab3" stroke="#bfdbfe" stroke-width="1.5"/>
+      <text x="430" y="109" font-size="10" font-weight="bold" fill="#fff">MHC II Presentation</text>
+      <text x="430" y="125" font-size="9"  fill="#dbeafe">CD74 · HLA-DR · Peptide</text>
+
+      <!-- ===== NODE 2 — TOP-RIGHT: Plaque Microglia (Crimson) ===== -->
+      <ellipse cx="590" cy="208" rx="115" ry="38" fill="#b91c1c" stroke="#fca5a5" stroke-width="1.5"/>
+      <text x="590" y="202" font-size="10" font-weight="bold" fill="#fff">Plaque Microglia</text>
+      <text x="590" y="218" font-size="9"  fill="#fecaca">TREM2 · TYROBP · APOE</text>
+
+      <!-- ===== NODE 3 — BOTTOM-RIGHT: Tau / Cognition (Orange) ===== -->
+      <ellipse cx="590" cy="392" rx="115" ry="38" fill="#c2410c" stroke="#fdba74" stroke-width="1.5"/>
+      <text x="590" y="386" font-size="10" font-weight="bold" fill="#fff">Tau / Cognition</text>
+      <text x="590" y="402" font-size="9"  fill="#ffedd5">STG · NFT · Cog. Decline</text>
+
+      <!-- ===== NODE 4 — BOTTOM: Innate-Adaptive Bridge (Teal) ===== -->
+      <ellipse cx="430" cy="485" rx="115" ry="38" fill="#0f766e" stroke="#99f6e4" stroke-width="1.5"/>
+      <text x="430" y="479" font-size="10" font-weight="bold" fill="#fff">Innate-Adaptive Bridge</text>
+      <text x="430" y="495" font-size="9"  fill="#ccfbf1">CD4+ T Cell · CD74/MIF</text>
+
+      <!-- ===== NODE 5 — BOTTOM-LEFT: Genetic Architecture (Amber) ===== -->
+      <ellipse cx="270" cy="392" rx="115" ry="38" fill="#b45309" stroke="#fde68a" stroke-width="1.5"/>
+      <text x="270" y="386" font-size="10" font-weight="bold" fill="#fff">Genetic Architecture</text>
+      <text x="270" y="402" font-size="9"  fill="#fef3c7">AD Risk · CNV · eQTL</text>
+
+      <!-- ===== NODE 6 — TOP-LEFT: Neuroinflammation State (Violet) ===== -->
+      <ellipse cx="270" cy="208" rx="115" ry="38" fill="#7c3aed" stroke="#ddd6fe" stroke-width="1.5"/>
+      <text x="270" y="202" font-size="10" font-weight="bold" fill="#fff">Neuroinflammation</text>
+      <text x="270" y="218" font-size="9"  fill="#ede9fe">CIITA · IFN-&#947; · NF-&#954;B</text>
+
+      <!-- ===== LEGEND ===== -->
+      <rect x="18" y="524" width="824" height="54" rx="6" fill="#fff" stroke="#a8bce8" stroke-width="1"/>
+
+      <!-- Row 1 -->
+      <circle cx="55"  cy="538" r="7" fill="#3d6ab3"/>
+      <text x="67"  y="542" font-size="8.5" fill="#292524" text-anchor="start">MHC II Presentation</text>
+
+      <circle cx="230" cy="538" r="7" fill="#b91c1c"/>
+      <text x="242" y="542" font-size="8.5" fill="#292524" text-anchor="start">Plaque Microglia</text>
+
+      <circle cx="385" cy="538" r="7" fill="#c2410c"/>
+      <text x="397" y="542" font-size="8.5" fill="#292524" text-anchor="start">Tau / Cognition</text>
+
+      <!-- Row 2 -->
+      <circle cx="55"  cy="559" r="7" fill="#0f766e"/>
+      <text x="67"  y="563" font-size="8.5" fill="#292524" text-anchor="start">Innate-Adaptive Bridge</text>
+
+      <circle cx="230" cy="559" r="7" fill="#b45309"/>
+      <text x="242" y="563" font-size="8.5" fill="#292524" text-anchor="start">Genetic Architecture</text>
+
+      <circle cx="385" cy="559" r="7" fill="#7c3aed"/>
+      <text x="397" y="563" font-size="8.5" fill="#292524" text-anchor="start">Neuroinflammation</text>
+
+      <!-- Biomarker note -->
+      <rect x="600" y="528" width="242" height="42" rx="5" fill="#dce7f9" stroke="#93c5fd" stroke-width="1"/>
+      <text x="721" y="545" font-size="8.5" font-weight="bold" fill="#1e3461" text-anchor="middle">Candidate Neuroimmune Biomarker</text>
+      <text x="721" y="560" font-size="8"   fill="#2d4d8a" text-anchor="middle">Plaque-localized · Biomarker role preferred</text>
+
+    </svg>
+    <figcaption>
+      Color-coded hub-and-spoke diagram of six HLA-DRA-linked biological domains in Alzheimer's disease.
+      Solid spokes reflect direct AD brain expression and genetic evidence. Each node color matches its Key Insight card.
+      HLA-DRA is most strongly supported as a plaque microglial biomarker and neuroimmune pathway node.
+    </figcaption>
+  </figure>
+
+  <!-- ===== KEY INSIGHTS ===== -->
+  <h2 class="section-title">Key Insights</h2>
+  <div class="cards">
+
+    <div class="card card-mhcii">
+      <h3>MHC Class II Antigen Presentation</h3>
+      <p>HLA-DRA encodes the invariant alpha chain of HLA-DR and repeatedly co-appears with CD74, HLA-DRB1/DRB5, HLA-DPA1/DPB1, HLA-DQA1/DQB1, CIITA, HLA-DMA, and HLA-DMB, indicating coordinated antigen-processing and antigen-presentation activity. HLA-DR-positive microglia can present peptides to CD4+ T cells, potentially engaging adaptive immune responses within the CNS. In AD, whether this antigen-presentation activity reflects harmful chronic inflammation or adaptive immune surveillance remains unresolved.</p>
+    </div>
+
+    <div class="card card-plaque">
+      <h3>Plaque-Associated Microglia</h3>
+      <p>A key AD-specific finding places HLA-DRA at the center of plaque-associated microglial biology: laser-captured AD plaque regions showed elevated HLA-DRA expression alongside APOE, AXL, TREM2, and TYROBP—particularly in early-onset AD plaques—while non-plaque parenchyma showed low expression. This supports HLA-DRA as marking a spatially localized plaque-response, phagocytic, and antigen-presenting microglial state rather than uniform global brain inflammation. The co-expression with TREM2, TYROBP, C3AR1, and ITGAX places HLA-DRA within disease-associated microglial programs.</p>
+    </div>
+
+    <div class="card card-tau">
+      <h3>Tau Pathology &amp; Cognitive Decline</h3>
+      <p>HLA-DRA was significantly altered in AD brains compared with controls in an immune-mediated disease overlap study; the HLA-region signal associated with neurofibrillary tangle (NFT) burden and longitudinal cognitive decline. HLA-DRA also appeared as part of a replicated AD superior temporal gyrus (STG) transcriptomic signature enriched for microglial/immune genes (CD74, TREM2, C3AR1, ITGAX, OLR1). An NLRP3 inflammasome postmortem study found no significant HLA-DRA difference in temporal cortex, highlighting heterogeneity across brain regions and methods.</p>
+    </div>
+
+    <div class="card card-bridge">
+      <h3>Innate-Adaptive Immune Bridge</h3>
+      <p>Because HLA-DR presents peptides to CD4+ T cells, HLA-DRA-positive microglia/macrophages could engage antigen-specific adaptive immune responses at plaques, CNS borders, or perivascular niches. The HLA-DRα1/CD74/MIF axis is mechanistically tractable: non-AD EAE studies show HLA-DRα1-derived constructs can downregulate CD74/MIF inflammatory signaling, reduce NLRP3 and IL-1β, increase M2-like macrophages, and improve CNS inflammatory disease phenotypes. This axis has not been tested in AD models but is mechanistically attractive.</p>
+    </div>
+
+    <div class="card card-genetics">
+      <h3>Genetic Architecture &amp; Cross-Trait Overlap</h3>
+      <p>HLA-DRA or the HLA-DRA/HLA-DRB5 region appears in AD CNV, eQTL/SMR, cross-trait, and dementia-risk analyses, as well as in shared genetic architecture with immune-mediated diseases, lipid traits, cardiovascular risk, gastrointestinal disease, and sleep-related traits. The extensive HLA-region linkage disequilibrium means HLA-DRA signals may tag broader haplotypes rather than proving HLA-DRA-specific causality; high-resolution HLA analysis with phasing is required.</p>
+    </div>
+
+    <div class="card card-inflam">
+      <h3>Neuroinflammatory State Regulation</h3>
+      <p>HLA-DRA expression is driven by IFN-γ/STAT1/CIITA, NF-κB/TNF, and complement-linked immune-remodeling pathways. In AD, HLA-DRA-positive microglia could be harmful if they amplify chronic neuroinflammation, but potentially beneficial if they support debris handling, plaque containment, or complement-mediated clearance. State-dependent context is critical: low HLA-DRA in sepsis or immunoparalysis marks impaired immune competence, while high HLA-DRA in activated microglia marks antigen-presenting capacity that may be either harmful or protective depending on AD stage and microenvironment.</p>
+    </div>
+
+  </div>
+
+  <!-- ===== ACTIONABLE TAKEAWAYS ===== -->
+  <h2 class="section-title">Actionable Takeaways</h2>
+  <div class="takeaways">
+    <ul>
+      <li><strong>Treat HLA-DRA as a candidate neuroimmune biomarker, not a validated drug target.</strong> Its most defensible role is marking plaque-associated microglial MHC class II activation, correlating with tau pathology and cognitive decline, and defining immune-active AD subtypes.</li>
+      <li><strong>Prioritize cell-type-specific spatial validation.</strong> Determine whether HLA-DRA is expressed by plaque-associated microglia, border-associated macrophages, infiltrating monocytes, dendritic-like cells, astrocytes, endothelial/perivascular cells, or choroid plexus cells. Plaque co-localization studies combining spatial transcriptomics with amyloid/tau imaging are critical.</li>
+      <li><strong>Measure HLA-DRA as part of a companion panel.</strong> Useful co-markers include CD74, TREM2, TYROBP, APOE, AXL, C3AR1, ITGAX, OLR1, HLA-DRB1/DRB5, CIITA, IRF8, complement genes, interferon-response genes, IL-1β, TNF, and standard microglial activation markers.</li>
+      <li><strong>Explore the HLA-DRα1/CD74/MIF axis as an intervention point.</strong> This is the most mechanistically developed therapeutic angle from the evidence. Test whether HLA-DRα1-derived peptides or CD74/MIF inhibitors reduce NLRP3, IL-1β, and plaque-associated neuroinflammation in AD models.</li>
+      <li><strong>Avoid assuming lower HLA-DRA is always beneficial.</strong> HLA-DRA-positive plaque microglia co-express TREM2, TYROBP, APOE, and AXL—phagocytic and plaque-clearance genes. Indiscriminate MHC class II suppression could impair protective debris handling or plaque containment.</li>
+      <li><strong>Use HLA-DRA for AD immune-subtype stratification.</strong> It may help identify immune-active AD patients with strong microglial antigen-presentation signatures, APOE ε4-linked immune-expression patterns, vascular/lipid comorbidities, or systemic inflammatory burden who may respond differently to immunomodulatory therapies.</li>
+      <li><strong>Require AD-specific causal perturbation data before target nomination.</strong> Missing: knockdown/rescue effects on amyloid/tau pathology, synaptic integrity, neurovascular dysfunction, and cognition; safety data on systemic immune consequences of HLA-DRA manipulation; and demonstration that modulating HLA-DRA changes disease trajectory rather than only reflecting immune state.</li>
+    </ul>
+  </div>
+
+  <!-- ===== VERDICT ===== -->
+  <div class="verdict">
+    <p class="verdict-label">TEP Verdict</p>
+    <p>
+      <strong>HLA-DRA is one of the more directly AD-relevant immune genes in this series, supported by plaque microglial co-expression, AD brain transcriptomic enrichment, and tau/cognition associations.</strong>
+      Its near-term value is as a neuroimmune biomarker for plaque-associated microglial activation and as a patient-stratification tool for immune-active AD subtypes. The HLA-DRα1/CD74/MIF axis represents the most mechanistically tractable therapeutic angle. Broad HLA-DRA inhibition should be avoided due to phagocytic and host-defense consequences. Before advancing to therapeutic target nomination, AD-specific causal perturbation studies—testing whether HLA-DRA modulation alters amyloid burden, tau pathology, synaptic integrity, and cognition—are required.
+    </p>
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  TREAT-AD Target Enabling Package &nbsp;·&nbsp; HLA-DRA &nbsp;·&nbsp; AI-Assisted Gene Summary &nbsp;·&nbsp; For Research Use Only
+</footer>
+
+</body>
+</html>

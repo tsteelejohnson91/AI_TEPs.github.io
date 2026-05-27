@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PYGL — TREAT-AD TEP Summary</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #f7fee7;
+    color: #1c1917;
+    line-height: 1.65;
+  }
+
+  /* ---- Header ---- */
+  .page-header {
+    background: linear-gradient(135deg, #1a2e05 0%, #365314 55%, #4d7c0f 100%);
+    color: #fff;
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+  }
+  .gene-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.65;
+    margin-bottom: 0.4rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .gene-title { font-size: 3rem; font-weight: bold; letter-spacing: 0.05em; }
+  .gene-subtitle {
+    font-size: 0.95rem;
+    opacity: 0.82;
+    margin-top: 0.4rem;
+    font-style: italic;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .chip-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .chip {
+    display: inline-block;
+    padding: 0.25rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .chip-hypothesis { background: #fef9c3; color: #713f12; }
+  .chip-metabolic  { background: #ecfccb; color: #365314; }
+  .chip-biomarker  { background: #ccfbf1; color: #134e4a; }
+
+  /* ---- Hypothesis banner ---- */
+  .hypothesis-banner {
+    background: #fef9c3;
+    border-left: 5px solid #ca8a04;
+    padding: 0.8rem 1.4rem;
+    margin: 1.4rem auto;
+    max-width: 860px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.87rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #713f12;
+  }
+  .hypothesis-banner strong { font-weight: 700; }
+
+  /* ---- Isoform caution banner ---- */
+  .caution-banner {
+    background: #fff7ed;
+    border-left: 5px solid #ea580c;
+    padding: 0.7rem 1.4rem;
+    margin: 0.8rem auto 0;
+    max-width: 860px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.85rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #7c2d12;
+  }
+  .caution-banner strong { font-weight: 700; }
+
+  /* ---- Container ---- */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
+  }
+
+  /* ---- Section headings ---- */
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #365314;
+    border-bottom: 2px solid #86efac;
+    padding-bottom: 0.4rem;
+    margin: 2rem 0 1rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  /* ---- Overview ---- */
+  .overview-text { font-size: 0.97rem; color: #292524; max-width: 820px; }
+
+  /* ---- Figure ---- */
+  .figure-wrap {
+    background: #fff;
+    border: 1px solid #bef264;
+    border-radius: 10px;
+    padding: 1rem 0.5rem 0.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 2px 8px rgba(26,46,5,0.08);
+    overflow-x: auto;
+  }
+  .figure-wrap figcaption {
+    text-align: center;
+    font-size: 0.78rem;
+    color: #6b7280;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+
+  /* ---- Insight cards ---- */
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  @media (max-width: 640px) { .cards { grid-template-columns: 1fr; } }
+  .card {
+    background: #fff;
+    border: 1px solid #d9f99d;
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    box-shadow: 0 1px 4px rgba(26,46,5,0.05);
+  }
+  .card h3 {
+    font-size: 0.92rem;
+    font-weight: bold;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin-bottom: 0.35rem;
+  }
+  .card p { font-size: 0.85rem; color: #374151; line-height: 1.55; }
+
+  /* Per-domain card accents matching SVG node colors */
+  .card-glycogen  { border-left: 4px solid #4d7c0f; }
+  .card-glycogen  h3 { color: #4d7c0f; }
+  .card-biomarker { border-left: 4px solid #0f766e; }
+  .card-biomarker h3 { color: #0f766e; }
+  .card-hypoxia   { border-left: 4px solid #1d4ed8; }
+  .card-hypoxia   h3 { color: #1d4ed8; }
+  .card-inflam    { border-left: 4px solid #b91c1c; }
+  .card-inflam    h3 { color: #b91c1c; }
+  .card-glcnac    { border-left: 4px solid #7c3aed; }
+  .card-glcnac    h3 { color: #7c3aed; }
+  .card-necropt   { border-left: 4px solid #c2410c; }
+  .card-necropt   h3 { color: #c2410c; }
+
+  /* ---- Takeaways ---- */
+  .takeaways {
+    background: #fff;
+    border: 1px solid #bef264;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-top: 0.5rem;
+  }
+  .takeaways ul { padding-left: 1.3rem; }
+  .takeaways li {
+    font-size: 0.88rem;
+    color: #1c1917;
+    margin-bottom: 0.65rem;
+    padding-left: 0.2rem;
+  }
+  .takeaways li::marker { color: #4d7c0f; }
+  .takeaways li:last-child { margin-bottom: 0; }
+
+  /* ---- Verdict ---- */
+  .verdict {
+    background: linear-gradient(135deg, #365314, #1a2e05);
+    color: #fff;
+    border-radius: 10px;
+    padding: 1.4rem 1.8rem;
+    margin-top: 2rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .verdict-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 0.5rem;
+  }
+  .verdict p { font-size: 0.95rem; line-height: 1.6; opacity: 0.95; }
+
+  /* ---- Footer ---- */
+  footer {
+    text-align: center;
+    font-size: 0.75rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #9ca3af;
+    padding: 1.5rem 0;
+    border-top: 1px solid #bef264;
+    margin-top: 2.5rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="page-header">
+  <p class="gene-label">TREAT-AD Target Enabling Package</p>
+  <h1 class="gene-title">PYGL</h1>
+  <p class="gene-subtitle">Glycogen Phosphorylase L (Liver Isoform) &nbsp;|&nbsp; Glycogenolysis Enzyme &nbsp;|&nbsp; Metabolic Stress-Response Node</p>
+  <div class="chip-row">
+    <span class="chip chip-hypothesis">Hypothesis-Generating</span>
+    <span class="chip chip-metabolic">Metabolic Node</span>
+    <span class="chip chip-biomarker">Biomarker Lead</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Hypothesis banner -->
+  <div class="hypothesis-banner">
+    <strong>Hypothesis-Generating Biomarker Candidate:</strong> PYGL's only direct AD evidence is upregulation in tear-fluid proteomics from mild AD patients. No causal evidence links PYGL to amyloid-β, tau pathology, or cognitive decline. AD relevance is inferred through glycogenolysis, energy resilience, oxidative stress, and glial/immune metabolic mechanisms.
+  </div>
+
+  <!-- Isoform caution -->
+  <div class="caution-banner">
+    <strong>Isoform Caution:</strong> PYGL is the liver glycogen phosphorylase isoform. PYGB is the canonical brain isoform. Any AD investigation must first establish whether PYGL itself is functionally active and relevant in neurons, astrocytes, or microglia, or whether the relevant target is PYGB or total glycogen phosphorylase activity.
+  </div>
+
+  <!-- ===== OVERVIEW ===== -->
+  <h2 class="section-title">Overview</h2>
+  <p class="overview-text">
+    PYGL (glycogen phosphorylase, liver isoform) catalyzes glycogen breakdown, providing glucose-derived substrates that feed glycolysis, lactate production, ATP maintenance, and pentose phosphate pathway (PPP) activity—including NADPH generation for antioxidant defense. The clearest AD-specific finding is a tear-fluid mass spectrometry study identifying PYGL as significantly upregulated in mild AD dementia compared with cognitively healthy controls, interpreted as reflecting oxidative stress, altered protein synthesis, and disturbed energy-metabolism regulation. This positions PYGL as a candidate peripheral/ocular biomarker but not a causal AD driver. Mechanistic bridges to AD are indirect: neuronal glycogen-dependent glycolytic plasticity during mitochondrial dysfunction and hypoxia; ischemic stroke networks linking PYGL to energy crisis, HIF-1 signaling, and neuroinflammation; glial glycogen phosphorylase expression relevant to O-GlcNAcylation and protein homeostasis; and necroptosis/RIP3/MLKL pathways in neural stress. Critical caveats include isoform ambiguity (PYGB is the canonical brain isoform), dual oxidative-stress role (protective PPP vs. harmful ROS), and systemic safety risks from PYGL deficiency causing glycogen storage disease type VI. Therapeutic direction is unresolved; neither global inhibition nor global activation is justified.
+  </p>
+
+  <!-- ===== FIGURE ===== -->
+  <h2 class="section-title">Mechanistic Summary Figure</h2>
+  <figure class="figure-wrap">
+    <!--
+      Verified hexagonal layout — no overlapping objects or text
+      Canvas: 860 × 590   Hub: cx=430 cy=300 r=63   Ring: 185px   Ellipses: rx=115 ry=38
+
+      Node centres (60° intervals; 185·sin60°=160, 185·cos60°=92):
+        Top         (430, 115)
+        Top-right   (590, 208)
+        Bot-right   (590, 392)
+        Bottom      (430, 485)
+        Bot-left    (270, 392)
+        Top-left    (270, 208)
+
+      Overlap check (adjacent, rx=115, ry=38):
+        Top ↔ TR:  (160/115)²+(93/38)² = 1.94+5.99 = 7.93 > 1  ✓
+        TR  ↔ BR:  (0/115)²+(184/38)²  = 23.4 > 1              ✓
+      Hub clearance: 237−153 = 84px ✓ (top);  447−363 = 84px ✓ (bottom)
+      Canvas: top ellipse top=77px; bottom ellipse bottom=523px (<590) ✓
+    -->
+    <svg viewBox="0 0 860 590" width="860" height="590" xmlns="http://www.w3.org/2000/svg"
+         font-family="'Helvetica Neue', Arial, sans-serif" text-anchor="middle">
+
+      <!-- Background -->
+      <rect width="860" height="590" fill="#f7fee7" rx="8"/>
+
+      <!-- Figure title -->
+      <text x="430" y="38" font-size="13.5" font-weight="bold" fill="#1a2e05">
+        PYGL · Glycogen Phosphorylase — Six AD-Relevant Metabolic Domains
+      </text>
+
+      <!-- ===== SPOKES — dashed: evidence is indirect ===== -->
+      <line x1="430" y1="300" x2="430" y2="115" stroke="#86efac" stroke-width="1.8" stroke-dasharray="6,3"/>
+      <line x1="430" y1="300" x2="590" y2="208" stroke="#86efac" stroke-width="1.8" stroke-dasharray="6,3"/>
+      <line x1="430" y1="300" x2="590" y2="392" stroke="#86efac" stroke-width="1.8" stroke-dasharray="6,3"/>
+      <line x1="430" y1="300" x2="430" y2="485" stroke="#86efac" stroke-width="1.8" stroke-dasharray="6,3"/>
+      <line x1="430" y1="300" x2="270" y2="392" stroke="#86efac" stroke-width="1.8" stroke-dasharray="6,3"/>
+      <line x1="430" y1="300" x2="270" y2="208" stroke="#86efac" stroke-width="1.8" stroke-dasharray="6,3"/>
+
+      <!-- ===== CENTRAL HUB ===== -->
+      <circle cx="430" cy="300" r="63" fill="#1a2e05" stroke="#a3e635" stroke-width="3"/>
+      <text x="430" y="291" font-size="15"  font-weight="bold" fill="#ecfccb">PYGL</text>
+      <text x="430" y="308" font-size="8.5" fill="#bef264">Liver Glycogen</text>
+      <text x="430" y="321" font-size="8.5" fill="#86efac">Phosphorylase</text>
+
+      <!-- ===== NODE 1 — TOP: Glycogenolysis / ATP (Olive-green) ===== -->
+      <ellipse cx="430" cy="115" rx="115" ry="38" fill="#4d7c0f" stroke="#bef264" stroke-width="1.5"/>
+      <text x="430" y="109" font-size="10" font-weight="bold" fill="#fff">Glycogenolysis / ATP</text>
+      <text x="430" y="125" font-size="9"  fill="#ecfccb">Glucose · Glycolysis · PPP</text>
+
+      <!-- ===== NODE 2 — TOP-RIGHT: Tear-Fluid Biomarker (Teal) ===== -->
+      <ellipse cx="590" cy="208" rx="115" ry="38" fill="#0f766e" stroke="#99f6e4" stroke-width="1.5"/>
+      <text x="590" y="202" font-size="10" font-weight="bold" fill="#fff">Tear-Fluid Biomarker</text>
+      <text x="590" y="218" font-size="9"  fill="#ccfbf1">Mild AD · Oxidative Stress</text>
+
+      <!-- ===== NODE 3 — BOTTOM-RIGHT: Hypoxia / HIF-1 (Blue) ===== -->
+      <ellipse cx="590" cy="392" rx="115" ry="38" fill="#1d4ed8" stroke="#bfdbfe" stroke-width="1.5"/>
+      <text x="590" y="386" font-size="10" font-weight="bold" fill="#fff">Hypoxia / HIF-1</text>
+      <text x="590" y="402" font-size="9"  fill="#dbeafe">Ischemia · Vascular AD</text>
+
+      <!-- ===== NODE 4 — BOTTOM: Neuroinflammation / ROS (Crimson) ===== -->
+      <ellipse cx="430" cy="485" rx="115" ry="38" fill="#b91c1c" stroke="#fca5a5" stroke-width="1.5"/>
+      <text x="430" y="479" font-size="10" font-weight="bold" fill="#fff">Neuroinflammation / ROS</text>
+      <text x="430" y="495" font-size="9"  fill="#fecaca">Microglia · NADPH · RIP3</text>
+
+      <!-- ===== NODE 5 — BOTTOM-LEFT: O-GlcNAc / Tau·APP (Violet) ===== -->
+      <ellipse cx="270" cy="392" rx="115" ry="38" fill="#7c3aed" stroke="#ddd6fe" stroke-width="1.5"/>
+      <text x="270" y="386" font-size="10" font-weight="bold" fill="#fff">O-GlcNAc / Tau·APP</text>
+      <text x="270" y="402" font-size="9"  fill="#ede9fe">Nutrient-Sensing · Protein</text>
+
+      <!-- ===== NODE 6 — TOP-LEFT: Necroptosis / Cell Death (Orange) ===== -->
+      <ellipse cx="270" cy="208" rx="115" ry="38" fill="#c2410c" stroke="#fdba74" stroke-width="1.5"/>
+      <text x="270" y="202" font-size="10" font-weight="bold" fill="#fff">Necroptosis / Cell Death</text>
+      <text x="270" y="218" font-size="9"  fill="#ffedd5">RIP3 · MLKL · Neural</text>
+
+      <!-- ===== LEGEND ===== -->
+      <rect x="18" y="524" width="824" height="54" rx="6" fill="#fff" stroke="#bef264" stroke-width="1"/>
+
+      <!-- Row 1 -->
+      <circle cx="55"  cy="538" r="7" fill="#4d7c0f"/>
+      <text x="67"  y="542" font-size="8.5" fill="#292524" text-anchor="start">Glycogenolysis / ATP</text>
+
+      <circle cx="230" cy="538" r="7" fill="#0f766e"/>
+      <text x="242" y="542" font-size="8.5" fill="#292524" text-anchor="start">Tear-Fluid Biomarker</text>
+
+      <circle cx="405" cy="538" r="7" fill="#1d4ed8"/>
+      <text x="417" y="542" font-size="8.5" fill="#292524" text-anchor="start">Hypoxia / HIF-1</text>
+
+      <!-- Row 2 -->
+      <circle cx="55"  cy="559" r="7" fill="#b91c1c"/>
+      <text x="67"  y="563" font-size="8.5" fill="#292524" text-anchor="start">Neuroinflammation / ROS</text>
+
+      <circle cx="230" cy="559" r="7" fill="#7c3aed"/>
+      <text x="242" y="563" font-size="8.5" fill="#292524" text-anchor="start">O-GlcNAc / Tau·APP</text>
+
+      <circle cx="405" cy="559" r="7" fill="#c2410c"/>
+      <text x="417" y="563" font-size="8.5" fill="#292524" text-anchor="start">Necroptosis / Cell Death</text>
+
+      <!-- Isoform caution badge -->
+      <rect x="630" y="528" width="212" height="42" rx="5" fill="#fff7ed" stroke="#fdba74" stroke-width="1"/>
+      <text x="736" y="545" font-size="8.5" font-weight="bold" fill="#7c2d12" text-anchor="middle">Isoform Caution</text>
+      <text x="736" y="560" font-size="8"   fill="#9a3412" text-anchor="middle">PYGB = brain isoform; validate first</text>
+
+    </svg>
+    <figcaption>
+      Color-coded hub-and-spoke diagram of six PYGL-linked domains in Alzheimer's disease context.
+      Dashed spokes indicate inferred rather than proven mechanistic relationships. Each node color matches its Key Insight card.
+      PYGL is the liver isoform; PYGB relevance in brain must be distinguished (see Isoform Caution).
+    </figcaption>
+  </figure>
+
+  <!-- ===== KEY INSIGHTS ===== -->
+  <h2 class="section-title">Key Insights</h2>
+  <div class="cards">
+
+    <div class="card card-glycogen">
+      <h3>Glycogenolysis &amp; Energy Resilience</h3>
+      <p>PYGL catalyzes glycogen breakdown, providing glucose-derived substrates for glycolysis, lactate production, ATP maintenance, and pentose phosphate pathway (PPP) activity including NADPH generation. In a key neuroscience study, the C. elegans PYGL ortholog was required for glycogen-dependent glycolytic plasticity during mitochondrial dysfunction and transient hypoxia; its loss impaired synaptic vesicle recycling under metabolic stress—directly linking glycogen mobilization to synaptic function, a major AD vulnerability.</p>
+    </div>
+
+    <div class="card card-biomarker">
+      <h3>Tear-Fluid Biomarker in Mild AD</h3>
+      <p>The strongest direct AD evidence is a tear-fluid mass spectrometry proteomics study identifying PYGL as significantly upregulated in mild AD dementia compared with cognitively healthy controls. The protein profile was interpreted as reflecting oxidative stress, altered protein synthesis, and disturbed energy-metabolism regulation. This positions PYGL as a candidate noninvasive biomarker for mild AD, warranting replication in larger cohorts and combination with complementary protein panels, but does not establish PYGL as a causal AD driver.</p>
+    </div>
+
+    <div class="card card-hypoxia">
+      <h3>Hypoxia / HIF-1 &amp; Vascular AD</h3>
+      <p>PYGL was identified as a hub gene in ischemic stroke networks enriched for glycolysis and HIF-1 signaling, with expression in neurons and microglia. Ischemic stroke models framed PYGL within an energy crisis–oxidative stress–neuroinflammation axis that overlaps with vascular and inflammatory contributors to AD. PYGL may be especially relevant in AD subtypes where cerebrovascular disease, hypoperfusion, or ischemia co-exists with amyloid/tau pathology.</p>
+    </div>
+
+    <div class="card card-inflam">
+      <h3>Neuroinflammation &amp; Oxidative Stress</h3>
+      <p>PYGL is associated with macrophage/neutrophil metabolic reprogramming, HIF-1α signaling, NET formation, inflammatory signatures, and immunosuppressive or inflammatory phenotypes. In retinal ganglion cell and cerebral ischemia/reperfusion models, increased PYGL activity appeared downstream of RIP3/RIP1/MLKL pathways and was associated with ROS accumulation and neuronal damage. Whether PYGL supports antioxidant defense (via NADPH/PPP) or amplifies oxidative damage depends critically on cell type and disease context.</p>
+    </div>
+
+    <div class="card card-glcnac">
+      <h3>O-GlcNAcylation, Tau &amp; APP Biology</h3>
+      <p>A glial-cell review links glycogen phosphorylase isoforms including PYGL to brain metabolic regulation and O-GlcNAcylation. Because O-GlcNAcylation affects AD-related proteins APP and tau—modulating tau phosphorylation and aggregation propensity—PYGL may indirectly influence AD-relevant protein homeostasis through nutrient-sensitive glycogen/glucose metabolism. This indirect axis is mechanistically plausible but entirely untested in AD-specific models.</p>
+    </div>
+
+    <div class="card card-necropt">
+      <h3>Necroptosis &amp; Neural Cell Death</h3>
+      <p>In retinal ganglion cell injury and cerebral ischemia/reperfusion contexts, PYGL activity appeared downstream of RIP3/MLKL-mediated necroptosis pathways and correlated with inflammatory cell death. These findings raise the hypothesis that pathological PYGL activation could contribute to regulated inflammatory neuronal death in AD-relevant stress conditions—but no AD-specific necroptosis/PYGL studies are available. Systemic PYGL inhibition carries hepatic metabolic risk (glycogen storage disease type VI phenotype).</p>
+    </div>
+
+  </div>
+
+  <!-- ===== ACTIONABLE TAKEAWAYS ===== -->
+  <h2 class="section-title">Actionable Takeaways</h2>
+  <div class="takeaways">
+    <ul>
+      <li><strong>Treat PYGL as a hypothesis-generating AD candidate, not a validated target.</strong> Current evidence supports investigation but not therapeutic deployment. The tear-fluid biomarker finding is the only direct AD-specific evidence.</li>
+      <li><strong>Resolve isoform ambiguity first.</strong> Determine whether PYGL is functionally active and relevant in neurons, astrocytes, or microglia in AD brain, or whether the appropriate target is PYGB (canonical brain isoform) or total glycogen phosphorylase activity. Without isoform clarification, PYGL-specific strategies cannot be designed.</li>
+      <li><strong>Validate PYGL as a biomarker in larger AD cohorts.</strong> Replicate tear-fluid findings in larger studies and test PYGL in combination with oxidative stress, glycolytic, neuroinflammatory, and neurodegeneration protein panels. Test in CSF, blood, and AD-stratified neuropathology cohorts.</li>
+      <li><strong>Map cell-type specificity in AD-relevant models.</strong> PYGL may be protective (energy support, NADPH/antioxidant) in energy-starved neurons and astrocytes, but harmful (ROS amplification, inflammatory glycolysis) in activated microglia. These opposing possibilities must be resolved before any intervention is designed.</li>
+      <li><strong>Test both activation and inhibition in AD models.</strong> Assess PYGL enhancement for improving ATP, lactate support, synaptic maintenance, and metabolic stress tolerance. Assess PYGL inhibition for reducing microglial inflammatory glycolysis, ROS, necroptosis, or maladaptive glycogen depletion.</li>
+      <li><strong>Investigate O-GlcNAcylation and tau/APP connections.</strong> Test whether PYGL modulation changes tau or APP O-GlcNAcylation, tau phosphorylation, APP processing, or downstream synaptic phenotypes—this is the most molecularly specific potential AD mechanism identified.</li>
+      <li><strong>Prioritize vascular and ischemic AD subtypes.</strong> PYGL may be most relevant where AD overlaps with cerebrovascular disease, hypoperfusion, ischemia, or vascular cognitive impairment. Context-specific investigation is more likely to yield actionable findings than pan-AD studies.</li>
+      <li><strong>Include metabolic safety monitoring in any preclinical study.</strong> Biallelic PYGL loss causes glycogen storage disease type VI with hepatomegaly, fasting hypoglycemia, and metabolic dysfunction. Monitor blood glucose, ketones, liver glycogen, triglycerides, transaminases, and fasting tolerance in all preclinical experiments.</li>
+    </ul>
+  </div>
+
+  <!-- ===== VERDICT ===== -->
+  <div class="verdict">
+    <p class="verdict-label">TEP Verdict</p>
+    <p>
+      <strong>PYGL is a metabolic stress-response enzyme with plausible but mostly indirect AD relevance.</strong>
+      Its strongest current AD role is as a tear-fluid biomarker candidate for mild AD dementia. Mechanistically, PYGL connects glycogenolysis, energy resilience, oxidative stress, hypoxia/HIF-1 signaling, glial/immune metabolism, O-GlcNAcylation, and inflammatory cell-death pathways to AD-relevant biology. However, isoform ambiguity (vs. PYGB), dual oxidative-stress role (protective vs. harmful), absence of AD causal evidence, and substantial hepatic safety concerns mean that PYGL should not advance as a primary AD therapeutic target without (1) isoform clarification in brain tissue, (2) AD-specific causal validation, and (3) context-specific mechanistic evidence defining whether activation or inhibition is appropriate in relevant cell types.
+    </p>
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  TREAT-AD Target Enabling Package &nbsp;·&nbsp; PYGL &nbsp;·&nbsp; AI-Assisted Gene Summary &nbsp;·&nbsp; For Research Use Only
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SDC4 &amp; Alzheimer's Disease — TEP Summary</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal-dark:  #134e4a;
+      --teal-mid:   #0d9488;
+      --teal-light: #ccfbf1;
+      --blue:       #2563a8;
+      --amber:      #d97706;
+      --red:        #b91c1c;
+      --purple:     #7c3aed;
+      --slate:      #475569;
+      --gray-100:   #f1f5f9;
+      --gray-200:   #e2e8f0;
+      --gray-600:   #475569;
+      --text:       #1e293b;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      color: var(--text);
+      background: #fff;
+      line-height: 1.75;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, var(--teal-dark) 0%, #0a3330 100%);
+      color: #fff;
+      padding: 48px 32px 40px;
+      text-align: center;
+    }
+    header .gene-chip {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 999px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      padding: 4px 14px;
+      margin-bottom: 16px;
+    }
+    header h1 { font-size: 2.4rem; font-weight: normal; letter-spacing: -0.02em; margin-bottom: 8px; }
+    header p.subtitle { font-size: 1rem; opacity: 0.75; font-style: italic; }
+
+    /* ── Layout ── */
+    main { max-width: 900px; margin: 0 auto; padding: 48px 24px; }
+
+    section { margin-bottom: 52px; }
+    section h2 {
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-mid);
+      border-bottom: 2px solid var(--teal-light);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    p { margin-bottom: 14px; }
+
+    /* ── Figure ── */
+    .figure-wrap {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 32px 24px 20px;
+      margin-bottom: 52px;
+    }
+    .figure-wrap figcaption {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--gray-600);
+      margin-top: 16px;
+      font-style: italic;
+    }
+    .figure-wrap svg { display: block; margin: 0 auto; }
+
+    /* ── Key Insights cards ── */
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 620px) { .cards { grid-template-columns: 1fr; } }
+
+    .card {
+      border-radius: 10px;
+      padding: 18px 20px;
+      border-left: 4px solid transparent;
+    }
+    .card.biomarker  { background: #f0fdf4; border-color: var(--teal-mid); }
+    .card.pathology  { background: #eff6ff; border-color: var(--blue); }
+    .card.tau        { background: #fdf4ff; border-color: var(--purple); }
+    .card.glycocalyx { background: #fff1f2; border-color: var(--red); }
+    .card.signaling  { background: #fffbeb; border-color: var(--amber); }
+    .card.neuroimmune{ background: #f8fafc; border-color: var(--slate); }
+    .card.shedding   { background: #fef3c7; border-color: #b45309; }
+    .card.therapy    { background: #fdf2f8; border-color: #9d174d; }
+
+    .card h3 { font-size: 0.9rem; font-family: sans-serif; font-weight: 700; margin-bottom: 6px; }
+    .card p  { font-size: 0.87rem; margin: 0; line-height: 1.55; }
+
+    /* ── Takeaways ── */
+    ol.takeaways { padding-left: 20px; }
+    ol.takeaways li {
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+    }
+    ol.takeaways li strong { color: var(--teal-dark); }
+
+    /* ── Verdict banner ── */
+    .verdict {
+      background: linear-gradient(135deg, #0a3330 0%, var(--teal-dark) 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 28px 32px;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .verdict strong { color: #5eead4; }
+
+    footer {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--gray-600);
+      padding: 24px;
+      border-top: 1px solid var(--gray-200);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="gene-chip">Gene: SDC4 &nbsp;|&nbsp; Syndecan-4</div>
+  <h1>SDC4 &amp; Alzheimer's Disease</h1>
+  <p class="subtitle">Target Enabling Package — AI-Assisted Evidence Summary</p>
+</header>
+
+<main>
+
+  <!-- FIGURE -->
+  <figure class="figure-wrap">
+    <svg width="820" height="460" viewBox="0 0 820 460" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+
+      <!-- Background -->
+      <rect width="820" height="460" fill="#f8fafc" rx="8"/>
+
+      <!-- Title -->
+      <text x="410" y="30" text-anchor="middle" fill="#134e4a" font-size="13" font-weight="bold">SDC4 (Syndecan-4) — Evidence Map in Alzheimer's Disease</text>
+
+      <!-- ── Spoke lines ── -->
+      <!-- Top-left: Glycocalyx/BBB -->
+      <line x1="410" y1="235" x2="145" y2="110" stroke="#cbd5e1" stroke-width="2.5"/>
+      <!-- Top: Early CSF Biomarker -->
+      <line x1="410" y1="235" x2="410" y2="80"  stroke="#cbd5e1" stroke-width="2.5"/>
+      <!-- Top-right: Amyloid/Tau Pathology -->
+      <line x1="410" y1="235" x2="675" y2="110" stroke="#cbd5e1" stroke-width="2.5"/>
+      <!-- Right: ECM Signaling Hub -->
+      <line x1="410" y1="235" x2="720" y2="255" stroke="#cbd5e1" stroke-width="2"/>
+      <!-- Bottom-right: Tau → Cognition -->
+      <line x1="410" y1="235" x2="630" y2="390" stroke="#cbd5e1" stroke-width="2"/>
+      <!-- Bottom: Shedding / MMP -->
+      <line x1="410" y1="235" x2="410" y2="400" stroke="#cbd5e1" stroke-width="2"/>
+      <!-- Bottom-left: Neuroinflammation -->
+      <line x1="410" y1="235" x2="190" y2="390" stroke="#cbd5e1" stroke-width="2"/>
+      <!-- Left: Endothelial / Vascular -->
+      <line x1="410" y1="235" x2="100" y2="255" stroke="#cbd5e1" stroke-width="2"/>
+
+      <!-- ── Central node ── -->
+      <circle cx="410" cy="235" r="60" fill="#134e4a" stroke="#fff" stroke-width="3"/>
+      <text x="410" y="228" text-anchor="middle" fill="#fff" font-size="20" font-weight="bold">SDC4</text>
+      <text x="410" y="247" text-anchor="middle" fill="#5eead4" font-size="9.5">Syndecan-4</text>
+      <text x="410" y="261" text-anchor="middle" fill="#99f6e4" font-size="8.5">HSPG · Transmembrane</text>
+
+      <!-- ── Satellite nodes ── -->
+
+      <!-- Top-left: Glycocalyx / BBB -->
+      <ellipse cx="145" cy="97" rx="96" ry="32" fill="#0d9488"/>
+      <text x="145" y="91" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Endothelial Glycocalyx / BBB</text>
+      <text x="145" y="105" text-anchor="middle" fill="#ccfbf1" font-size="9">Shedding · barrier disruption · CAA</text>
+
+      <!-- Top: Early CSF Biomarker -->
+      <ellipse cx="410" cy="67" rx="100" ry="29" fill="#2563a8"/>
+      <text x="410" y="61" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Early CSF Biomarker</text>
+      <text x="410" y="75" text-anchor="middle" fill="#bfdbfe" font-size="9">Preclinical AD · amyloid transition · 8-yr follow-up</text>
+
+      <!-- Top-right: Amyloid / Tau pathology -->
+      <ellipse cx="675" cy="97" rx="96" ry="32" fill="#7c3aed"/>
+      <text x="675" y="91" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Amyloid &amp; Tau Pathology</text>
+      <text x="675" y="105" text-anchor="middle" fill="#ede9fe" font-size="9">PET burden · fibrillization · protease protection</text>
+
+      <!-- Right: ECM Signaling Hub -->
+      <ellipse cx="722" cy="255" rx="88" ry="30" fill="#d97706"/>
+      <text x="722" y="249" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">ECM Signaling Hub</text>
+      <text x="722" y="263" text-anchor="middle" fill="#fef3c7" font-size="9">FN1 · collagen · FGF2 · MDK · PTN · CCL5</text>
+
+      <!-- Bottom-right: Tau → Cognition -->
+      <ellipse cx="628" cy="393" rx="96" ry="29" fill="#b91c1c"/>
+      <text x="628" y="387" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Tau-Mediated Cognitive Decline</text>
+      <text x="628" y="401" text-anchor="middle" fill="#fecaca" font-size="9">Memory · language · executive function</text>
+
+      <!-- Bottom: Shedding / MMP -->
+      <ellipse cx="410" cy="413" rx="94" ry="28" fill="#b45309"/>
+      <text x="410" y="407" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Shedding / MMP / Heparanase</text>
+      <text x="410" y="421" text-anchor="middle" fill="#fef3c7" font-size="9">Soluble SDC4 · oxidative stress · matrix turnover</text>
+
+      <!-- Bottom-left: Neuroinflammation -->
+      <ellipse cx="190" cy="393" rx="96" ry="29" fill="#475569"/>
+      <text x="190" y="387" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Neuroinflammation</text>
+      <text x="190" y="401" text-anchor="middle" fill="#e2e8f0" font-size="9">CCN1 · CXCL10 · microglial lipid handling</text>
+
+      <!-- Left: Vascular / Endothelial -->
+      <ellipse cx="98" cy="255" rx="88" ry="30" fill="#9d174d"/>
+      <text x="98" y="249" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Vascular / Endothelial</text>
+      <text x="98" y="263" text-anchor="middle" fill="#fce7f3" font-size="9">Pericytes · VSMC · angiogenesis · stiffness</text>
+
+      <!-- ── Biomarker performance badge ── -->
+      <rect x="298" y="150" width="224" height="52" rx="8" fill="#dbeafe" stroke="#2563a8" stroke-width="1.5"/>
+      <text x="410" y="168" text-anchor="middle" fill="#1e3a8a" font-size="9.5" font-weight="bold">CSF SDC4 Biomarker Performance</text>
+      <text x="410" y="182" text-anchor="middle" fill="#1e40af" font-size="9">AD vs. Control: AUC 0.90 (13-protein panel)</text>
+      <text x="410" y="196" text-anchor="middle" fill="#1e40af" font-size="9">Stable vs. Progressing MCI: AUC 0.81</text>
+
+      <!-- Legend note -->
+      <text x="20" y="448" fill="#94a3b8" font-size="9">Node color denotes biological domain. Spoke thickness indicates evidence strength in supplied data.</text>
+    </svg>
+    <figcaption>
+      <strong>Figure 1.</strong> SDC4 (Syndecan-4) as an early neurovascular biomarker and signaling node in Alzheimer's disease.
+      CSF SDC4 elevation occurs in preclinical AD and tracks amyloid/tau PET burden and cognitive decline over 8 years.
+      Its biological role spans the endothelial glycocalyx, ECM co-receptor signaling, neuroinflammation, and shedding-mediated vascular injury.
+    </figcaption>
+  </figure>
+
+  <!-- OVERVIEW -->
+  <section>
+    <h2>1. Overview</h2>
+    <p>
+      SDC4 encodes <strong>syndecan-4</strong>, a transmembrane heparan sulfate proteoglycan (HSPG) with roles in
+      endothelial glycocalyx biology, extracellular matrix signaling, inflammatory regulation, ligand-receptor
+      communication, cell adhesion and migration, vesicle trafficking, and tissue remodeling.
+    </p>
+    <p>
+      In Alzheimer's disease-specific evidence, SDC4 is most strongly supported as an
+      <strong>early biomarker and candidate mechanistic node</strong>. The most direct evidence comes from a
+      longitudinal CSF proteomics study in 1,041 participants: CSF SDC4 was elevated in the earliest preclinical
+      stages of AD, near the transition to amyloid positivity, and increased more strongly after tau positivity.
+      Higher baseline CSF SDC4 correlated with greater amyloid-PET and tau-PET burden, worse baseline cognition,
+      and faster decline in global cognition, episodic memory, language, and executive function over a
+      mean 8-year follow-up.
+    </p>
+    <p>
+      SDC4 also accumulates in AD-vulnerable brain regions (hippocampus, occipital cortex) and, as an HSPG,
+      may mechanistically promote amyloid-&beta; and tau fibrillization and protect aggregates from proteolytic
+      degradation — though it is <strong>not yet a validated therapeutic target</strong>.
+    </p>
+  </section>
+
+  <!-- KEY INSIGHTS -->
+  <section>
+    <h2>2. Key Insights</h2>
+    <div class="cards">
+
+      <div class="card biomarker">
+        <h3>Early AD Biomarker</h3>
+        <p>CSF SDC4 rises in preclinical AD around amyloid positivity — earlier than many downstream markers — suggesting it reflects an early neurovascular or glycocalyx-related process rather than late neurodegeneration alone.</p>
+      </div>
+
+      <div class="card pathology">
+        <h3>Tracks Core AD Pathology</h3>
+        <p>Higher CSF SDC4 associates with greater global and regional amyloid-PET and tau-PET burden. Longitudinally, it predicts faster amyloid/tau accumulation and cognitive decline over 8 years.</p>
+      </div>
+
+      <div class="card tau">
+        <h3>Tau Mediates Cognitive Link</h3>
+        <p>The SDC4-to-cognition relationship is largely mediated by global tau-PET burden, implying SDC4 may mark upstream or parallel processes that converge on tau-associated neurodegeneration.</p>
+      </div>
+
+      <div class="card glycocalyx">
+        <h3>Endothelial Glycocalyx Injury</h3>
+        <p>As a brain endothelial glycocalyx protein, elevated soluble CSF SDC4 likely represents MMP/heparanase-mediated shedding or altered turnover, linking it to BBB dysfunction, vascular inflammation, and impaired amyloid/tau clearance.</p>
+      </div>
+
+      <div class="card signaling">
+        <h3>ECM &amp; Ligand Signaling Hub</h3>
+        <p>SDC4 acts as a co-receptor for collagen, fibronectin, thrombospondin, tenascin, midkine, pleiotrophin, ANGPTL4, CCN1, CCL5, CXCL10, FGF2, and GPNMB — positioning it at the interface of vascular, immune, and glial signaling.</p>
+      </div>
+
+      <div class="card neuroimmune">
+        <h3>Neuroinflammatory Mechanisms</h3>
+        <p>SDC4-linked axes — CCN1-SDC4 (microglial lipid clearance), PTN-SDC4 (neuron-glia stress signaling), and CXCL10-SDC4 (gliovascular inflammation) — overlap directly with microglial lipid dysregulation and chronic AD neuroinflammation.</p>
+      </div>
+
+      <div class="card shedding">
+        <h3>Shedding as a Readout</h3>
+        <p>Soluble SDC4 in CSF reflects glycocalyx remodeling, MMP/heparanase activation, inflammatory endothelial stress, and matrix turnover — making shed SDC4 a mechanistically meaningful signal for early neurovascular damage in AD.</p>
+      </div>
+
+      <div class="card therapy">
+        <h3>Context-Dependent Therapeutic Role</h3>
+        <p>Pathogenic SDC4 functions (NF-&kappa;B/TNF/IL-1 signaling, profibrotic ECM remodeling, barrier disruption) must be distinguished from protective ones (glycocalyx integrity, microglial repair, neurite outgrowth). Global inhibition is unlikely to be safe.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ACTIONABLE TAKEAWAYS -->
+  <section>
+    <h2>3. Actionable Takeaways</h2>
+    <ol class="takeaways">
+      <li><strong>Prioritize SDC4 as an early AD biomarker candidate.</strong> The strongest current evidence supports CSF SDC4 for early detection, disease staging, and trajectory prediction, especially at the transition toward amyloid positivity or tau-mediated decline.</li>
+      <li><strong>Validate SDC4 in AD-specific compartments.</strong> Measure membrane-bound and soluble SDC4 in CSF, plasma, brain endothelial cells, pericytes, astrocytes, microglia, neurons, plaque-associated regions, CAA-affected vessels, and extracellular vesicles.</li>
+      <li><strong>Test whether SDC4 is causal or correlative.</strong> AD models should determine whether SDC4 modulation changes amyloid burden, tau spread/phosphorylation, neuroinflammation, white matter injury, BBB integrity, synaptic markers, and cognition.</li>
+      <li><strong>Investigate vascular/endothelial mechanisms first.</strong> The strongest direct AD signal frames SDC4 as a brain endothelial glycocalyx protein — test whether its elevation marks glycocalyx disruption, BBB leakage, CAA-associated vessel injury, or MMP/heparanase activation.</li>
+      <li><strong>Focus therapeutic exploration on selective modulation.</strong> Promising strategies include preserving glycocalyx integrity, reducing pathological shedding, blocking harmful SDC4-ligand interactions (MDK-SDC4, PTN-SDC4, CXCL10-SDC4, IL-1/NF-&kappa;B-SDC4), and targeting SDC4-syntenin/exosome pathways if validated in AD.</li>
+      <li><strong>Use SDC4 to stratify AD subtypes.</strong> SDC4 may help identify patients with prominent neurovascular, endothelial, inflammatory, or matrix-remodeling AD components, enabling more targeted prevention or early intervention trials.</li>
+      <li><strong>Maintain caution around therapeutic targeting.</strong> SDC4 has beneficial roles in barrier maintenance, immune regulation, neuronal support, and vascular adaptation. Any AD therapy must be cell-type-, ligand-, disease-stage-, and compartment-specific.</li>
+    </ol>
+  </section>
+
+  <!-- VERDICT -->
+  <section>
+    <div class="verdict">
+      <strong>Overall Assessment &mdash;</strong>
+      SDC4 is the <strong>strongest early AD biomarker candidate</strong> in this TEP, with longitudinal CSF evidence linking it to preclinical amyloid transition, tau-PET burden, and 8-year cognitive decline trajectories.
+      Its mechanistic relevance — endothelial glycocalyx shedding, ECM co-receptor signaling, and neuroinflammatory crosstalk — is biologically coherent but not yet causally validated in AD.
+      <strong>Biomarker development should proceed in parallel with mechanistic studies</strong> to determine whether SDC4 is a bystander marker of neurovascular injury or an active contributor to disease progression.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  SDC4 TEP Evidence Summary &mdash; AI-generated analysis &middot; For research use only
+</footer>
+
+</body>
+</html>

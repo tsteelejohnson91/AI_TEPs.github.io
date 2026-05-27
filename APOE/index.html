@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APOE — TREAT-AD TEP Summary</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #fafaf9;
+    color: #1c1917;
+    line-height: 1.65;
+  }
+
+  /* ---- Header ---- */
+  .page-header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 55%, #334155 100%);
+    color: #fff;
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+  }
+  .gene-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.65;
+    margin-bottom: 0.4rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .gene-title {
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    color: #fbbf24;
+  }
+  .gene-subtitle {
+    font-size: 0.95rem;
+    opacity: 0.8;
+    margin-top: 0.4rem;
+    font-style: italic;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .allele-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+  .allele-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.9rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 700;
+  }
+  .allele-e4 { background: #7f1d1d; color: #fecaca; border: 1px solid #f87171; }
+  .allele-e3 { background: #374151; color: #e5e7eb; border: 1px solid #9ca3af; }
+  .allele-e2 { background: #14532d; color: #bbf7d0; border: 1px solid #4ade80; }
+  .chip-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+    flex-wrap: wrap;
+  }
+  .chip {
+    display: inline-block;
+    padding: 0.22rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.73rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .chip-risk      { background: #fef3c7; color: #78350f; }
+  .chip-lipid     { background: #e0f2fe; color: #0c4a6e; }
+  .chip-precision { background: #f0fdf4; color: #14532d; }
+
+  /* ---- Validated banner ---- */
+  .validated-banner {
+    background: #fef9c3;
+    border-left: 5px solid #ca8a04;
+    padding: 0.8rem 1.4rem;
+    margin: 1.4rem auto;
+    max-width: 860px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.87rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #713f12;
+  }
+  .validated-banner strong { font-weight: 700; }
+
+  /* ---- Container ---- */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
+  }
+
+  /* ---- Section headings ---- */
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #1e293b;
+    border-bottom: 2px solid #d97706;
+    padding-bottom: 0.4rem;
+    margin: 2rem 0 1rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  /* ---- Overview ---- */
+  .overview-text { font-size: 0.97rem; color: #292524; max-width: 820px; }
+
+  /* ---- Figure ---- */
+  .figure-wrap {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-top: 3px solid #d97706;
+    border-radius: 10px;
+    padding: 1rem 0.5rem 0.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 2px 10px rgba(15,23,42,0.08);
+    overflow-x: auto;
+  }
+  .figure-wrap figcaption {
+    text-align: center;
+    font-size: 0.78rem;
+    color: #6b7280;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+
+  /* ---- Insight cards ---- */
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  @media (max-width: 640px) { .cards { grid-template-columns: 1fr; } }
+  .card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    box-shadow: 0 1px 4px rgba(15,23,42,0.05);
+  }
+  .card h3 {
+    font-size: 0.92rem;
+    font-weight: bold;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin-bottom: 0.35rem;
+  }
+  .card p { font-size: 0.85rem; color: #374151; line-height: 1.55; }
+
+  /* Per-domain card accents matching SVG node colors */
+  .card-lipid     { border-left: 4px solid #b45309; }
+  .card-lipid     h3 { color: #b45309; }
+  .card-amyloid   { border-left: 4px solid #c2410c; }
+  .card-amyloid   h3 { color: #c2410c; }
+  .card-glial     { border-left: 4px solid #7c3aed; }
+  .card-glial     h3 { color: #7c3aed; }
+  .card-vascular  { border-left: 4px solid #1d4ed8; }
+  .card-vascular  h3 { color: #1d4ed8; }
+  .card-synaptic  { border-left: 4px solid #0f766e; }
+  .card-synaptic  h3 { color: #0f766e; }
+  .card-metabolic { border-left: 4px solid #15803d; }
+  .card-metabolic h3 { color: #15803d; }
+
+  /* ---- Takeaways ---- */
+  .takeaways {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-top: 0.5rem;
+  }
+  .takeaways ul { padding-left: 1.3rem; }
+  .takeaways li {
+    font-size: 0.88rem;
+    color: #1c1917;
+    margin-bottom: 0.65rem;
+    padding-left: 0.2rem;
+  }
+  .takeaways li::marker { color: #d97706; }
+  .takeaways li:last-child { margin-bottom: 0; }
+
+  /* ---- Verdict ---- */
+  .verdict {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    color: #fff;
+    border-radius: 10px;
+    padding: 1.4rem 1.8rem;
+    margin-top: 2rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    border-top: 3px solid #d97706;
+  }
+  .verdict-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #fbbf24;
+    margin-bottom: 0.5rem;
+  }
+  .verdict p { font-size: 0.95rem; line-height: 1.6; opacity: 0.95; }
+
+  /* ---- Footer ---- */
+  footer {
+    text-align: center;
+    font-size: 0.75rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #9ca3af;
+    padding: 1.5rem 0;
+    border-top: 1px solid #e2e8f0;
+    margin-top: 2.5rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="page-header">
+  <p class="gene-label">TREAT-AD Target Enabling Package</p>
+  <h1 class="gene-title">APOE</h1>
+  <p class="gene-subtitle">Apolipoprotein E &nbsp;|&nbsp; Strongest Common Genetic Risk Factor for Late-Onset AD &nbsp;|&nbsp; Lipid Transport Hub</p>
+  <div class="allele-row">
+    <span class="allele-badge allele-e4">ε4 — Highest Risk</span>
+    <span class="allele-badge allele-e3">ε3 — Reference</span>
+    <span class="allele-badge allele-e2">ε2 — Protective</span>
+  </div>
+  <div class="chip-row">
+    <span class="chip chip-risk">Dominant Risk Locus</span>
+    <span class="chip chip-lipid">Lipid Transport Hub</span>
+    <span class="chip chip-precision">Precision Stratification</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Validated banner -->
+  <div class="validated-banner">
+    <strong>Validated Risk &amp; Precision Target:</strong> APOE ε4 is the strongest common genetic risk factor for late-onset AD. APOE genotype already informs clinical care—ARIA risk in anti-amyloid therapy, biomarker thresholds, and trial enrichment. Therapeutic modulation should normalize APOE4 dysfunction, not globally suppress APOE.
+  </div>
+
+  <!-- ===== OVERVIEW ===== -->
+  <h2 class="section-title">Overview</h2>
+  <p class="overview-text">
+    APOE is a central AD mechanistic hub, not merely a risk marker. APOE ε4 is the strongest common inherited susceptibility factor for late-onset AD—associated with earlier amyloid/tau positivity, greater plaque and tangle burden, hippocampal atrophy, vascular injury, and faster progression. APOE ε2 confers resilience through anti-inflammatory, DNA-repair, and anti-senescence mechanisms; APOE3-Christchurch mimics ε2 protection with reduced tau pathology and gliosis. APOE exerts its effects through multiple intersecting pathways: lipid transport and ApoE lipidation, amyloid-β clearance and toxicity, tau propagation, astrocyte and microglial activation (via APOE–TREM2), neuroinflammation, mitochondrial stress, synaptic dysfunction, vascular injury, and blood–brain barrier compromise. APOE is also clinically essential for ARIA risk stratification in anti-amyloid therapy—particularly for ε4 homozygotes. Effects are allele-specific, cell-type-specific, lipidation-dependent, stage-dependent, sex-dependent, and ancestry-modified. The therapeutic goal is selective normalization of APOE4 dysfunction while preserving essential APOE biology.
+  </p>
+
+  <!-- ===== FIGURE ===== -->
+  <h2 class="section-title">Mechanistic Summary Figure</h2>
+  <figure class="figure-wrap">
+    <!--
+      Verified hexagonal layout — no overlapping objects or text
+      Canvas: 860 × 595   Hub: cx=430 cy=300 r=65   Ring: 185px   Ellipses: rx=115 ry=38
+
+      Node centres (60° intervals; 185·sin60°=160, 185·cos60°=92):
+        Top         (430, 115)
+        Top-right   (590, 208)
+        Bot-right   (590, 392)
+        Bottom      (430, 485)
+        Bot-left    (270, 392)
+        Top-left    (270, 208)
+
+      Overlap check (adjacent, rx=115, ry=38):
+        Top ↔ TR:  (160/115)²+(93/38)² = 1.94+5.99 = 7.93 > 1  ✓
+        TR  ↔ BR:  (0/115)²+(184/38)²  = 23.4 > 1              ✓
+      Hub clearance: top gap = 235−153 = 82px ✓; bottom gap = 447−365 = 82px ✓
+      Canvas: top ellipse top=77px; bottom ellipse bottom=523px (<595) ✓
+    -->
+    <svg viewBox="0 0 860 595" width="860" height="595" xmlns="http://www.w3.org/2000/svg"
+         font-family="'Helvetica Neue', Arial, sans-serif" text-anchor="middle">
+
+      <!-- Background -->
+      <rect width="860" height="595" fill="#fafaf9" rx="8"/>
+
+      <!-- Figure title -->
+      <text x="430" y="38" font-size="13.5" font-weight="bold" fill="#1e293b">
+        APOE · Six Pathogenic Domains Across Alleles ε2 · ε3 · ε4
+      </text>
+
+      <!-- ===== SPOKES — drawn first ===== -->
+      <line x1="430" y1="300" x2="430" y2="115" stroke="#cbd5e1" stroke-width="2"/>
+      <line x1="430" y1="300" x2="590" y2="208" stroke="#cbd5e1" stroke-width="2"/>
+      <line x1="430" y1="300" x2="590" y2="392" stroke="#cbd5e1" stroke-width="2"/>
+      <line x1="430" y1="300" x2="430" y2="485" stroke="#cbd5e1" stroke-width="2"/>
+      <line x1="430" y1="300" x2="270" y2="392" stroke="#cbd5e1" stroke-width="2"/>
+      <line x1="430" y1="300" x2="270" y2="208" stroke="#cbd5e1" stroke-width="2"/>
+
+      <!-- ===== CENTRAL HUB ===== -->
+      <circle cx="430" cy="300" r="65" fill="#1e293b" stroke="#f59e0b" stroke-width="3"/>
+      <text x="430" y="289" font-size="17"  font-weight="bold" fill="#fbbf24">APOE</text>
+      <text x="430" y="306" font-size="9.5" fill="#94a3b8">ε2 · ε3 · ε4 Alleles</text>
+      <text x="430" y="321" font-size="8.5" fill="#64748b">Lipid Transport Hub</text>
+
+      <!-- ===== NODE 1 — TOP: Lipid Transport (Amber) ===== -->
+      <ellipse cx="430" cy="115" rx="115" ry="38" fill="#b45309" stroke="#fde68a" stroke-width="1.5"/>
+      <text x="430" y="109" font-size="10" font-weight="bold" fill="#fff">Lipid Transport</text>
+      <text x="430" y="125" font-size="9"  fill="#fef3c7">ABCA1 · LXR · HDL-like</text>
+
+      <!-- ===== NODE 2 — TOP-RIGHT: Amyloid Clearance (Orange) ===== -->
+      <ellipse cx="590" cy="208" rx="115" ry="38" fill="#c2410c" stroke="#fdba74" stroke-width="1.5"/>
+      <text x="590" y="202" font-size="10" font-weight="bold" fill="#fff">Amyloid Clearance</text>
+      <text x="590" y="218" font-size="9"  fill="#ffedd5">Aβ · CAA · ε3-Ch Compact</text>
+
+      <!-- ===== NODE 3 — BOTTOM-RIGHT: Glial / TREM2 (Violet) ===== -->
+      <ellipse cx="590" cy="392" rx="115" ry="38" fill="#7c3aed" stroke="#ddd6fe" stroke-width="1.5"/>
+      <text x="590" y="386" font-size="10" font-weight="bold" fill="#fff">Glial / TREM2</text>
+      <text x="590" y="402" font-size="9"  fill="#ede9fe">Microglia · Astrocyte · GFAP</text>
+
+      <!-- ===== NODE 4 — BOTTOM: Vascular / BBB (Blue) ===== -->
+      <ellipse cx="430" cy="485" rx="115" ry="38" fill="#1d4ed8" stroke="#bfdbfe" stroke-width="1.5"/>
+      <text x="430" y="479" font-size="10" font-weight="bold" fill="#fff">Vascular / BBB</text>
+      <text x="430" y="495" font-size="9"  fill="#dbeafe">Endothelial · WMH · CAA</text>
+
+      <!-- ===== NODE 5 — BOTTOM-LEFT: Synaptic / Network (Teal) ===== -->
+      <ellipse cx="270" cy="392" rx="115" ry="38" fill="#0f766e" stroke="#99f6e4" stroke-width="1.5"/>
+      <text x="270" y="386" font-size="10" font-weight="bold" fill="#fff">Synaptic / Network</text>
+      <text x="270" y="402" font-size="9"  fill="#ccfbf1">E/I Balance · Hippocampus</text>
+
+      <!-- ===== NODE 6 — TOP-LEFT: Mitochondria / Metabolism (Green) ===== -->
+      <ellipse cx="270" cy="208" rx="115" ry="38" fill="#15803d" stroke="#86efac" stroke-width="1.5"/>
+      <text x="270" y="202" font-size="10" font-weight="bold" fill="#fff">Mitochondria / Metabolism</text>
+      <text x="270" y="218" font-size="9"  fill="#d1fae5">mPTP · Fragmentation · Sex</text>
+
+      <!-- ===== LEGEND ===== -->
+      <rect x="18" y="526" width="824" height="56" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+
+      <!-- Row 1: domain colors -->
+      <circle cx="55"  cy="540" r="7" fill="#b45309"/>
+      <text x="67"  y="544" font-size="8.5" fill="#292524" text-anchor="start">Lipid Transport</text>
+
+      <circle cx="210" cy="540" r="7" fill="#c2410c"/>
+      <text x="222" y="544" font-size="8.5" fill="#292524" text-anchor="start">Amyloid Clearance</text>
+
+      <circle cx="385" cy="540" r="7" fill="#7c3aed"/>
+      <text x="397" y="544" font-size="8.5" fill="#292524" text-anchor="start">Glial / TREM2</text>
+
+      <!-- Row 2 -->
+      <circle cx="55"  cy="561" r="7" fill="#1d4ed8"/>
+      <text x="67"  y="565" font-size="8.5" fill="#292524" text-anchor="start">Vascular / BBB</text>
+
+      <circle cx="210" cy="561" r="7" fill="#0f766e"/>
+      <text x="222" y="565" font-size="8.5" fill="#292524" text-anchor="start">Synaptic / Network</text>
+
+      <circle cx="385" cy="561" r="7" fill="#15803d"/>
+      <text x="397" y="565" font-size="8.5" fill="#292524" text-anchor="start">Mitochondria / Metabolism</text>
+
+      <!-- Allele key (right side) -->
+      <rect x="588" cy="530" x="588" y="530" width="242" height="44" rx="5"
+            fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+      <circle cx="604" cy="544" r="6" fill="#b91c1c"/>
+      <text x="614" y="548" font-size="8" fill="#7f1d1d" text-anchor="start">ε4 — Risk (↑Aβ, ↑tau, ↑ARIA)</text>
+      <circle cx="604" cy="560" r="6" fill="#374151"/>
+      <text x="614" y="564" font-size="8" fill="#374151" text-anchor="start">ε3 — Reference neutral allele</text>
+      <circle cx="718" cy="544" r="6" fill="#15803d"/>
+      <text x="728" y="548" font-size="8" fill="#14532d" text-anchor="start">ε2 — Protective</text>
+
+    </svg>
+    <figcaption>
+      Color-coded hub-and-spoke diagram of six pathogenic APOE domains in Alzheimer's disease. Each domain color matches its Key Insight card.
+      APOE allele effects (ε4 risk, ε3 neutral, ε2 protective) modulate all six domains; hub spokes represent established mechanistic relationships.
+    </figcaption>
+  </figure>
+
+  <!-- ===== KEY INSIGHTS ===== -->
+  <h2 class="section-title">Key Insights</h2>
+  <div class="cards">
+
+    <div class="card card-lipid">
+      <h3>Lipid Transport &amp; ApoE Lipidation</h3>
+      <p>APOE is a core brain lipid-transport gene. ABCA1/LXR-mediated ApoE lipidation, HDL-like particle formation, and cholesterol efflux are central to its biology. Lipidated APOE2/3 generally supports cholesterol transport and amyloid clearance, while APOE4 is linked to impaired lipid handling, reduced lipid-competent ApoE, and altered HDL-like particles. ApoE4 self-association, aggregation, and toxic intracellular conformers are potential direct therapeutic targets. Lipid-bound versus lipid-free ApoE4 may drive distinct pathologies—metabolic reprogramming versus type I interferon signaling respectively.</p>
+    </div>
+
+    <div class="card card-amyloid">
+      <h3>Amyloid Clearance &amp; Plaque Biology</h3>
+      <p>APOE ε4 is associated with amyloid accumulation, soluble antibody-accessible Aβ, cerebral amyloid angiopathy, and stronger coupling between amyloid burden and neurodegeneration. APOE3-Christchurch is associated with reduced amyloid toxicity, lower oligomeric Aβ, more compact plaques, and reduced tau pathology and propagation—providing a therapeutic template. APOE ε4 also elevates ARIA risk in anti-amyloid therapy, making APOE genotyping essential for clinical care; ε4 homozygotes are the highest-risk group.</p>
+    </div>
+
+    <div class="card card-glial">
+      <h3>Glial Biology &amp; TREM2 Axis</h3>
+      <p>APOE is highly expressed in astrocytes and converges on microglial pathways through the APOE–TREM2 axis, a major late-onset AD risk interaction. APOE ε4 is linked to astrocyte activation, GFAP-associated amyloid/tau/cognition relationships, microglial lipid droplets, oxidative stress, NLRP3 inflammasome activation, complement regulation, and disease-associated microglial states. Structural studies of APOE–TREM2 interactions support TREM2 agonists or mini-protein mimetics, though Aβ/apoE ligand competition may affect drug response.</p>
+    </div>
+
+    <div class="card card-vascular">
+      <h3>Vascular &amp; BBB Vulnerability</h3>
+      <p>APOE ε4 contributes substantially to vascular injury: cerebral blood flow reduction, endothelial dysfunction, BBB leakage, white matter hyperintensities (WMH), cerebral amyloid angiopathy, microinfarcts, vascular inflammation, carotid plaque-related progression, and blood pressure variability effects. WMH burden mediates part of ε4 associations with memory decline, hippocampal atrophy, amyloid deposition, and incident AD. Reducing vascular risk factors is a particularly relevant therapeutic target for ε4 carriers.</p>
+    </div>
+
+    <div class="card card-synaptic">
+      <h3>Synaptic &amp; Network Dysfunction</h3>
+      <p>ApoE4 is linked to impaired synaptic vesicle cycling, altered neurotransmission, excitatory/inhibitory imbalance, hippocampal and entorhinal hyperexcitability, impaired inhibitory interneuron function, synaptic pruning disruption, and PSD protein disruption. Early brain network changes—detectable before dementia—further emphasize the need for pre-symptomatic intervention. APOE ε4 shifts individuals earlier along the AD continuum, complicating interpretation of "progression" in clinical studies.</p>
+    </div>
+
+    <div class="card card-metabolic">
+      <h3>Mitochondrial &amp; Metabolic Pathology</h3>
+      <p>APOE4 is linked to altered cholesterol and fatty acid metabolism, bile acid biosynthesis, folate and thyroid hormone metabolism, mitochondrial fragmentation, reduced basal respiration, disrupted oxidative phosphorylation, impaired menopausal metabolic adaptation, and stress-induced tau pathology through mitochondrial permeability transition pore (mPTP) activation. Sex strongly modifies APOE4 metabolic risk—particularly in the context of menopausal transition, estrogen signaling, and sleep-memory associations. Some immune interventions show opposite effects in APOE4 females versus males.</p>
+    </div>
+
+  </div>
+
+  <!-- ===== ACTIONABLE TAKEAWAYS ===== -->
+  <h2 class="section-title">Actionable Takeaways</h2>
+  <div class="takeaways">
+    <ul>
+      <li><strong>Use APOE genotype as a precision stratification variable, not a deterministic diagnosis.</strong> APOE ε4 dose should inform AD risk estimation, trial enrichment, biomarker interpretation, and prevention strategies, but must be integrated with amyloid, tau, GFAP, NfL, imaging, vascular, and demographic data.</li>
+      <li><strong>Incorporate APOE genotyping into anti-amyloid therapy workflows.</strong> ε4 status, particularly homozygosity, should drive ARIA risk counseling, treatment eligibility, shared decision-making, and MRI monitoring intensity. Validate plasma ApoE proteotyping carefully before using it to guide eligibility—genotype–proteotype discordance can create clinically important errors.</li>
+      <li><strong>Prioritize therapeutic normalization of APOE4 dysfunction over global APOE suppression.</strong> APOE has essential roles in lipid transport, repair, immune regulation, and receptor signaling; broad inhibition or depletion could be harmful. Target ApoE4 structure correction, self-association disruption, toxic fragment reduction, and mimicry of APOE2 or APOE3-Christchurch protective mechanisms.</li>
+      <li><strong>Target ABCA1/LXR lipidation pathways with nuance.</strong> Improving ApoE lipidation supports cholesterol efflux and amyloid clearance, but lipid-bound versus lipid-free ApoE4 drive distinct pathologies, so lipidation interventions require mechanistic specificity.</li>
+      <li><strong>Advance APOE–TREM2 pathway therapeutics cautiously.</strong> TREM2 agonists or mini-protein mimetics may enhance protective microglial responses, but drug effects depend on Aβ/apoE ligand competition, disease stage, and microenvironment.</li>
+      <li><strong>Treat vascular and white matter injury as major APOE4-specific therapeutic targets.</strong> Hypertension variability reduction, endothelial protection, BBB preservation, CAA management, carotid burden reduction, and WMH progression prevention are especially relevant for ε4 carriers.</li>
+      <li><strong>Consider mitochondrial protection for APOE4-related tau vulnerability.</strong> mPTP inhibition, mitochondrial stress reduction, bioenergetic flexibility restoration, and cholesterol/ER homeostasis correction are mechanistically supported strategies.</li>
+      <li><strong>Design sex-stratified APOE studies and interventions.</strong> APOE4 effects differ substantially by sex in endocrine aging, lipid vulnerability, immune responses, sleep-memory associations, and treatment response. Assume neither sex is the default.</li>
+      <li><strong>Build ancestry-aware biomarker thresholds and risk models.</strong> APOE-related effects on plasma p-tau181 and p-tau217 may be attenuated in African ancestry participants; European-derived thresholds may not generalize.</li>
+    </ul>
+  </div>
+
+  <!-- ===== VERDICT ===== -->
+  <div class="verdict">
+    <p class="verdict-label">TEP Verdict</p>
+    <p>
+      <strong>APOE is the most important common genetic driver of late-onset AD and a multi-pathway therapeutic hub.</strong>
+      Its near-term clinical utility—ARIA risk stratification, biomarker calibration, trial enrichment, and precision prevention—is established. Therapeutic development should focus on selective APOE4 normalization: correcting ApoE4 structure and lipidation, mimicking APOE2/APOE3-Christchurch protective biology, targeting the APOE–TREM2 glial axis, protecting vascular and BBB integrity, and restoring mitochondrial and synaptic function in ε4 carriers. Context-dependence by allele, cell type, sex, ancestry, disease stage, and lipidation state must be built into every experimental and therapeutic design.
+    </p>
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  TREAT-AD Target Enabling Package &nbsp;·&nbsp; APOE &nbsp;·&nbsp; AI-Assisted Gene Summary &nbsp;·&nbsp; For Research Use Only
+</footer>
+
+</body>
+</html>

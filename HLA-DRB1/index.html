@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HLA-DRB1 — TREAT-AD TEP Summary</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #f5f3ff;
+    color: #1e1b4b;
+    line-height: 1.65;
+  }
+
+  /* ---- Header ---- */
+  .page-header {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 55%, #4338ca 100%);
+    color: #fff;
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+  }
+  .gene-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: 0.4rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .gene-title { font-size: 3rem; font-weight: bold; letter-spacing: 0.05em; }
+  .gene-subtitle {
+    font-size: 0.95rem;
+    opacity: 0.85;
+    margin-top: 0.4rem;
+    font-style: italic;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .chip-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .chip {
+    display: inline-block;
+    padding: 0.25rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .chip-candidate { background: #e0e7ff; color: #3730a3; }
+  .chip-immune    { background: #ede9fe; color: #5b21b6; }
+  .chip-allele    { background: #fef3c7; color: #92400e; }
+
+  /* ---- Candidate banner ---- */
+  .candidate-banner {
+    background: #e0e7ff;
+    border-left: 5px solid #4338ca;
+    padding: 0.8rem 1.4rem;
+    margin: 1.4rem auto;
+    max-width: 860px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.87rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #312e81;
+  }
+  .candidate-banner strong { font-weight: 700; }
+
+  /* ---- Container ---- */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
+  }
+
+  /* ---- Section headings ---- */
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #312e81;
+    border-bottom: 2px solid #a5b4fc;
+    padding-bottom: 0.4rem;
+    margin: 2rem 0 1rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  /* ---- Overview ---- */
+  .overview-text { font-size: 0.97rem; color: #1e1b4b; max-width: 820px; }
+
+  /* ---- Figure ---- */
+  .figure-wrap {
+    background: #fff;
+    border: 1px solid #c7d2fe;
+    border-radius: 10px;
+    padding: 1rem 0.5rem 0.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 2px 8px rgba(67,56,202,0.08);
+    overflow-x: auto;
+  }
+  .figure-wrap figcaption {
+    text-align: center;
+    font-size: 0.78rem;
+    color: #6b7280;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+
+  /* ---- Insight cards ---- */
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  @media (max-width: 640px) { .cards { grid-template-columns: 1fr; } }
+  .card {
+    background: #fff;
+    border: 1px solid #e0e7ff;
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    box-shadow: 0 1px 4px rgba(67,56,202,0.06);
+  }
+  .card h3 {
+    font-size: 0.92rem;
+    font-weight: bold;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin-bottom: 0.35rem;
+  }
+  .card p { font-size: 0.85rem; color: #374151; line-height: 1.55; }
+
+  /* Per-domain card accents */
+  .card-antigen  { border-left: 4px solid #3730a3; }
+  .card-antigen  h3 { color: #3730a3; }
+  .card-neuro    { border-left: 4px solid #b91c1c; }
+  .card-neuro    h3 { color: #b91c1c; }
+  .card-viral    { border-left: 4px solid #b45309; }
+  .card-viral    h3 { color: #b45309; }
+  .card-ad       { border-left: 4px solid #0f766e; }
+  .card-ad       h3 { color: #0f766e; }
+  .card-metabolic{ border-left: 4px solid #15803d; }
+  .card-metabolic h3{ color: #15803d; }
+  .card-epigen   { border-left: 4px solid #6d28d9; }
+  .card-epigen   h3 { color: #6d28d9; }
+
+  /* ---- Takeaways ---- */
+  .takeaways {
+    background: #fff;
+    border: 1px solid #c7d2fe;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-top: 0.5rem;
+  }
+  .takeaways ul { padding-left: 1.3rem; }
+  .takeaways li {
+    font-size: 0.88rem;
+    color: #1e1b4b;
+    margin-bottom: 0.65rem;
+    padding-left: 0.2rem;
+  }
+  .takeaways li::marker { color: #4338ca; }
+  .takeaways li:last-child { margin-bottom: 0; }
+
+  /* ---- Verdict ---- */
+  .verdict {
+    background: linear-gradient(135deg, #312e81, #1e1b4b);
+    color: #fff;
+    border-radius: 10px;
+    padding: 1.4rem 1.8rem;
+    margin-top: 2rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .verdict-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 0.5rem;
+  }
+  .verdict p { font-size: 0.95rem; line-height: 1.6; opacity: 0.95; }
+
+  /* ---- Footer ---- */
+  footer {
+    text-align: center;
+    font-size: 0.75rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #9ca3af;
+    padding: 1.5rem 0;
+    border-top: 1px solid #c7d2fe;
+    margin-top: 2.5rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="page-header">
+  <p class="gene-label">TREAT-AD Target Enabling Package</p>
+  <h1 class="gene-title">HLA-DRB1</h1>
+  <p class="gene-subtitle">HLA Class II Histocompatibility Antigen, DR Beta 1 &nbsp;|&nbsp; Antigen Presentation &nbsp;|&nbsp; Neuroinflammation Modifier</p>
+  <div class="chip-row">
+    <span class="chip chip-candidate">Candidate Target</span>
+    <span class="chip chip-immune">Neuroimmune</span>
+    <span class="chip chip-allele">Allele-Specific</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Candidate banner -->
+  <div class="candidate-banner">
+    <strong>Candidate Immune Modifier:</strong> HLA-DRB1 lacks direct causal AD evidence. Its relevance is inferred from peripheral immune-cell expression, shared MHC genetics with AD/IBD, brain multi-omics, and neuroimmune analogies. Not a validated therapeutic target.
+  </div>
+
+  <!-- ===== OVERVIEW ===== -->
+  <h2 class="section-title">Overview</h2>
+  <p class="overview-text">
+    HLA-DRB1 encodes a highly polymorphic HLA class II molecule that regulates peptide display to CD4+ T cells, adaptive immunity, tolerance, autoantibody formation, and inflammatory disease susceptibility. Its Alzheimer's disease relevance is primarily inferential: increased HLA-DRB1 expression in peripheral immune cells associates with higher AD risk; shared MHC genetics link HLA-DRB1 to both AD and inflammatory bowel disease; brain multi-omics identify SNP–methylation interaction effects on HLA-DRB1 transcription in AD cortex; and the HLA-DRB1*13:01 allele may confer resilience in tau/viral-seropositive contexts. Local genetic sharing with insulin-resistance traits further positions HLA-DRB1 as a possible immune-metabolic bridge. Mechanistically, it may modulate AD-relevant biology through antigen presentation, microglial or peripheral myeloid activation, CD4+ T-cell responses, viral and retroviral immune recognition, cytokine imbalance, and immune-metabolic crosstalk—but it has not been shown to directly drive amyloid-β deposition, tau pathology, synaptic loss, or cognitive decline.
+  </p>
+
+  <!-- ===== FIGURE ===== -->
+  <h2 class="section-title">Mechanistic Summary Figure</h2>
+  <figure class="figure-wrap">
+    <!--
+      Verified hexagonal layout — no overlapping objects or text
+      Canvas: 860 × 585   Hub: cx=430 cy=295 r=62   Ring: 185px   Ellipses: rx=115 ry=38
+
+      Node centres (60° intervals, 0° = top, sin60=0.866, cos60=0.5):
+        Top         (430, 110)   [cy−185]
+        Top-right   (590, 202)   [cx+160, cy−93]
+        Bot-right   (590, 388)   [cx+160, cy+93]
+        Bottom      (430, 480)   [cy+185]
+        Bot-left    (270, 388)   [cx−160, cy+93]
+        Top-left    (270, 202)   [cx−160, cy−93]
+
+      Overlap check (adjacent nodes, rx=115, ry=38):
+        Top ↔ Top-right:  (160/115)²+(92/38)² = 1.94+5.86 = 7.80 > 1 ✓
+        TR  ↔ BR:         (0/115)²+(186/38)²  = 0+23.99 > 1        ✓
+        (All pairs symmetric — all clear)
+      Hub–node clearance: 233−148 = 85 px (top); 442−357 = 85 px (bottom) ✓
+      Canvas: top ellipse top=72 px; bottom ellipse bottom=518 px (<585) ✓
+    -->
+    <svg viewBox="0 0 860 585" width="860" height="585" xmlns="http://www.w3.org/2000/svg"
+         font-family="'Helvetica Neue', Arial, sans-serif" text-anchor="middle">
+
+      <!-- Background -->
+      <rect width="860" height="585" fill="#f5f3ff" rx="8"/>
+
+      <!-- Figure title -->
+      <text x="430" y="38" font-size="13.5" font-weight="bold" fill="#312e81">
+        HLA-DRB1 · Six Biological Domains in Alzheimer's Disease Context
+      </text>
+
+      <!-- ===== SPOKES — drawn first so nodes render on top ===== -->
+      <line x1="430" y1="295" x2="430" y2="110" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5,3"/>
+      <line x1="430" y1="295" x2="590" y2="202" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5,3"/>
+      <line x1="430" y1="295" x2="590" y2="388" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5,3"/>
+      <line x1="430" y1="295" x2="430" y2="480" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5,3"/>
+      <line x1="430" y1="295" x2="270" y2="388" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5,3"/>
+      <line x1="430" y1="295" x2="270" y2="202" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5,3"/>
+
+      <!-- ===== CENTRAL HUB ===== -->
+      <circle cx="430" cy="295" r="62" fill="#1e1b4b" stroke="#a5b4fc" stroke-width="3"/>
+      <text x="430" y="288" font-size="14.5" font-weight="bold" fill="#fff">HLA-DRB1</text>
+      <text x="430" y="307"  font-size="9"   fill="#c7d2fe">Class II Immune Locus</text>
+
+      <!-- ===== NODE 1 — TOP: Antigen Presentation (Indigo) ===== -->
+      <ellipse cx="430" cy="110" rx="115" ry="38" fill="#3730a3" stroke="#a5b4fc" stroke-width="1.5"/>
+      <text x="430" y="104" font-size="10" font-weight="bold" fill="#fff">Antigen Presentation</text>
+      <text x="430" y="120" font-size="9"  fill="#c7d2fe">CD4+ T Cell · Peptide MHC</text>
+
+      <!-- ===== NODE 2 — TOP-RIGHT: Neuroinflammation (Crimson) ===== -->
+      <ellipse cx="590" cy="202" rx="115" ry="38" fill="#b91c1c" stroke="#fca5a5" stroke-width="1.5"/>
+      <text x="590" y="196" font-size="10" font-weight="bold" fill="#fff">Neuroinflammation</text>
+      <text x="590" y="212" font-size="9"  fill="#fecaca">Microglia · Myeloid States</text>
+
+      <!-- ===== NODE 3 — BOTTOM-RIGHT: Viral / Retroviral (Amber) ===== -->
+      <ellipse cx="590" cy="388" rx="115" ry="38" fill="#b45309" stroke="#fde68a" stroke-width="1.5"/>
+      <text x="590" y="382" font-size="10" font-weight="bold" fill="#fff">Viral / Retroviral</text>
+      <text x="590" y="398" font-size="9"  fill="#fef3c7">HHV1 · HERVK · EBV</text>
+
+      <!-- ===== NODE 4 — BOTTOM: AD Biomarker (Teal) ===== -->
+      <ellipse cx="430" cy="480" rx="115" ry="38" fill="#0f766e" stroke="#99f6e4" stroke-width="1.5"/>
+      <text x="430" y="474" font-size="10" font-weight="bold" fill="#fff">AD Biomarker</text>
+      <text x="430" y="490" font-size="9"  fill="#ccfbf1">pTau217 · Allele Strata</text>
+
+      <!-- ===== NODE 5 — BOTTOM-LEFT: Immune-Metabolic (Green) ===== -->
+      <ellipse cx="270" cy="388" rx="115" ry="38" fill="#15803d" stroke="#86efac" stroke-width="1.5"/>
+      <text x="270" y="382" font-size="10" font-weight="bold" fill="#fff">Immune-Metabolic</text>
+      <text x="270" y="398" font-size="9"  fill="#d1fae5">IBD · Insulin Resistance</text>
+
+      <!-- ===== NODE 6 — TOP-LEFT: Epigenetic Control (Violet) ===== -->
+      <ellipse cx="270" cy="202" rx="115" ry="38" fill="#6d28d9" stroke="#ddd6fe" stroke-width="1.5"/>
+      <text x="270" y="196" font-size="10" font-weight="bold" fill="#fff">Epigenetic Control</text>
+      <text x="270" y="212" font-size="9"  fill="#ede9fe">SNP-Methyl · Brain Expr.</text>
+
+      <!-- ===== LEGEND ===== -->
+      <rect x="18" y="520" width="824" height="54" rx="6" fill="#fff" stroke="#c7d2fe" stroke-width="1"/>
+
+      <!-- Row 1 -->
+      <circle cx="60"  cy="534" r="7" fill="#3730a3"/>
+      <text x="72"  y="538" font-size="8.5" fill="#1e1b4b" text-anchor="start">Antigen Presentation</text>
+
+      <circle cx="260" cy="534" r="7" fill="#b91c1c"/>
+      <text x="272" y="538" font-size="8.5" fill="#1e1b4b" text-anchor="start">Neuroinflammation</text>
+
+      <circle cx="455" cy="534" r="7" fill="#b45309"/>
+      <text x="467" y="538" font-size="8.5" fill="#1e1b4b" text-anchor="start">Viral / Retroviral</text>
+
+      <!-- Row 2 -->
+      <circle cx="60"  cy="554" r="7" fill="#0f766e"/>
+      <text x="72"  y="558" font-size="8.5" fill="#1e1b4b" text-anchor="start">AD Biomarker</text>
+
+      <circle cx="260" cy="554" r="7" fill="#15803d"/>
+      <text x="272" cy="558" font-size="8.5" fill="#1e1b4b" text-anchor="start">Immune-Metabolic</text>
+
+      <circle cx="455" cy="554" r="7" fill="#6d28d9"/>
+      <text x="467" y="558" font-size="8.5" fill="#1e1b4b" text-anchor="start">Epigenetic Control</text>
+
+      <!-- Allele note (right of legend) -->
+      <text x="690" y="534" font-size="8"   fill="#312e81" text-anchor="start" font-style="italic">Allele effects:</text>
+      <text x="690" y="548" font-size="8.5" fill="#3730a3" text-anchor="start">*13:01 resilience · *15:01 risk</text>
+
+    </svg>
+    <figcaption>
+      Color-coded hub-and-spoke diagram showing six biological domains through which HLA-DRB1 may influence Alzheimer's disease.
+      Each domain color matches the corresponding Key Insight card below. Dashed spokes indicate inferred rather than proven relationships.
+      Allele-specific effects modulate each domain independently.
+    </figcaption>
+  </figure>
+
+  <!-- ===== KEY INSIGHTS ===== -->
+  <h2 class="section-title">Key Insights</h2>
+  <div class="cards">
+
+    <div class="card card-antigen">
+      <h3>Antigen Presentation</h3>
+      <p>HLA-DRB1 alleles determine which peptides are displayed to CD4+ T cells, shaping adaptive immunity, tolerance, and autoantibody responses. AD-relevant antigens—including tau, amyloid-β, myelin peptides, and viral proteins—could be HLA-DRB1-restricted, but direct demonstration in AD is absent. Allele specificity is central: different alleles can have opposing effects depending on peptide repertoire and immune context.</p>
+    </div>
+
+    <div class="card card-neuro">
+      <h3>Neuroinflammation Link</h3>
+      <p>An AD immune-cell study found increased HLA-DRB1 expression in peripheral immune cells associated with higher AD risk, while HLA-DQA1 expression associated with reduced risk. Potential downstream AD-relevant pathways include IL-3/IL-3R astrocyte–microglia signaling, IL-12p70/IL-10 cytokine imbalance, TYK2–STAT4 signaling, IFN/JAK/STAT-driven HLA induction, and myeloid inflammatory states.</p>
+    </div>
+
+    <div class="card card-viral">
+      <h3>Viral &amp; Retroviral Recognition</h3>
+      <p>A tau-biomarker study reported that HLA-DRB1*13:01 reduced or abolished the association between pTau217 and abnormal synchronous neural activity, particularly in individuals seropositive for HHV1 and HERVK. This raises the hypothesis of an allele-specific antiviral or immunomodulatory resilience mechanism. HLA-DRB1*15:01 has also been repeatedly implicated in EBV-related immune responses and CNS inflammatory risk in multiple sclerosis.</p>
+    </div>
+
+    <div class="card card-ad">
+      <h3>AD Biomarker &amp; Stratification</h3>
+      <p>HLA-DRB1 expression and genotype may serve as patient-stratification variables for AD immune endotypes. In progressive supranuclear palsy, DRB1*15:01-DQB1*06:02 haplotypes associated with microglial load, cytotoxic T-cell density, and phosphorylated tau pathology. In Lewy body disease, HLA-DRB1*11:01 associated with lower Thal amyloid phase, supporting investigation of class II allele effects on proteinopathy burden.</p>
+    </div>
+
+    <div class="card card-metabolic">
+      <h3>Immune-Metabolic Bridge</h3>
+      <p>Genetic overlap analyses between AD and inflammatory bowel disease implicated the MHC region and HLA-DRB1 (including rs660895), with associated biology in monocytes, chemokine signaling, and NK cell-mediated cytotoxicity. Local genetic sharing between insulin-resistance-related conditions and AD also placed HLA-DRB1 near prioritized immune-inflammatory, lipid-metabolic, and vesicle-trafficking regions.</p>
+    </div>
+
+    <div class="card card-epigen">
+      <h3>Epigenetic &amp; Brain Expression</h3>
+      <p>AD brain multi-omics data linked HLA-DRB1 to SNP–DNA methylation interaction effects on transcript expression in dorsolateral prefrontal cortex. HLA-DRB1 is part of a genetically and epigenetically regulated immune-expression signature in AD brain tissue, but whether this reflects pathogenic immune activation or a compensatory response remains unresolved.</p>
+    </div>
+
+  </div>
+
+  <!-- ===== ACTIONABLE TAKEAWAYS ===== -->
+  <h2 class="section-title">Actionable Takeaways</h2>
+  <div class="takeaways">
+    <ul>
+      <li><strong>Treat HLA-DRB1 as a candidate immune-modifier, not a validated AD therapeutic target.</strong> Current evidence supports biological plausibility but does not establish direct causal AD activity.</li>
+      <li><strong>Prioritize high-resolution HLA typing in AD cohorts</strong> at allele, haplotype, amino-acid-residue, and ancestry levels. HLA-region linkage disequilibrium requires separating HLA-DRB1 signals from HLA-DQA1, DQB1, DRA, DRB5, C4, and broader MHC haplotypes.</li>
+      <li><strong>Explore HLA-DRB1*13:01 as a resilience allele</strong> in tau/viral-seropositive AD contexts, investigating whether it improves antigen presentation of viral or tau-derived peptides or reduces neuroinflammatory responses.</li>
+      <li><strong>Test AD endophenotype associations</strong> including amyloid burden, tau burden, pTau217/pTau181, neurofilament light, microglial activation, T-cell infiltration, vascular pathology, cognitive decline, age at onset, sex-specific risk, and inflammatory comorbidities.</li>
+      <li><strong>Identify AD-relevant HLA-DRB1-restricted antigens.</strong> Candidate sources include tau, amyloid-β, APOE/APOB lipid antigens, myelin/neuronal peptides, senescence-associated proteins, HHV1/EBV antigens, and HERVK retroviral proteins.</li>
+      <li><strong>Use HLA-DRB1 as a stratification variable in AD immunotherapy trials</strong>, especially for vaccines, anti-amyloid antibodies, anti-tau approaches, antiviral strategies, or immune checkpoint-like modulation.</li>
+      <li><strong>Avoid broad HLA-DRB1 inhibition</strong> as an AD strategy. HLA-DRB1 is essential for host defense, vaccine responses, and immune tolerance. Safer approaches target downstream inflammatory pathways, pathogenic cell states, or antigen-specific immune responses.</li>
+      <li><strong>Develop spatial and single-cell studies</strong> to determine whether AD-relevant HLA-DRB1 expression arises in microglia, infiltrating monocytes/macrophages, dendritic-like cells, B cells, CD4+ T cells, perivascular immune cells, or meningeal/CNS-border compartments.</li>
+    </ul>
+  </div>
+
+  <!-- ===== VERDICT ===== -->
+  <div class="verdict">
+    <p class="verdict-label">TEP Verdict</p>
+    <p>
+      <strong>HLA-DRB1 is a candidate AD immune-modifier and patient-stratification locus, not a validated therapeutic target.</strong>
+      The most defensible strategy is allele-informed, antigen-specific, and cell-state-specific modulation: characterize the relevant HLA-DRB1 allele in AD patients, identify the antigen(s) presented, determine whether the immune response is harmful or protective, then pursue tolerogenic, antiviral, immunomodulatory, or downstream anti-inflammatory intervention accordingly. Direct HLA-DRB1 blockade carries substantial immune-safety risk and should await compelling AD-specific functional evidence.
+    </p>
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  TREAT-AD Target Enabling Package &nbsp;·&nbsp; HLA-DRB1 &nbsp;·&nbsp; AI-Assisted Gene Summary &nbsp;·&nbsp; For Research Use Only
+</footer>
+
+</body>
+</html>

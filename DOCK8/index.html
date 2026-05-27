@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOCK8 &amp; Alzheimer's Disease — TEP Summary</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple-dark:  #3b0764;
+      --purple-mid:   #7c3aed;
+      --purple-light: #ede9fe;
+      --red:          #b91c1c;
+      --red-light:    #fff1f2;
+      --amber:        #d97706;
+      --slate:        #475569;
+      --teal:         #0d9488;
+      --gray-100:     #f1f5f9;
+      --gray-200:     #e2e8f0;
+      --gray-600:     #475569;
+      --text:         #1e293b;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      color: var(--text);
+      background: #fff;
+      line-height: 1.75;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, var(--purple-dark) 0%, #1e0438 100%);
+      color: #fff;
+      padding: 48px 32px 40px;
+      text-align: center;
+    }
+    header .gene-chip {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 999px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      padding: 4px 14px;
+      margin-bottom: 16px;
+    }
+    .warning-chip {
+      display: inline-block;
+      background: rgba(185,28,28,0.3);
+      border: 1px solid rgba(252,165,165,0.5);
+      border-radius: 999px;
+      font-family: sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      padding: 3px 12px;
+      margin-left: 10px;
+      color: #fca5a5;
+    }
+    header h1 { font-size: 2.4rem; font-weight: normal; letter-spacing: -0.02em; margin-bottom: 8px; }
+    header p.subtitle { font-size: 1rem; opacity: 0.75; font-style: italic; }
+
+    /* ── Layout ── */
+    main { max-width: 900px; margin: 0 auto; padding: 48px 24px; }
+
+    section { margin-bottom: 52px; }
+    section h2 {
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--purple-mid);
+      border-bottom: 2px solid var(--purple-light);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    p { margin-bottom: 14px; }
+
+    /* ── Safety alert ── */
+    .safety-alert {
+      background: #fff1f2;
+      border: 1.5px solid var(--red);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .safety-alert strong { color: var(--red); }
+
+    /* ── Figure ── */
+    .figure-wrap {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 32px 24px 20px;
+      margin-bottom: 52px;
+    }
+    .figure-wrap figcaption {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--gray-600);
+      margin-top: 16px;
+      font-style: italic;
+    }
+    .figure-wrap svg { display: block; margin: 0 auto; }
+
+    /* ── Cards ── */
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 620px) { .cards { grid-template-columns: 1fr; } }
+
+    .card {
+      border-radius: 10px;
+      padding: 18px 20px;
+      border-left: 4px solid transparent;
+    }
+    .card.microglial { background: #f5f3ff; border-color: var(--purple-mid); }
+    .card.signaling  { background: #fffbeb; border-color: var(--amber); }
+    .card.plausible  { background: #f0fdf4; border-color: var(--teal); }
+    .card.systemic   { background: #fff1f2; border-color: var(--red); }
+    .card.context    { background: #f8fafc; border-color: var(--slate); }
+    .card.downstream { background: #eff6ff; border-color: #2563a8; }
+
+    .card h3 { font-size: 0.9rem; font-family: sans-serif; font-weight: 700; margin-bottom: 6px; }
+    .card p  { font-size: 0.87rem; margin: 0; line-height: 1.55; }
+
+    /* ── Takeaways ── */
+    ol.takeaways { padding-left: 20px; }
+    ol.takeaways li { margin-bottom: 12px; font-size: 0.95rem; }
+    ol.takeaways li strong { color: var(--purple-dark); }
+
+    /* ── Verdict banner ── */
+    .verdict {
+      background: linear-gradient(135deg, #1e0438 0%, var(--purple-dark) 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 28px 32px;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .verdict strong { color: #c4b5fd; }
+
+    footer {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--gray-600);
+      padding: 24px;
+      border-top: 1px solid var(--gray-200);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <span class="gene-chip">Gene: DOCK8 &nbsp;|&nbsp; Dedicator of Cytokinesis 8</span>
+    <span class="warning-chip">&#9888; Safety Concern: Systemic Inhibition</span>
+  </div>
+  <h1>DOCK8 &amp; Alzheimer's Disease</h1>
+  <p class="subtitle">Target Enabling Package — AI-Assisted Evidence Summary</p>
+</header>
+
+<main>
+
+  <!-- FIGURE -->
+  <figure class="figure-wrap">
+    <svg width="820" height="500" viewBox="0 0 820 500" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+
+      <!-- Background -->
+      <rect width="820" height="500" fill="#f8fafc" rx="8"/>
+      <text x="410" y="28" text-anchor="middle" fill="#3b0764" font-size="13" font-weight="bold">DOCK8 — Signaling Architecture &amp; AD Relevance</text>
+
+      <!-- ============================================================ -->
+      <!-- LEFT PANEL: AD-Relevant Cascade (dark bg) -->
+      <!-- ============================================================ -->
+      <rect x="20" y="44" width="370" height="420" rx="10" fill="#1e1040" opacity="0.05" stroke="#7c3aed" stroke-width="1"/>
+      <text x="205" y="64" text-anchor="middle" fill="#7c3aed" font-size="10" font-weight="bold" letter-spacing="0.05em">AD-RELEVANT SIGNALING (PRECLINICAL)</text>
+
+      <!-- Aβ stimulus -->
+      <rect x="120" y="78" width="170" height="34" rx="6" fill="#7c3aed"/>
+      <text x="205" y="98" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Amyloid-β (A&beta;1-42) Stimulus</text>
+
+      <!-- Arrow down -->
+      <line x1="205" y1="112" x2="205" y2="130" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-purple)"/>
+
+      <!-- ATF3 -->
+      <rect x="145" y="130" width="120" height="30" rx="6" fill="#6d28d9"/>
+      <text x="205" y="149" text-anchor="middle" fill="#fff" font-size="10">ATF3 (transcription factor)</text>
+
+      <!-- Arrow down -->
+      <line x1="205" y1="160" x2="205" y2="178" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-purple)"/>
+
+      <!-- DOCK8 central in cascade -->
+      <rect x="135" y="178" width="140" height="36" rx="8" fill="#3b0764" stroke="#c4b5fd" stroke-width="2"/>
+      <text x="205" y="200" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">DOCK8</text>
+
+      <!-- Two arrows: Cdc42 branch and STAT3 branch -->
+      <!-- Cdc42 branch (left) -->
+      <line x1="175" y1="214" x2="130" y2="248" stroke="#7c3aed" stroke-width="1.8" marker-end="url(#arrow-purple)"/>
+      <!-- STAT3 branch (right) -->
+      <line x1="235" y1="214" x2="280" y2="248" stroke="#7c3aed" stroke-width="1.8" marker-end="url(#arrow-purple)"/>
+
+      <!-- Cdc42 node -->
+      <rect x="50" y="248" width="152" height="28" rx="6" fill="#5b21b6"/>
+      <text x="126" y="266" text-anchor="middle" fill="#fff" font-size="9.5">Cdc42 / Rac Activation</text>
+
+      <!-- STAT3 node -->
+      <rect x="214" y="248" width="152" height="28" rx="6" fill="#5b21b6"/>
+      <text x="290" y="266" text-anchor="middle" fill="#fff" font-size="9.5">STAT3 Phosphorylation</text>
+
+      <!-- Arrow from Cdc42 down -->
+      <line x1="126" y1="276" x2="126" y2="294" stroke="#7c3aed" stroke-width="1.8" marker-end="url(#arrow-purple)"/>
+      <!-- Arrow from STAT3 down -->
+      <line x1="290" y1="276" x2="290" y2="294" stroke="#7c3aed" stroke-width="1.8" marker-end="url(#arrow-purple)"/>
+
+      <!-- p38 MAPK -->
+      <rect x="50" y="294" width="152" height="28" rx="6" fill="#6d28d9"/>
+      <text x="126" y="313" text-anchor="middle" fill="#fff" font-size="9.5">p38 MAPK</text>
+
+      <!-- NLRP3 -->
+      <rect x="214" y="294" width="152" height="28" rx="6" fill="#6d28d9"/>
+      <text x="290" y="313" text-anchor="middle" fill="#fff" font-size="9.5">NLRP3 Inflammasome</text>
+
+      <!-- Arrow from p38 down -->
+      <line x1="126" y1="322" x2="126" y2="340" stroke="#7c3aed" stroke-width="1.8" marker-end="url(#arrow-purple)"/>
+      <!-- Arrow from NLRP3 down -->
+      <line x1="290" y1="322" x2="290" y2="340" stroke="#7c3aed" stroke-width="1.8" marker-end="url(#arrow-purple)"/>
+
+      <!-- Converging to: Microglial activation / migration -->
+      <rect x="50" y="340" width="152" height="36" rx="6" fill="#4c1d95"/>
+      <text x="126" y="358" text-anchor="middle" fill="#fff" font-size="9.5">Microglial Migration</text>
+      <text x="126" y="370" text-anchor="middle" fill="#ddd6fe" font-size="8.5">&amp; Actin Remodeling</text>
+
+      <!-- NF-κB -->
+      <rect x="214" y="340" width="152" height="36" rx="6" fill="#4c1d95"/>
+      <text x="290" y="358" text-anchor="middle" fill="#fff" font-size="9.5">NF-&kappa;B / IL-1&beta; / iNOS</text>
+      <text x="290" y="370" text-anchor="middle" fill="#ddd6fe" font-size="8.5">Inflammatory cytokines</text>
+
+      <!-- Converge arrows down to outcome -->
+      <line x1="126" y1="376" x2="175" y2="410" stroke="#7c3aed" stroke-width="1.8" marker-end="url(#arrow-purple)"/>
+      <line x1="290" y1="376" x2="240" y2="410" stroke="#7c3aed" stroke-width="1.8" marker-end="url(#arrow-purple)"/>
+
+      <!-- Outcome box -->
+      <rect x="100" y="410" width="210" height="38" rx="8" fill="#b91c1c"/>
+      <text x="205" y="427" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Plaque Pathology &amp; Cognitive</text>
+      <text x="205" y="441" text-anchor="middle" fill="#fecaca" font-size="9">Impairment (APP/PS1 model)</text>
+
+      <!-- KNOCKDOWN note -->
+      <rect x="32" y="440" width="60" height="22" rx="4" fill="#16a34a"/>
+      <text x="62" y="455" text-anchor="middle" fill="#fff" font-size="8.5" font-weight="bold">KD improves</text>
+
+      <!-- ============================================================ -->
+      <!-- RIGHT PANEL: Safety + Broader Biology -->
+      <!-- ============================================================ -->
+      <rect x="420" y="44" width="380" height="420" rx="10" fill="#fff1f2" opacity="0.5" stroke="#b91c1c" stroke-width="1"/>
+      <text x="610" y="64" text-anchor="middle" fill="#b91c1c" font-size="10" font-weight="bold" letter-spacing="0.05em">SYSTEMIC IMMUNE SAFETY CONCERN</text>
+
+      <!-- DOCK8 loss box -->
+      <rect x="455" y="78" width="300" height="38" rx="8" fill="#b91c1c"/>
+      <text x="605" y="96" text-anchor="middle" fill="#fff" font-size="10.5" font-weight="bold">Human DOCK8 Loss-of-Function</text>
+      <text x="605" y="110" text-anchor="middle" fill="#fecaca" font-size="9">Combined Immunodeficiency / Hyper-IgE Syndrome</text>
+
+      <!-- Consequences grid -->
+      <rect x="450" y="128" width="136" height="28" rx="5" fill="#fecaca" stroke="#b91c1c" stroke-width="1"/>
+      <text x="518" y="146" text-anchor="middle" fill="#7f1d1d" font-size="9">Recurrent viral / bacterial</text>
+
+      <rect x="598" y="128" width="136" height="28" rx="5" fill="#fecaca" stroke="#b91c1c" stroke-width="1"/>
+      <text x="666" y="146" text-anchor="middle" fill="#7f1d1d" font-size="9">Severe eczema / atopy / IgE</text>
+
+      <rect x="450" y="164" width="136" height="28" rx="5" fill="#fecaca" stroke="#b91c1c" stroke-width="1"/>
+      <text x="518" y="182" text-anchor="middle" fill="#7f1d1d" font-size="9">Autoimmunity / IBD</text>
+
+      <rect x="598" y="164" width="136" height="28" rx="5" fill="#fecaca" stroke="#b91c1c" stroke-width="1"/>
+      <text x="666" y="182" text-anchor="middle" fill="#7f1d1d" font-size="9">Malignancy risk</text>
+
+      <rect x="450" y="200" width="136" height="28" rx="5" fill="#fecaca" stroke="#b91c1c" stroke-width="1"/>
+      <text x="518" y="218" text-anchor="middle" fill="#7f1d1d" font-size="9">Impaired T / B / NK cells</text>
+
+      <rect x="598" y="200" width="136" height="28" rx="5" fill="#fecaca" stroke="#b91c1c" stroke-width="1"/>
+      <text x="666" y="218" text-anchor="middle" fill="#7f1d1d" font-size="9">CNS infections / vascular</text>
+
+      <!-- Safer alternatives header -->
+      <text x="610" y="256" text-anchor="middle" fill="#3b0764" font-size="10" font-weight="bold" letter-spacing="0.05em">SAFER DOWNSTREAM ALTERNATIVES</text>
+
+      <!-- Downstream targets -->
+      <rect x="445" y="268" width="120" height="30" rx="6" fill="#6d28d9"/>
+      <text x="505" y="287" text-anchor="middle" fill="#fff" font-size="9.5">p38 MAPK inhibitors</text>
+
+      <rect x="580" y="268" width="120" height="30" rx="6" fill="#6d28d9"/>
+      <text x="640" y="287" text-anchor="middle" fill="#fff" font-size="9.5">STAT3 modulators</text>
+
+      <rect x="445" y="310" width="120" height="30" rx="6" fill="#6d28d9"/>
+      <text x="505" y="329" text-anchor="middle" fill="#fff" font-size="9.5">NLRP3 inhibitors</text>
+
+      <rect x="580" y="310" width="120" height="30" rx="6" fill="#6d28d9"/>
+      <text x="640" y="329" text-anchor="middle" fill="#fff" font-size="9.5">NF-&kappa;B pathway</text>
+
+      <rect x="445" y="352" width="120" height="30" rx="6" fill="#6d28d9"/>
+      <text x="505" y="371" text-anchor="middle" fill="#fff" font-size="9.5">Cdc42-selective</text>
+
+      <rect x="580" y="352" width="120" height="30" rx="6" fill="#0d9488"/>
+      <text x="640" y="365" text-anchor="middle" fill="#fff" font-size="9">Microglia-targeted</text>
+      <text x="640" y="377" text-anchor="middle" fill="#ccfbf1" font-size="8.5">partial DOCK8 modulation</text>
+
+      <!-- Target strategy box -->
+      <rect x="445" y="396" width="310" height="50" rx="8" fill="#3b0764"/>
+      <text x="600" y="416" text-anchor="middle" fill="#c4b5fd" font-size="9.5" font-weight="bold">Preferred Strategy: Brain/Microglia-Selective,</text>
+      <text x="600" y="431" text-anchor="middle" fill="#ddd6fe" font-size="9">Partial, Reversible Modulation — NOT global DOCK8 blockade</text>
+
+      <!-- Arrow markers -->
+      <defs>
+        <marker id="arrow-purple" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#7c3aed"/>
+        </marker>
+      </defs>
+
+      <!-- Footer note -->
+      <text x="410" y="490" text-anchor="middle" fill="#94a3b8" font-size="9">Left panel: AD-relevant preclinical signaling cascade. Right panel: systemic safety landscape and preferred therapeutic approach.</text>
+    </svg>
+    <figcaption>
+      <strong>Figure 1.</strong> DOCK8 signaling in Alzheimer's disease and systemic immune safety.
+      Left: A&beta; stimulates ATF3-mediated DOCK8 upregulation, activating Cdc42/p38&nbsp;MAPK and STAT3/NLRP3/NF-&kappa;B cascades
+      that drive microglial migration, plaque-associated pathology, and cognitive impairment in APP/PS1 mice — partially reversed by DOCK8 knockdown.
+      Right: Human DOCK8 loss-of-function causes severe combined immunodeficiency, making global inhibition unsafe;
+      downstream pathway targets or microglia-selective modulation are preferred.
+    </figcaption>
+  </figure>
+
+  <!-- OVERVIEW -->
+  <section>
+    <h2>1. Overview</h2>
+
+    <div class="safety-alert">
+      <strong>Safety Flag:</strong> Human DOCK8 loss-of-function causes severe combined immunodeficiency with recurrent infections,
+      elevated IgE, autoimmunity, and malignancy risk. Systemic DOCK8 inhibition for AD is likely unsafe.
+      Any therapeutic strategy must be brain- or microglia-targeted and selective.
+    </div>
+
+    <p>
+      DOCK8 encodes <strong>Dedicator of Cytokinesis 8</strong>, a guanine nucleotide exchange factor and cytoskeletal
+      regulator operating primarily through Cdc42/Rac-related pathways. It controls immune-cell migration,
+      actin remodeling, immune synapse formation, T- and B-cell activation, NK-cell cytotoxicity, dendritic-cell
+      trafficking, phagocytosis, regulatory T-cell function, cytokine balance, and antiviral defense.
+    </p>
+    <p>
+      DOCK8 is <strong>not an established AD gene, biomarker, or validated therapeutic target.</strong> Most evidence
+      comes from immunodeficiency, allergy, autoimmunity, infection, cancer, and broader neuroinflammatory contexts.
+      Direct AD-specific evidence is limited to preclinical findings: DOCK8 is upregulated in APP/PS1 mouse hippocampus
+      and in A&beta;1-42-stimulated microglia, where it promotes inflammatory activation and plaque-associated pathology
+      via ATF3&rarr;DOCK8&rarr;Cdc42/p38&nbsp;MAPK and DOCK8&rarr;STAT3&rarr;NLRP3&rarr;NF-&kappa;B cascades.
+      DOCK8 knockdown improved behavioral outcomes in this model.
+    </p>
+  </section>
+
+  <!-- KEY INSIGHTS -->
+  <section>
+    <h2>2. Key Insights</h2>
+    <div class="cards">
+
+      <div class="card microglial">
+        <h3>Strongest AD Signal: Microglial Activation</h3>
+        <p>In APP/PS1 mice, hippocampal DOCK8 is increased, ATF3-mediated DOCK8 upregulation drives Cdc42/p38&nbsp;MAPK activation, enhanced microglial migration toward A&beta; plaques, greater plaque-associated pathology, and behavioral impairment. DOCK8 knockdown reversed these effects.</p>
+      </div>
+
+      <div class="card signaling">
+        <h3>Two Key AD-Relevant Cascades</h3>
+        <p><strong>ATF3 &rarr; DOCK8 &rarr; Cdc42 &rarr; p38&nbsp;MAPK</strong> (migration, actin remodeling) and <strong>DOCK8 &rarr; STAT3 &rarr; NLRP3 &rarr; NF-&kappa;B</strong> (inflammasome, cytokine release, iNOS, CD86). Both are supported by A&beta;-stimulated BV2 microglial data.</p>
+      </div>
+
+      <div class="card plausible">
+        <h3>Biological Plausibility in AD</h3>
+        <p>DOCK8's links to Cdc42/Rac, WASP, Arp2/3, p38&nbsp;MAPK, STAT3, NF-&kappa;B, inflammasome signaling, migration, phagocytosis, and immune synapse formation align with mechanisms relevant to microglial plaque response and chronic AD neuroinflammation.</p>
+      </div>
+
+      <div class="card systemic">
+        <h3>Major Systemic Safety Concern</h3>
+        <p>Human DOCK8 deficiency causes combined immunodeficiency/hyper-IgE syndrome: recurrent viral, bacterial, and fungal infections; severe eczema; food allergy; eosinophilia; autoimmunity; inflammatory bowel disease; bronchiectasis; malignancy risk; and impaired T-, B-, NK-, and dendritic-cell function.</p>
+      </div>
+
+      <div class="card context">
+        <h3>Context-Dependent Role</h3>
+        <p>In AD-like microglial models, DOCK8 reduction appears protective by lowering inflammatory activation and migration. In systemic immunity, DOCK8 restoration is life-saving because deficiency causes severe disease. Therapeutic direction differs by cell type, disease stage, and compartment.</p>
+      </div>
+
+      <div class="card downstream">
+        <h3>Safer Downstream Alternatives</h3>
+        <p>Modulating p38&nbsp;MAPK, STAT3, NLRP3 inflammasome, NF-&kappa;B, or Cdc42-linked cytoskeletal signaling may capture AD-relevant inflammatory effects while avoiding the profound immune toxicity of full systemic DOCK8 suppression.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ACTIONABLE TAKEAWAYS -->
+  <section>
+    <h2>3. Actionable Takeaways</h2>
+    <ol class="takeaways">
+      <li><strong>Treat DOCK8 as a speculative AD neuroimmune node, not a validated target.</strong> Prioritize AD-specific validation before any therapeutic development.</li>
+      <li><strong>Assess DOCK8 in AD-specific datasets.</strong> Measure expression in AD brain, CSF, blood, single-cell microglia datasets, plaque-associated microglia, border-associated macrophages, monocytes, and infiltrating lymphocytes.</li>
+      <li><strong>Test whether DOCK8 correlates with AD-relevant outcomes.</strong> Evaluate amyloid burden, tau pathology, neuroinflammatory markers, microglial activation states, cognitive trajectory, and systemic immune signatures.</li>
+      <li><strong>Mechanistic studies should focus on microglia.</strong> Determine whether DOCK8 controls A&beta;-induced migration, plaque clustering, phagocytosis, inflammasome activation, cytokine release, synapse engulfment, neuronal toxicity, and transition into disease-associated microglial states.</li>
+      <li><strong>Interrogate the two key signaling axes.</strong> ATF3&rarr;DOCK8&rarr;Cdc42&rarr;p38&nbsp;MAPK and DOCK8&rarr;STAT3&rarr;NLRP3&rarr;NF-&kappa;B are the most directly AD-relevant cascades described in the supplied evidence.</li>
+      <li><strong>Do not pursue global DOCK8 inhibition.</strong> Human genetics strongly indicate DOCK8 loss causes severe immune compromise. Any AD strategy must emphasize microglia-selective, brain-targeted, partial, reversible, or downstream-pathway modulation.</li>
+      <li><strong>Clarify whether DOCK8 inhibition impairs beneficial microglial functions.</strong> Reduced migration/phagocytosis could lower neuroinflammation and harmful engulfment but might also impair A&beta; containment, debris clearance, or tissue repair.</li>
+      <li><strong>Use disease-stage-specific models.</strong> DOCK8 modulation may have different effects during early amyloid accumulation, plaque maturation, chronic inflammation, tau spread, or late neurodegeneration.</li>
+    </ol>
+  </section>
+
+  <!-- VERDICT -->
+  <section>
+    <div class="verdict">
+      <strong>Overall Assessment &mdash;</strong>
+      DOCK8 is a <strong>compelling immune/cytoskeletal regulator with plausible but preliminary AD relevance</strong>
+      through microglial migration, A&beta;-induced inflammatory activation, Cdc42/p38&nbsp;MAPK signaling,
+      and STAT3/NLRP3/NF-&kappa;B signaling. Its therapeutic potential in AD remains speculative and
+      <strong>would require microglia-selective targeting plus strong safety controls</strong>,
+      because systemic DOCK8 loss is profoundly immunopathogenic. Downstream pathway modulators
+      (p38&nbsp;MAPK, STAT3, NLRP3, NF-&kappa;B) represent safer near-term AD research priorities.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  DOCK8 TEP Evidence Summary &mdash; AI-generated analysis &middot; For research use only
+</footer>
+
+</body>
+</html>

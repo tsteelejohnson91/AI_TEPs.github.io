@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PLEC &amp; Alzheimer's Disease — TEP Summary</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --amber-dark:  #78350f;
+      --amber-mid:   #d97706;
+      --amber-light: #fef3c7;
+      --orange:      #ea580c;
+      --red:         #b91c1c;
+      --slate:       #475569;
+      --teal:        #0d9488;
+      --indigo:      #4338ca;
+      --gray-100:    #f1f5f9;
+      --gray-200:    #e2e8f0;
+      --gray-600:    #475569;
+      --text:        #1e293b;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      color: var(--text);
+      background: #fff;
+      line-height: 1.75;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, var(--amber-dark) 0%, #451a03 100%);
+      color: #fff;
+      padding: 48px 32px 40px;
+      text-align: center;
+    }
+    header .gene-chip {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 999px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      padding: 4px 14px;
+      margin-bottom: 16px;
+    }
+    .caution-chip {
+      display: inline-block;
+      background: rgba(234,88,12,0.35);
+      border: 1px solid rgba(253,186,116,0.55);
+      border-radius: 999px;
+      font-family: sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      padding: 3px 12px;
+      margin-left: 10px;
+      color: #fed7aa;
+    }
+    header h1 { font-size: 2.4rem; font-weight: normal; letter-spacing: -0.02em; margin-bottom: 8px; }
+    header p.subtitle { font-size: 1rem; opacity: 0.75; font-style: italic; }
+
+    /* ── Layout ── */
+    main { max-width: 900px; margin: 0 auto; padding: 48px 24px; }
+    section { margin-bottom: 52px; }
+    section h2 {
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--amber-mid);
+      border-bottom: 2px solid var(--amber-light);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    p { margin-bottom: 14px; }
+
+    /* ── Alert boxes ── */
+    .alert {
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+    .alert.caution  { background: #fff7ed; border: 1.5px solid var(--orange); }
+    .alert.safety   { background: #fff1f2; border: 1.5px solid var(--red); }
+    .alert.note     { background: var(--amber-light); border: 1.5px solid var(--amber-mid); }
+    .alert strong   { color: var(--amber-dark); }
+    .alert.safety strong { color: var(--red); }
+
+    /* ── Figure ── */
+    .figure-wrap {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 32px 24px 20px;
+      margin-bottom: 52px;
+    }
+    .figure-wrap figcaption {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--gray-600);
+      margin-top: 16px;
+      font-style: italic;
+    }
+    .figure-wrap svg { display: block; margin: 0 auto; }
+
+    /* ── Cards ── */
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 620px) { .cards { grid-template-columns: 1fr; } }
+    .card {
+      border-radius: 10px;
+      padding: 18px 20px;
+      border-left: 4px solid transparent;
+    }
+    .card.cyto     { background: #fff7ed; border-color: var(--amber-mid); }
+    .card.glial    { background: #f0fdf4; border-color: var(--teal); }
+    .card.mito     { background: #fef3c7; border-color: #b45309; }
+    .card.auto     { background: #eff6ff; border-color: var(--indigo); }
+    .card.cardio   { background: #fdf4ff; border-color: #9333ea; }
+    .card.stress   { background: #fff1f2; border-color: var(--red); }
+    .card.isoform  { background: #f8fafc; border-color: var(--slate); }
+    .card.target   { background: #f0fdf4; border-color: #16a34a; }
+    .card h3 { font-size: 0.9rem; font-family: sans-serif; font-weight: 700; margin-bottom: 6px; }
+    .card p  { font-size: 0.87rem; margin: 0; line-height: 1.55; }
+
+    /* ── Takeaways nested list ── */
+    ol.takeaways { padding-left: 20px; }
+    ol.takeaways li { margin-bottom: 12px; font-size: 0.95rem; }
+    ol.takeaways li strong { color: var(--amber-dark); }
+    ul.sub { padding-left: 22px; margin-top: 6px; }
+    ul.sub li { font-size: 0.88rem; margin-bottom: 4px; color: var(--slate); }
+
+    /* ── Verdict ── */
+    .verdict {
+      background: linear-gradient(135deg, #451a03 0%, var(--amber-dark) 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 28px 32px;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .verdict strong { color: #fcd34d; }
+
+    footer {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--gray-600);
+      padding: 24px;
+      border-top: 1px solid var(--gray-200);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <span class="gene-chip">Gene: PLEC &nbsp;|&nbsp; Plectin (Plakin Family)</span>
+    <span class="caution-chip">&#9888; Acronym Collision Risk &nbsp;|&nbsp; Safety: Plectinopathies</span>
+  </div>
+  <h1>PLEC &amp; Alzheimer's Disease</h1>
+  <p class="subtitle">Target Enabling Package — AI-Assisted Evidence Summary</p>
+</header>
+
+<main>
+
+  <!-- FIGURE -->
+  <figure class="figure-wrap">
+    <svg width="820" height="510" viewBox="0 0 820 510" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+
+      <defs>
+        <marker id="arr-amber" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#d97706"/>
+        </marker>
+        <marker id="arr-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#b91c1c"/>
+        </marker>
+        <marker id="arr-slate" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#94a3b8"/>
+        </marker>
+      </defs>
+
+      <!-- Background -->
+      <rect width="820" height="510" fill="#f8fafc" rx="8"/>
+      <text x="410" y="28" text-anchor="middle" fill="#78350f" font-size="13" font-weight="bold">PLEC / Plectin — Cytoskeletal Hub &amp; AD Mechanistic Landscape</text>
+
+      <!-- ── Spoke lines (solid = stronger, dashed = indirect) ── -->
+      <!-- Strong spokes -->
+      <line x1="410" y1="235" x2="150" y2="108" stroke="#d97706" stroke-width="2.5"/>
+      <line x1="410" y1="235" x2="410" y2="72"  stroke="#d97706" stroke-width="2.5"/>
+      <line x1="410" y1="235" x2="670" y2="108" stroke="#d97706" stroke-width="2.5"/>
+      <!-- Moderate spokes -->
+      <line x1="410" y1="235" x2="720" y2="248" stroke="#d97706" stroke-width="2"/>
+      <line x1="410" y1="235" x2="640" y2="388" stroke="#d97706" stroke-width="2"/>
+      <!-- Indirect/dashed spokes -->
+      <line x1="410" y1="235" x2="410" y2="400" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5,4"/>
+      <line x1="410" y1="235" x2="178" y2="388" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5,4"/>
+      <line x1="410" y1="235" x2="98"  y2="248" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5,4"/>
+
+      <!-- ── Central node ── -->
+      <circle cx="410" cy="235" r="62" fill="#78350f" stroke="#fcd34d" stroke-width="3"/>
+      <text x="410" y="224" text-anchor="middle" fill="#fff" font-size="20" font-weight="bold">PLEC</text>
+      <text x="410" y="242" text-anchor="middle" fill="#fcd34d" font-size="9.5">Plectin — Cytolinker</text>
+      <text x="410" y="256" text-anchor="middle" fill="#fed7aa" font-size="8.5">IF · Actin · MT · Adhesion</text>
+
+      <!-- ── Satellite nodes ── -->
+
+      <!-- Top-left: Cytoskeletal Scaffolding (strong) -->
+      <ellipse cx="150" cy="96" rx="100" ry="32" fill="#d97706"/>
+      <text x="150" y="90" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Cytoskeletal Scaffolding</text>
+      <text x="150" y="104" text-anchor="middle" fill="#fef3c7" font-size="9">IF · actin · microtubules · tau-MT biology</text>
+
+      <!-- Top: Glial / Barrier Biology (strong) -->
+      <ellipse cx="410" cy="58" rx="108" ry="28" fill="#0d9488"/>
+      <text x="410" y="52" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Glial &amp; Barrier Biology</text>
+      <text x="410" y="66" text-anchor="middle" fill="#ccfbf1" font-size="9">AQP4 · astrocyte endfeet · choroid plexus · CSF barrier</text>
+
+      <!-- Top-right: Mitochondrial QC (strong) -->
+      <ellipse cx="670" cy="96" rx="100" ry="32" fill="#b45309"/>
+      <text x="670" y="90" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Mitochondrial Quality Control</text>
+      <text x="670" y="104" text-anchor="middle" fill="#fef3c7" font-size="9">Localization · respiration · mitophagy · ROS</text>
+
+      <!-- Right: Autophagy / Proteostasis (moderate) -->
+      <ellipse cx="722" cy="248" rx="88" ry="30" fill="#4338ca"/>
+      <text x="722" y="242" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Autophagy / Proteostasis</text>
+      <text x="722" y="256" text-anchor="middle" fill="#e0e7ff" font-size="9">LC3 · SQSTM1 · BAG3 · aggregate clearance</text>
+
+      <!-- Bottom-right: AD–Cardiovascular Risk (moderate) -->
+      <ellipse cx="638" cy="390" rx="102" ry="30" fill="#9333ea"/>
+      <text x="638" y="384" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">AD–Cardiovascular Risk</text>
+      <text x="638" y="398" text-anchor="middle" fill="#f3e8ff" font-size="9">Shared GWAS · atrial fibrillation · PLEC in heart LV</text>
+
+      <!-- Bottom: Synaptic Junctions (indirect / dashed) -->
+      <ellipse cx="410" cy="414" rx="98" ry="28" fill="#64748b"/>
+      <text x="410" y="408" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Synaptic Junctions</text>
+      <text x="410" y="422" text-anchor="middle" fill="#e2e8f0" font-size="9">NMJ · ribbon synapse · EV proteome (indirect)</text>
+
+      <!-- Bottom-left: Stress &amp; Cell Death (indirect / dashed) -->
+      <ellipse cx="180" cy="390" rx="100" ry="30" fill="#b91c1c"/>
+      <text x="180" y="384" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Stress &amp; Cell Death</text>
+      <text x="180" y="398" text-anchor="middle" fill="#fecaca" font-size="9">Caspase · p38/MAPK · ISR · oxeiptosis</text>
+
+      <!-- Left: Isoform / Tissue Specificity (indirect / dashed) -->
+      <ellipse cx="96" cy="248" rx="88" ry="30" fill="#475569"/>
+      <text x="96" y="242" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Isoform Complexity</text>
+      <text x="96" y="256" text-anchor="middle" fill="#e2e8f0" font-size="9">P1a–P1k · skin · muscle · astrocyte</text>
+
+      <!-- ── AD Evidence inset badge ── -->
+      <rect x="296" y="148" width="228" height="72" rx="8" fill="#fff" stroke="#d97706" stroke-width="1.5"/>
+      <text x="410" y="166" text-anchor="middle" fill="#78350f" font-size="9.5" font-weight="bold">AD-Specific Evidence (Limited)</text>
+      <text x="410" y="181" text-anchor="middle" fill="#92400e" font-size="8.5">&#9679; Overexpressed in postmortem AD brain (GeneEMBED)</text>
+      <text x="410" y="194" text-anchor="middle" fill="#92400e" font-size="8.5">&#9679; Upregulated in AD astrocytes (multi-omics colocalization)</text>
+      <text x="410" y="207" text-anchor="middle" fill="#92400e" font-size="8.5">&#9679; ~4× in Wnt-activated choroid plexus + A&#946;42 model</text>
+
+      <!-- ── Safety warning box (bottom-centre) ── -->
+      <rect x="268" y="446" width="284" height="44" rx="8" fill="#fff1f2" stroke="#b91c1c" stroke-width="1.5"/>
+      <text x="410" y="463" text-anchor="middle" fill="#b91c1c" font-size="9.5" font-weight="bold">&#9888; Safety: Human Plectinopathies</text>
+      <text x="410" y="478" text-anchor="middle" fill="#7f1d1d" font-size="8.5">EBS · muscular dystrophy · CMS · cardiomyopathy · pyloric atresia</text>
+
+      <!-- Legend -->
+      <line x1="32" y1="496" x2="62" y2="496" stroke="#d97706" stroke-width="2"/>
+      <text x="68" y="499" fill="#64748b" font-size="8.5">Stronger evidence</text>
+      <line x1="170" y1="496" x2="200" y2="496" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,4"/>
+      <text x="206" y="499" fill="#64748b" font-size="8.5">Indirect / extrapolated</text>
+    </svg>
+    <figcaption>
+      <strong>Figure 1.</strong> PLEC/plectin as a cytoskeletal and stress-response hub in the context of Alzheimer's disease.
+      Solid spokes indicate domains with direct or moderate evidence; dashed spokes indicate indirect or extrapolated mechanisms.
+      AD-specific evidence is limited to postmortem brain overexpression, AD astrocyte upregulation, and choroid plexus organoid findings.
+      Systemic PLEC loss causes severe multisystem plectinopathies — broad inhibition is not a safe therapeutic approach.
+    </figcaption>
+  </figure>
+
+  <!-- OVERVIEW -->
+  <section>
+    <h2>1. Overview</h2>
+
+    <div class="alert note">
+      <strong>Acronym Collision Warning:</strong> Many occurrences of "PLEC" in the supplied literature refer to unrelated entities —
+      pulmonary lymphoepithelioma carcinoma, pancreatic lymphoepithelial cyst, placental epigenetic clock, bacterial PleC signaling
+      proteins, and polymer/drug-delivery terms. Only evidence referring to human <em>PLEC/plectin</em> should be used for AD-mechanism inference.
+    </div>
+
+    <div class="alert safety">
+      <strong>Safety Flag:</strong> Human PLEC loss-of-function causes severe multisystem plectinopathies including epidermolysis bullosa
+      simplex, muscular dystrophy, congenital myasthenic syndrome, myopathy, cardiomyopathy, pyloric atresia, and airway stenosis.
+      Systemic PLEC inhibition is not a safe AD therapeutic strategy.
+    </div>
+
+    <p>
+      PLEC encodes <strong>plectin</strong>, a large plakin-family cytolinker that organizes intermediate filaments, actin,
+      microtubules, membrane-associated adhesion complexes, mitochondrial-associated structures, and tissue-specific
+      cytoskeletal networks. PLEC is expressed in multiple highly isoform-specific contexts (P1a–P1k) across skin, muscle,
+      heart, astrocytes, hemidesmosomes, Z-disks, focal adhesions, and neuromuscular junctions.
+    </p>
+    <p>
+      AD-specific evidence is <strong>limited and mixed in strength</strong>. PLEC was identified as a candidate hub gene
+      in AD rare-variant and network-based analyses; reported as overexpressed in postmortem AD brains; upregulated in
+      AD astrocytes via multi-omics colocalization; and upregulated approximately 4-fold in Wnt-activated iPSC-derived
+      choroid plexus organoids challenged with amyloid-&beta;42 oligomers. No supplied study demonstrates that PLEC
+      directly regulates amyloid-&beta; production/clearance, tau phosphorylation, synaptic loss, or cognition.
+    </p>
+  </section>
+
+  <!-- KEY INSIGHTS -->
+  <section>
+    <h2>2. Key Insights</h2>
+    <div class="cards">
+
+      <div class="card cyto">
+        <h3>Cytoskeletal Regulation — Core Mechanism</h3>
+        <p>Plectin is the primary cytolinker connecting intermediate filaments, actin, and microtubules to adhesion complexes. This directly overlaps with AD biology: tau-associated microtubule failure, neuritic degeneration, axonal transport defects, and synaptic structural loss all involve cytoskeletal disruption.</p>
+      </div>
+
+      <div class="card glial">
+        <h3>Glial &amp; Barrier Biology</h3>
+        <p>PLEC was linked to astrocyte AQP4 aggregate organization, astrocyte volume dynamics, and astrocyte migration. AQP4 localization is critical for glymphatic amyloid clearance. PLEC was also upregulated ~4-fold in choroid plexus organoids responding to A&beta;42, implicating it in blood–CSF barrier inflammatory responses.</p>
+      </div>
+
+      <div class="card mito">
+        <h3>Mitochondrial Quality Control</h3>
+        <p>Plectin deficiency causes mitochondrial mislocalization, reduced respiratory function, altered fusion–fission machinery, impaired mitophagy, and increased oxidative stress in non-AD models. These mechanisms overlap strongly with central AD pathophysiology.</p>
+      </div>
+
+      <div class="card auto">
+        <h3>Autophagy &amp; Proteostasis</h3>
+        <p>Plectin deficiency is associated with protein aggregation, impaired autophagic flux, and altered LC3/SQSTM1/LAMP2/BAG3 pathways in muscle models. Since AD is fundamentally a proteostasis disorder, this is mechanistically relevant — though not yet AD-validated.</p>
+      </div>
+
+      <div class="card cardio">
+        <h3>Shared AD–Cardiovascular Risk</h3>
+        <p>PLEC was prioritized through colocalization and multi-omics analyses linking AD, atrial fibrillation, and PLEC expression in heart left ventricle — alongside AD astrocyte upregulation. This positions PLEC as a pleiotropic neurovascular/cardiometabolic candidate rather than a classic amyloid/tau gene.</p>
+      </div>
+
+      <div class="card stress">
+        <h3>Stress Signaling &amp; Cell Death</h3>
+        <p>Plectin is linked to caspase cleavage, cytochrome c release, integrated stress response signaling, oxeiptosis/disulfidptosis analyses, oxidative stress, p38/MAPK, PKC/RACK1, and AMPK/JNK pathways — all overlapping with neurodegenerative stress mechanisms in AD.</p>
+      </div>
+
+      <div class="card isoform">
+        <h3>Critical Isoform &amp; Tissue Specificity</h3>
+        <p>Plectin isoforms P1a–P1k have distinct localizations and functions across skin, muscle, mitochondria, astrocytes, hemidesmosomes, Z-disks, focal adhesions, and neuromuscular junctions. Global modulation risks unpredictable harm. Any therapeutic approach must be isoform- and cell-type-specific.</p>
+      </div>
+
+      <div class="card target">
+        <h3>Targetability — Cautious Promise</h3>
+        <p>Cancer studies show plectin can be reached by antibodies, PET tracers, nanoparticles, peptides, and plecstatin. This demonstrates pharmacological tractability — but CNS delivery, brain-cell specificity, and AD efficacy remain unestablished. Targeting should remain exploratory.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ACTIONABLE TAKEAWAYS -->
+  <section>
+    <h2>3. Actionable Takeaways</h2>
+    <ol class="takeaways">
+      <li><strong>Treat PLEC as an exploratory AD candidate, not a validated target.</strong> Evidence supports biological plausibility across cytoskeletal, mitochondrial, glial/barrier, and inflammatory pathways — but no direct causal AD data exist.</li>
+      <li><strong>Filter out acronym collisions before any analysis.</strong> Only human PLEC/plectin evidence should be used for AD inference; unrelated "PLEC" acronyms must be excluded.</li>
+      <li><strong>Prioritize AD-specific validation in relevant cell types.</strong> Test PLEC expression, isoform usage, localization, cleavage, phosphorylation, methylation, and genetic variation in neurons, astrocytes, microglia, oligodendrocytes, endothelial cells, pericytes, and choroid plexus epithelium across AD brain regions.</li>
+      <li><strong>Focus mechanistic studies on the most AD-relevant pathways:</strong>
+        <ul class="sub">
+          <li>Neuronal cytoskeletal stability and tau/microtubule interactions</li>
+          <li>Axonal transport and neuritic degeneration</li>
+          <li>Astrocyte AQP4 polarization and glymphatic/clearance biology</li>
+          <li>Choroid plexus and blood–CSF barrier responses to amyloid-&beta;</li>
+          <li>Mitochondrial positioning, respiration, oxidative stress, and mitophagy</li>
+          <li>Autophagy–lysosomal flux and aggregate handling</li>
+        </ul>
+      </li>
+      <li><strong>Avoid broad PLEC inhibition.</strong> Plectin is essential for skin, muscle, heart, airway, epithelial, and neuromuscular integrity. If PLEC is pursued therapeutically, strategies must be isoform-specific, cell-type-specific, interaction-specific, or downstream-pathway-focused.</li>
+      <li><strong>Prefer downstream or interaction-targeted modulation.</strong> More plausible approaches include preventing pathological plectin cleavage or phosphorylation, enhancing autophagic/mitophagic flux, stabilizing astrocyte AQP4 organization, or modulating specific PLEC-interacting networks rather than suppressing plectin globally.</li>
+      <li><strong>Use existing targetability evidence cautiously.</strong> Cancer antibodies, imaging probes, nanoparticles, and plecstatin demonstrate pharmacological tractability — but AD applications require CNS delivery, brain-cell specificity, and proof of disease relevance in AD tissue.</li>
+    </ol>
+  </section>
+
+  <!-- VERDICT -->
+  <section>
+    <div class="verdict">
+      <strong>Overall Assessment &mdash;</strong>
+      PLEC/plectin is a <strong>cytoskeletal and stress-response hub with plausible but unvalidated AD relevance</strong>,
+      primarily through cytoskeletal failure, mitochondrial dysfunction, proteostasis impairment,
+      glial/barrier dysfunction, and neurovascular–cardiovascular comorbidity. It warrants targeted investigation
+      in AD models and human brain datasets, but <strong>cannot yet be considered an established AD therapeutic target</strong>.
+      Safety risks from systemic inhibition are substantial, and isoform complexity demands a highly selective approach
+      to any future therapeutic development.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  PLEC TEP Evidence Summary &mdash; AI-generated analysis &middot; For research use only
+</footer>
+
+</body>
+</html>

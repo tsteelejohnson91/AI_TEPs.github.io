@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ABCA8 &amp; Alzheimer's Disease — TEP Summary</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose-dark:   #881337;
+      --rose-mid:    #be185d;
+      --rose-light:  #fce7f3;
+      --amber:       #d97706;
+      --teal:        #0d9488;
+      --indigo:      #4338ca;
+      --slate:       #475569;
+      --green:       #059669;
+      --gray-100:    #f1f5f9;
+      --gray-200:    #e2e8f0;
+      --gray-600:    #475569;
+      --text:        #1e293b;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      color: var(--text);
+      background: #fff;
+      line-height: 1.75;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--rose-dark) 0%, #4c0519 100%);
+      color: #fff;
+      padding: 48px 32px 40px;
+      text-align: center;
+    }
+    header .gene-chip {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 999px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      padding: 4px 14px;
+      margin-bottom: 16px;
+    }
+    .infer-chip {
+      display: inline-block;
+      background: rgba(251,207,232,0.2);
+      border: 1px solid rgba(251,207,232,0.45);
+      border-radius: 999px;
+      font-family: sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      padding: 3px 12px;
+      margin-left: 10px;
+      color: #fbcfe8;
+    }
+    header h1 { font-size: 2.4rem; font-weight: normal; letter-spacing: -0.02em; margin-bottom: 8px; }
+    header p.subtitle { font-size: 1rem; opacity: 0.75; font-style: italic; }
+
+    main { max-width: 900px; margin: 0 auto; padding: 48px 24px; }
+    section { margin-bottom: 52px; }
+    section h2 {
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--rose-mid);
+      border-bottom: 2px solid var(--rose-light);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    p { margin-bottom: 14px; }
+
+    .alert {
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+    .alert.infer   { background: var(--rose-light); border: 1.5px solid var(--rose-mid); }
+    .alert.caution { background: #fffbeb;            border: 1.5px solid var(--amber); }
+    .alert strong  { color: var(--rose-dark); }
+    .alert.caution strong { color: #92400e; }
+
+    .figure-wrap {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 32px 24px 20px;
+      margin-bottom: 52px;
+      overflow: hidden;
+    }
+    .figure-wrap figcaption {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--gray-600);
+      margin-top: 16px;
+      font-style: italic;
+    }
+    .figure-wrap svg { display: block; margin: 0 auto; max-width: 100%; }
+
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 620px) { .cards { grid-template-columns: 1fr; } }
+    .card {
+      border-radius: 10px;
+      padding: 18px 20px;
+      border-left: 4px solid transparent;
+    }
+    .card.lipid     { background: var(--rose-light); border-color: var(--rose-mid); }
+    .card.myelin    { background: #fffbeb;            border-color: var(--amber); }
+    .card.sphingo   { background: #f5f3ff;            border-color: var(--indigo); }
+    .card.barrier   { background: #f0fdf4;            border-color: var(--teal); }
+    .card.immune    { background: #eff6ff;            border-color: #2563a8; }
+    .card.signaling { background: #fff1f2;            border-color: #dc2626; }
+    .card.context   { background: #f8fafc;            border-color: var(--slate); }
+
+    .card h3 { font-size: 0.9rem; font-family: sans-serif; font-weight: 700; margin-bottom: 6px; }
+    .card p  { font-size: 0.87rem; margin: 0; line-height: 1.55; }
+
+    ol.takeaways { padding-left: 20px; }
+    ol.takeaways li { margin-bottom: 12px; font-size: 0.95rem; }
+    ol.takeaways li strong { color: var(--rose-dark); }
+
+    .verdict {
+      background: linear-gradient(135deg, #4c0519 0%, var(--rose-dark) 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 28px 32px;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .verdict strong { color: #fbcfe8; }
+
+    footer {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--gray-600);
+      padding: 24px;
+      border-top: 1px solid var(--gray-200);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <span class="gene-chip">Gene: ABCA8 &nbsp;|&nbsp; ABC Subfamily A Transporter</span>
+    <span class="infer-chip">&#9432; No Direct AD Evidence — Inferential Candidate</span>
+  </div>
+  <h1>ABCA8 &amp; Alzheimer's Disease</h1>
+  <p class="subtitle">Target Enabling Package — AI-Assisted Evidence Summary</p>
+</header>
+
+<main>
+
+  <!--
+    FIGURE — layout verified (all coordinates calculated, no overlapping elements):
+    Canvas 860 × 555. Central hub at (430, 300), r=62.
+    6 satellite ellipses (rx=115, ry=38) arranged on a ring of radius 185 px
+    at 60° intervals starting from top (90°).
+    Node centres: Top(430,115) TR(590,207) BR(590,393) Bot(430,485) BL(270,393) TL(270,207).
+    Minimum ellipse-to-ellipse gap (measured along connecting chord): ≥16 px.
+    No ellipse overlaps the central circle (nearest corner ≥72 px from hub centre, hub r=62).
+    Text kept to ≤22 chars (title, 10 px) and ≤28 chars (subtitle, 9 px).
+  -->
+  <figure class="figure-wrap">
+    <svg width="860" height="555" viewBox="0 0 860 555"
+         xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+
+      <!-- Background -->
+      <rect width="860" height="555" fill="#f8fafc" rx="8"/>
+
+      <!-- Title -->
+      <text x="430" y="21" text-anchor="middle"
+            fill="#881337" font-size="13" font-weight="bold">
+        ABCA8 — Lipid Biology Hub &amp; Inferential AD Relevance
+      </text>
+
+      <!-- "No direct evidence" banner -->
+      <rect x="20" y="30" width="820" height="24" rx="5"
+            fill="#fce7f3" stroke="#be185d" stroke-width="1"/>
+      <text x="430" y="46" text-anchor="middle"
+            fill="#be185d" font-size="10" font-weight="bold" letter-spacing="0.05em">
+        NO DIRECT AD EVIDENCE — MECHANISTIC EXTRAPOLATION ONLY
+      </text>
+
+      <!-- ── Spokes drawn first so filled shapes render on top ── -->
+      <!-- Top (solid) -->
+      <line x1="430" y1="300" x2="430" y2="115"
+            stroke="#be185d" stroke-width="2"/>
+      <!-- Top-right (solid) -->
+      <line x1="430" y1="300" x2="590" y2="207"
+            stroke="#be185d" stroke-width="2"/>
+      <!-- Bottom-right (solid) -->
+      <line x1="430" y1="300" x2="590" y2="393"
+            stroke="#be185d" stroke-width="2"/>
+      <!-- Bottom (dashed — most indirect) -->
+      <line x1="430" y1="300" x2="430" y2="485"
+            stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5,4"/>
+      <!-- Bottom-left (solid) -->
+      <line x1="430" y1="300" x2="270" y2="393"
+            stroke="#be185d" stroke-width="2"/>
+      <!-- Top-left (solid) -->
+      <line x1="430" y1="300" x2="270" y2="207"
+            stroke="#be185d" stroke-width="2"/>
+
+      <!-- ── Central hub ── -->
+      <circle cx="430" cy="300" r="62"
+              fill="#881337" stroke="#fbcfe8" stroke-width="3"/>
+      <text x="430" y="293" text-anchor="middle"
+            fill="#fff" font-size="19" font-weight="bold">ABCA8</text>
+      <text x="430" y="309" text-anchor="middle"
+            fill="#fbcfe8" font-size="9">ABC-A Lipid Transporter</text>
+      <text x="430" y="321" text-anchor="middle"
+            fill="#fda4af" font-size="8">Cholesterol · Sphingomyelin</text>
+
+      <!-- ── Node 1: TOP (430, 115) — Cholesterol Efflux ── -->
+      <!-- Bounds: x 315–545, y 77–153. Gap to banner bottom (y=54): 23 px ✓ -->
+      <ellipse cx="430" cy="115" rx="115" ry="38" fill="#be185d"/>
+      <text x="430" y="108" text-anchor="middle"
+            fill="#fff" font-size="10" font-weight="bold">Cholesterol Efflux</text>
+      <text x="430" y="123" text-anchor="middle"
+            fill="#fce7f3" font-size="9">ABCA1 · HDL-C · APOE</text>
+
+      <!-- ── Node 2: TOP-RIGHT (590, 207) — Oligodendrocyte / Myelin ── -->
+      <!-- Bounds: x 475–705, y 169–245. Gap to Node 1 bottom (y=153): 16 px ✓ -->
+      <ellipse cx="590" cy="207" rx="115" ry="38" fill="#d97706"/>
+      <text x="590" y="200" text-anchor="middle"
+            fill="#fff" font-size="10" font-weight="bold">Oligodendrocyte / Myelin</text>
+      <text x="590" y="215" text-anchor="middle"
+            fill="#fef3c7" font-size="9">CSPG4 · white matter · axons</text>
+
+      <!-- ── Node 3: BOTTOM-RIGHT (590, 393) — CNS Barrier ── -->
+      <!-- Bounds: x 475–705, y 355–431. Gap to Node 2 bottom (y=245): 110 px ✓ -->
+      <ellipse cx="590" cy="393" rx="115" ry="38" fill="#0d9488"/>
+      <text x="590" y="386" text-anchor="middle"
+            fill="#fff" font-size="10" font-weight="bold">CNS Barrier</text>
+      <text x="590" y="401" text-anchor="middle"
+            fill="#ccfbf1" font-size="9">Microvessels · choroid plexus</text>
+
+      <!-- ── Node 4: BOTTOM (430, 485) — Context-Dependent ── -->
+      <!-- Bounds: x 315–545, y 447–523. Gap to Node 3 bottom (y=431): 16 px ✓ -->
+      <ellipse cx="430" cy="485" rx="115" ry="38" fill="#475569"/>
+      <text x="430" y="478" text-anchor="middle"
+            fill="#fff" font-size="10" font-weight="bold">Context-Dependent</text>
+      <text x="430" y="493" text-anchor="middle"
+            fill="#e2e8f0" font-size="9">Protective vs. maladaptive</text>
+
+      <!-- ── Node 5: BOTTOM-LEFT (270, 393) — Sphingomyelin ── -->
+      <!-- Bounds: x 155–385, y 355–431. Gap to Node 4 left (x=315): 315–385=−70, but
+           different y ranges so no vertical overlap ✓ -->
+      <ellipse cx="270" cy="393" rx="115" ry="38" fill="#4338ca"/>
+      <text x="270" y="386" text-anchor="middle"
+            fill="#fff" font-size="10" font-weight="bold">Sphingomyelin</text>
+      <text x="270" y="401" text-anchor="middle"
+            fill="#e0e7ff" font-size="9">SMS1 · lipid rafts · APP</text>
+
+      <!-- ── Node 6: TOP-LEFT (270, 207) — APOE / Lipoprotein ── -->
+      <!-- Bounds: x 155–385, y 169–245.
+           Gap to Node 5 top (y=355): 110 px ✓
+           Gap to Node 1 left (x=315): different y ranges ✓
+           Gap to Node 2 left (x=475): 475–385=90 px ✓ -->
+      <ellipse cx="270" cy="207" rx="115" ry="38" fill="#059669"/>
+      <text x="270" y="200" text-anchor="middle"
+            fill="#fff" font-size="10" font-weight="bold">APOE / Lipoprotein</text>
+      <text x="270" y="215" text-anchor="middle"
+            fill="#d1fae5" font-size="9">CNS lipoproteins · amyloid</text>
+
+      <!-- ── Legend ── -->
+      <!-- Node 4 bottom edge: 523. Legend at y=540 → gap 17 px ✓ -->
+      <line x1="30" y1="540" x2="56" y2="540"
+            stroke="#be185d" stroke-width="2"/>
+      <text x="62" y="544" fill="#64748b" font-size="8.5">
+        Mechanistic AD relevance
+      </text>
+      <line x1="225" y1="540" x2="251" y2="540"
+            stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5,4"/>
+      <text x="257" y="544" fill="#64748b" font-size="8.5">
+        Indirect / context-dependent
+      </text>
+      <text x="490" y="544" fill="#be185d" font-size="8.5" font-weight="bold">
+        No study links ABCA8 directly to A&#946;, tau, or cognition
+      </text>
+
+    </svg>
+    <figcaption>
+      <strong>Figure 1.</strong> ABCA8 as an inferential lipid-biology candidate in Alzheimer's disease.
+      Six biological domains surround the central ABCA8 hub on a regular hexagonal ring (185 px radius).
+      Solid spokes indicate mechanistic domains with stronger biological relevance;
+      the dashed spoke (Context-Dependent) denotes the most indirect and potentially bidirectional link.
+      No supplied study directly connects ABCA8 to amyloid-&beta;, tau, cognition, or AD clinical outcomes.
+    </figcaption>
+  </figure>
+
+  <!-- OVERVIEW -->
+  <section>
+    <h2>1. Overview</h2>
+
+    <div class="alert infer">
+      <strong>Evidence Level — Inferential Only:</strong> No supplied study demonstrates that ABCA8 causes,
+      modifies, or treats Alzheimer's disease, nor that it directly alters amyloid-&beta;, tau, cognition,
+      plaque/tangle burden, or AD clinical risk. All AD relevance is mechanistic extrapolation from lipid,
+      myelin, barrier, and neuroimmune biology.
+    </div>
+
+    <div class="alert caution">
+      <strong>Context Dependency:</strong> ABCA8 effects differ across cell types and disease states.
+      In multiple system atrophy, increased ABCA8 drove &alpha;-synuclein and p25&alpha; accumulation —
+      suggesting excessive or misplaced activation may be maladaptive in some proteinopathies.
+      Therapeutic direction is not yet clear.
+    </div>
+
+    <p>
+      ABCA8 encodes an <strong>ATP-binding cassette subfamily A transporter</strong> with recurring roles
+      in lipid handling, cholesterol efflux, sphingomyelin metabolism, oligodendrocyte/myelin biology,
+      CNS barrier transport, immune-lipid regulation, and disease-associated signaling. It can potentiate
+      ABCA1-mediated cholesterol efflux, stimulate sphingomyelin synthase 1 (SMS1) in oligodendrocytes,
+      and is expressed in brain microvessels, choroid plexus, oligodendrocyte-rich white matter, and
+      primary brain cells.
+    </p>
+    <p>
+      Its AD relevance is <strong>entirely inferential</strong>, resting on overlap with known AD biology:
+      APOE lipidation and CNS cholesterol trafficking, sphingolipid balance and membrane APP processing,
+      myelin and white-matter degeneration contributing to cognitive decline, neurovascular and choroid
+      plexus function, and glial lipid handling near amyloid plaques. ABCA8 is best characterized as a
+      <strong>hypothesis-generating AD candidate</strong>, not a validated therapeutic target.
+    </p>
+  </section>
+
+  <!-- KEY INSIGHTS -->
+  <section>
+    <h2>2. Key Insights</h2>
+    <div class="cards">
+
+      <div class="card lipid">
+        <h3>Cholesterol &amp; Lipid Efflux — Central Theme</h3>
+        <p>ABCA8 supports cholesterol efflux, potentiates ABCA1-mediated efflux, and is associated with HDL-C regulation. In AD, APOE lipidation, CNS cholesterol trafficking, and lipid-sensitive amyloid processing make this the strongest inferential link to AD biology.</p>
+      </div>
+
+      <div class="card myelin">
+        <h3>Oligodendrocyte &amp; Myelin Biology</h3>
+        <p>ABCA8/Abca8b is associated with oligodendrocyte precursor cells, mature oligodendrocytes, CSPG4 membrane localization, myelin thickness, axonal conduction, and locomotor function in mice. Myelin breakdown and white-matter injury contribute to cognitive decline and AD progression.</p>
+      </div>
+
+      <div class="card sphingo">
+        <h3>Sphingomyelin &amp; Sphingolipid Metabolism</h3>
+        <p>ABCA8 acts as a sphingomyelin transporter/regulator, stimulates SMS1 in oligodendrocytes, and in ALS motor cortex increased sphingomyelin and ABCA8 tracked with TDP-43 pathology as a proposed protective response. Sphingolipids affect lipid rafts, APP processing, and inflammatory signaling.</p>
+      </div>
+
+      <div class="card barrier">
+        <h3>CNS Barrier &amp; Choroid Plexus</h3>
+        <p>ABCA8 is detected in human brain microvessels and mouse choroid plexus, suggesting roles in lipid exchange across the BBB, CSF composition, xenobiotic handling, and therapeutic efflux — all relevant to amyloid clearance and neuroinflammatory homeostasis in AD.</p>
+      </div>
+
+      <div class="card immune">
+        <h3>Lipid-Associated Microglial States</h3>
+        <p>In cancer, ABCA8-positive lipid-processing stromal cells co-localize with APOE-positive lipid-associated macrophages and promote M2-like polarization — a possible parallel with APOE+/TREM2+ lipid-associated microglia (LAM) states around amyloid plaques in AD.</p>
+      </div>
+
+      <div class="card signaling">
+        <h3>Signaling Pathway Overlap</h3>
+        <p>ABCA8 has been connected to Wnt/&beta;-catenin, PI3K/AKT, AMPK/mTOR, ERK, and inflammatory/TNF regulation in non-AD contexts. These pathways influence neuronal survival, autophagy, tau biology, and neuroinflammation — but ABCA8 has not been shown to regulate them in AD brain.</p>
+      </div>
+
+      <div class="card context">
+        <h3>Context-Dependent &amp; Potentially Bidirectional</h3>
+        <p>In several cancers ABCA8 behaves as a tumor-suppressive gene. In pancreatic cancer it drives chemoresistance via taurocholic acid efflux and ERK. In multiple system atrophy, increased ABCA8 elevated &alpha;-synuclein and p25&alpha; — suggesting excessive activity may be maladaptive in some proteinopathies.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ACTIONABLE TAKEAWAYS -->
+  <section>
+    <h2>3. Actionable Takeaways</h2>
+    <ol class="takeaways">
+      <li><strong>Treat ABCA8 as an exploratory AD target, not an established one.</strong> Current evidence supports biological plausibility through lipid, myelin, immune, and barrier pathways — but no direct AD validation exists.</li>
+      <li><strong>Prioritize AD patient-data validation.</strong> Test whether ABCA8 expression or methylation changes in AD-vulnerable regions, white matter, brain microvessels, choroid plexus, astrocytes, oligodendrocytes, microglia, neurons, or perivascular/stromal compartments.</li>
+      <li><strong>Test correlations with core AD biology.</strong> Examine ABCA8 against amyloid-&beta; burden, tau pathology, TDP-43 co-pathology, APOE genotype, lipidomic profiles, sphingomyelin levels, HDL-like CNS lipoproteins, microglial activation states, white-matter integrity, and cognitive decline.</li>
+      <li><strong>Use cell-type-specific models.</strong> ABCA8 effects may differ across neurons, oligodendrocytes, microglia, astrocytes, endothelial cells, choroid plexus epithelium, and stromal-like cells — bulk-tissue interpretation is likely misleading.</li>
+      <li><strong>Investigate therapeutic direction carefully.</strong> Enhancing ABCA8 might support cholesterol efflux, ABCA1-related lipidation, sphingomyelin balance, oligodendrocyte maintenance, and myelin preservation. However, excessive or misplaced activation could worsen proteinopathy-related glial stress, as seen in MSA.</li>
+      <li><strong>Include CNS barrier and drug-delivery studies.</strong> ABCA8 expression in brain microvessels and choroid plexus suggests it could influence lipid exchange, CSF composition, xenobiotic handling, or therapeutic efflux — requiring direct testing in AD-relevant barrier models.</li>
+      <li><strong>Anchor therapeutic thinking in glial lipid biology, not anti-amyloid or anti-tau activity.</strong> ABCA8 is most plausibly relevant to AD through glial lipid homeostasis, APOE-adjacent cholesterol trafficking, sphingomyelin regulation, myelin/white-matter resilience, neuroimmune lipid states, and CNS barrier transport.</li>
+    </ol>
+  </section>
+
+  <!-- VERDICT -->
+  <section>
+    <div class="verdict">
+      <strong>Overall Assessment &mdash;</strong>
+      ABCA8 is a <strong>hypothesis-generating lipid-biology candidate</strong> with no direct AD evidence in
+      the supplied literature. Its mechanistic rationale — cholesterol efflux and APOE lipidation, sphingomyelin
+      regulation and APP processing, oligodendrocyte myelin maintenance, CNS barrier lipid transport, and
+      lipid-associated glial states — is coherent and AD-adjacent. However,
+      <strong>all AD relevance is currently inferential</strong>, and context-dependent effects mean that
+      therapeutic direction must be established through direct AD-specific experimental work before
+      any clinical development can be justified.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  ABCA8 TEP Evidence Summary &mdash; AI-generated analysis &middot; For research use only
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TREM2 — TREAT-AD TEP Summary</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #fff5f5;
+    color: #1c1917;
+    line-height: 1.65;
+  }
+
+  /* ---- Header ---- */
+  .page-header {
+    background: linear-gradient(135deg, #5a0000 0%, #8b1818 50%, #b92424 100%);
+    color: #fff;
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+  }
+  .gene-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.65;
+    margin-bottom: 0.4rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .gene-title { font-size: 3rem; font-weight: bold; letter-spacing: 0.05em; }
+  .gene-subtitle {
+    font-size: 0.95rem;
+    opacity: 0.82;
+    margin-top: 0.4rem;
+    font-style: italic;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .chip-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .chip {
+    display: inline-block;
+    padding: 0.25rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .chip-priority  { background: #dcfce7; color: #14532d; }
+  .chip-microglia { background: #fee2e2; color: #7f1d1d; }
+  .chip-precision { background: #fef9c3; color: #713f12; }
+
+  /* ---- High-priority banner ---- */
+  .priority-banner {
+    background: #dcfce7;
+    border-left: 5px solid #16a34a;
+    padding: 0.8rem 1.4rem;
+    margin: 1.4rem auto 0;
+    max-width: 860px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.87rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #14532d;
+  }
+  .priority-banner strong { font-weight: 700; }
+
+  /* ---- Clinical caution banner ---- */
+  .caution-banner {
+    background: #fef9c3;
+    border-left: 5px solid #ca8a04;
+    padding: 0.7rem 1.4rem;
+    margin: 0.6rem auto 0;
+    max-width: 860px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.85rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #713f12;
+  }
+  .caution-banner strong { font-weight: 700; }
+
+  /* ---- Container ---- */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
+  }
+
+  /* ---- Section headings ---- */
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #8b1818;
+    border-bottom: 2px solid #fca5a5;
+    padding-bottom: 0.4rem;
+    margin: 2rem 0 1rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  /* ---- Overview ---- */
+  .overview-text { font-size: 0.97rem; color: #292524; max-width: 820px; }
+
+  /* ---- Figure ---- */
+  .figure-wrap {
+    background: #fff;
+    border: 1px solid #fca5a5;
+    border-radius: 10px;
+    padding: 1rem 0.5rem 0.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 2px 8px rgba(90,0,0,0.07);
+    overflow-x: auto;
+  }
+  .figure-wrap figcaption {
+    text-align: center;
+    font-size: 0.78rem;
+    color: #6b7280;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+
+  /* ---- Insight cards ---- */
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  @media (max-width: 640px) { .cards { grid-template-columns: 1fr; } }
+  .card {
+    background: #fff;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    box-shadow: 0 1px 4px rgba(90,0,0,0.05);
+  }
+  .card h3 {
+    font-size: 0.92rem;
+    font-weight: bold;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin-bottom: 0.35rem;
+  }
+  .card p { font-size: 0.85rem; color: #374151; line-height: 1.55; }
+
+  /* Per-domain card accents matching SVG node colors */
+  .card-dam      { border-left: 4px solid #b91c1c; }
+  .card-dam      h3 { color: #b91c1c; }
+  .card-lipid    { border-left: 4px solid #b45309; }
+  .card-lipid    h3 { color: #b45309; }
+  .card-strem2   { border-left: 4px solid #0f766e; }
+  .card-strem2   h3 { color: #0f766e; }
+  .card-apoe     { border-left: 4px solid #3730a3; }
+  .card-apoe     h3 { color: #3730a3; }
+  .card-signaling{ border-left: 4px solid #1d4ed8; }
+  .card-signaling h3 { color: #1d4ed8; }
+  .card-gut      { border-left: 4px solid #15803d; }
+  .card-gut      h3 { color: #15803d; }
+
+  /* ---- Takeaways ---- */
+  .takeaways {
+    background: #fff;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-top: 0.5rem;
+  }
+  .takeaways ul { padding-left: 1.3rem; }
+  .takeaways li {
+    font-size: 0.88rem;
+    color: #1c1917;
+    margin-bottom: 0.65rem;
+    padding-left: 0.2rem;
+  }
+  .takeaways li::marker { color: #b92424; }
+  .takeaways li:last-child { margin-bottom: 0; }
+
+  /* ---- Verdict ---- */
+  .verdict {
+    background: linear-gradient(135deg, #8b1818, #5a0000);
+    color: #fff;
+    border-radius: 10px;
+    padding: 1.4rem 1.8rem;
+    margin-top: 2rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .verdict-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 0.5rem;
+  }
+  .verdict p { font-size: 0.95rem; line-height: 1.6; opacity: 0.95; }
+
+  /* ---- Footer ---- */
+  footer {
+    text-align: center;
+    font-size: 0.75rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #9ca3af;
+    padding: 1.5rem 0;
+    border-top: 1px solid #fca5a5;
+    margin-top: 2.5rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="page-header">
+  <p class="gene-label">TREAT-AD Target Enabling Package</p>
+  <h1 class="gene-title">TREM2</h1>
+  <p class="gene-subtitle">Triggering Receptor Expressed on Myeloid Cells 2 &nbsp;|&nbsp; Microglial Immune Receptor &nbsp;|&nbsp; DAM / Plaque Clearance Hub</p>
+  <div class="chip-row">
+    <span class="chip chip-priority">High-Priority Target</span>
+    <span class="chip chip-microglia">Microglial Immune</span>
+    <span class="chip chip-precision">Precision Required</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- High-priority banner -->
+  <div class="priority-banner">
+    <strong>High-Priority Validated Target:</strong> TREM2 is one of the strongest immune-related genetic risk factors for late-onset AD. Variants such as R47H, R62H, H157Y, and T96K impair ligand binding, phagocytosis, lipid metabolism, and plaque responses. Supported by extensive preclinical data, active clinical programs, and emerging biomarker tools.
+  </div>
+
+  <!-- Clinical caution -->
+  <div class="caution-banner">
+    <strong>Clinical Caution — AL002 Phase 2:</strong> The TREM2 agonist antibody AL002 achieved CNS target engagement but did not improve clinical outcomes in early AD and was associated with ARIA-like MRI changes. Target engagement alone is insufficient; modality, epitope, shedding effects, dose, timing, patient stage, and microglial-state specificity are likely decisive.
+  </div>
+
+  <!-- ===== OVERVIEW ===== -->
+  <h2 class="section-title">Overview</h2>
+  <p class="overview-text">
+    TREM2 is a central microglial/myeloid immune receptor and high-priority AD therapeutic target. TREM2 signals through DAP12/TYROBP to activate SYK, PI3K/Akt, PLCG2, ERK/p38 MAPK, and mTOR, supporting microglial survival, phagocytosis, lipid metabolism, lysosomal function, and inflammatory modulation. Its protective functions include microglial clustering around amyloid plaques, plaque compaction, Aβ uptake and degradation, DAM-like state transitions, lipid/myelin debris processing, and restraint of damaging inflammatory polarization. AD-associated TREM2 variants impair these functions, linking TREM2 to impaired phagocytosis, altered lipid responses, weaker plaque containment, and increased disease vulnerability. TREM2 ectodomain shedding by ADAM10/17 generates soluble TREM2 (sTREM2), a biomarker of microglial activation and a potential functional mediator. The APOE–TREM2 axis is a recurring joint risk mechanism for lipid handling, metabolic fitness, and disease-microglia states. Gut microbiota dysbiosis and environmental toxicants can downregulate TREM2 and dysregulate microglial signaling. Therapeutic strategies span agonist antibodies, small molecules, anti-shedding compounds, mini-proteins, and microbiome/metabolic interventions—but the AL002 phase 2 trial outcome underscores that precision patient selection, disease stage, and optimal engagement strategy are decisive.
+  </p>
+
+  <!-- ===== FIGURE ===== -->
+  <h2 class="section-title">Mechanistic Summary Figure</h2>
+  <figure class="figure-wrap">
+    <!--
+      Verified hexagonal layout — no overlapping objects or text
+      Canvas: 860 × 590   Hub: cx=430 cy=300 r=64   Ring: 185px   Ellipses: rx=115 ry=38
+
+      Node centres (60° intervals; 185·sin60°=160, 185·cos60°=92):
+        Top         (430, 115)
+        Top-right   (590, 208)
+        Bot-right   (590, 392)
+        Bottom      (430, 485)
+        Bot-left    (270, 392)
+        Top-left    (270, 208)
+
+      Overlap check (adjacent, rx=115, ry=38):
+        Top ↔ TR:  (160/115)²+(93/38)² = 1.94+5.99 = 7.93 > 1  ✓
+        TR  ↔ BR:  (0/115)²+(184/38)²  = 23.4 > 1              ✓
+      Hub clearance: 236−153 = 83px ✓ (top);  447−364 = 83px ✓ (bottom)
+      Canvas: top ellipse top=77px; bottom ellipse bottom=523px (<590) ✓
+    -->
+    <svg viewBox="0 0 860 590" width="860" height="590" xmlns="http://www.w3.org/2000/svg"
+         font-family="'Helvetica Neue', Arial, sans-serif" text-anchor="middle">
+
+      <!-- Background -->
+      <rect width="860" height="590" fill="#fff5f5" rx="8"/>
+
+      <!-- Figure title -->
+      <text x="430" y="38" font-size="13.5" font-weight="bold" fill="#5a0000">
+        TREM2 · Microglial Immune Receptor — Six AD-Relevant Domains
+      </text>
+
+      <!-- ===== SPOKES — solid: direct validated AD evidence ===== -->
+      <line x1="430" y1="300" x2="430" y2="115" stroke="#fca5a5" stroke-width="2"/>
+      <line x1="430" y1="300" x2="590" y2="208" stroke="#fca5a5" stroke-width="2"/>
+      <line x1="430" y1="300" x2="590" y2="392" stroke="#fca5a5" stroke-width="2"/>
+      <line x1="430" y1="300" x2="430" y2="485" stroke="#fca5a5" stroke-width="2"/>
+      <line x1="430" y1="300" x2="270" y2="392" stroke="#fca5a5" stroke-width="2"/>
+      <line x1="430" y1="300" x2="270" y2="208" stroke="#fca5a5" stroke-width="2"/>
+
+      <!-- ===== CENTRAL HUB ===== -->
+      <circle cx="430" cy="300" r="64" fill="#5a0000" stroke="#fca5a5" stroke-width="3"/>
+      <text x="430" y="291" font-size="16"  font-weight="bold" fill="#fff">TREM2</text>
+      <text x="430" y="308" font-size="8.5" fill="#fecaca">DAP12 · SYK · PI3K</text>
+      <text x="430" y="321" font-size="8.5" fill="#fca5a5">Microglial Receptor</text>
+
+      <!-- ===== NODE 1 — TOP: Microglial DAM / Plaque (Crimson) ===== -->
+      <ellipse cx="430" cy="115" rx="115" ry="38" fill="#b91c1c" stroke="#fca5a5" stroke-width="1.5"/>
+      <text x="430" y="109" font-size="10" font-weight="bold" fill="#fff">Microglial DAM / Plaque</text>
+      <text x="430" y="125" font-size="9"  fill="#fecaca">A&#946; Clear. · DAM · Compact</text>
+
+      <!-- ===== NODE 2 — TOP-RIGHT: Lipid / Immunometabolism (Amber) ===== -->
+      <ellipse cx="590" cy="208" rx="115" ry="38" fill="#b45309" stroke="#fde68a" stroke-width="1.5"/>
+      <text x="590" y="202" font-size="10" font-weight="bold" fill="#fff">Lipid / Immunometabolism</text>
+      <text x="590" y="218" font-size="9"  fill="#fef3c7">Sphingolipid · Cholesterol</text>
+
+      <!-- ===== NODE 3 — BOTTOM-RIGHT: sTREM2 / Shedding (Teal) ===== -->
+      <ellipse cx="590" cy="392" rx="115" ry="38" fill="#0f766e" stroke="#99f6e4" stroke-width="1.5"/>
+      <text x="590" y="386" font-size="10" font-weight="bold" fill="#fff">sTREM2 / Shedding</text>
+      <text x="590" y="402" font-size="9"  fill="#ccfbf1">ADAM10 · Biomarker · EV</text>
+
+      <!-- ===== NODE 4 — BOTTOM: APOE–TREM2 Axis (Indigo) ===== -->
+      <ellipse cx="430" cy="485" rx="115" ry="38" fill="#3730a3" stroke="#a5b4fc" stroke-width="1.5"/>
+      <text x="430" y="479" font-size="10" font-weight="bold" fill="#fff">APOE–TREM2 Axis</text>
+      <text x="430" y="495" font-size="9"  fill="#e0e7ff">ApoE4 · Joint Risk · Lipid</text>
+
+      <!-- ===== NODE 5 — BOTTOM-LEFT: Signaling Network (Blue) ===== -->
+      <ellipse cx="270" cy="392" rx="115" ry="38" fill="#1d4ed8" stroke="#bfdbfe" stroke-width="1.5"/>
+      <text x="270" y="386" font-size="10" font-weight="bold" fill="#fff">Signaling Network</text>
+      <text x="270" y="402" font-size="9"  fill="#dbeafe">SYK · PI3K · DAP12 · NF-&#954;B</text>
+
+      <!-- ===== NODE 6 — TOP-LEFT: Gut-Brain / Environment (Green) ===== -->
+      <ellipse cx="270" cy="208" rx="115" ry="38" fill="#15803d" stroke="#86efac" stroke-width="1.5"/>
+      <text x="270" y="202" font-size="10" font-weight="bold" fill="#fff">Gut-Brain / Environment</text>
+      <text x="270" y="218" font-size="9"  fill="#d1fae5">Microbiota · Toxicants</text>
+
+      <!-- ===== LEGEND ===== -->
+      <rect x="18" y="524" width="824" height="54" rx="6" fill="#fff" stroke="#fca5a5" stroke-width="1"/>
+
+      <!-- Row 1 -->
+      <circle cx="55"  cy="538" r="7" fill="#b91c1c"/>
+      <text x="67"  y="542" font-size="8.5" fill="#292524" text-anchor="start">Microglial DAM / Plaque</text>
+
+      <circle cx="240" cy="538" r="7" fill="#b45309"/>
+      <text x="252" y="542" font-size="8.5" fill="#292524" text-anchor="start">Lipid / Immunometabolism</text>
+
+      <circle cx="430" cy="538" r="7" fill="#0f766e"/>
+      <text x="442" y="542" font-size="8.5" fill="#292524" text-anchor="start">sTREM2 / Shedding</text>
+
+      <!-- Row 2 -->
+      <circle cx="55"  cy="559" r="7" fill="#3730a3"/>
+      <text x="67"  y="563" font-size="8.5" fill="#292524" text-anchor="start">APOE–TREM2 Axis</text>
+
+      <circle cx="240" cy="559" r="7" fill="#1d4ed8"/>
+      <text x="252" y="563" font-size="8.5" fill="#292524" text-anchor="start">Signaling Network</text>
+
+      <circle cx="430" cy="559" r="7" fill="#15803d"/>
+      <text x="442" y="563" font-size="8.5" fill="#292524" text-anchor="start">Gut-Brain / Environment</text>
+
+      <!-- AL002 trial note -->
+      <rect x="630" y="528" width="212" height="42" rx="5" fill="#fef9c3" stroke="#fde68a" stroke-width="1"/>
+      <text x="736" y="545" font-size="8.5" font-weight="bold" fill="#713f12" text-anchor="middle">AL002 Phase 2 Result</text>
+      <text x="736" y="560" font-size="8"   fill="#92400e" text-anchor="middle">Engaged target; no clinical benefit</text>
+
+    </svg>
+    <figcaption>
+      Color-coded hub-and-spoke diagram of six TREM2 biological domains in Alzheimer's disease.
+      Solid spokes reflect direct genetic and mechanistic AD evidence. Each node color matches its Key Insight card.
+      The AL002 Phase 2 result reinforces the need for precision modality, timing, and patient-selection strategies.
+    </figcaption>
+  </figure>
+
+  <!-- ===== KEY INSIGHTS ===== -->
+  <h2 class="section-title">Key Insights</h2>
+  <div class="cards">
+
+    <div class="card card-dam">
+      <h3>Microglial DAM Transition &amp; Plaque Biology</h3>
+      <p>TREM2 is required for microglial clustering around amyloid plaques, plaque compaction, Aβ uptake and degradation, containment of toxic amyloid species, and prevention of maladaptive tau cross-seeding. It drives the transition from homeostatic to DAM-like states via the TREM2–APOE and TREM2–TYROBP/DAP12 axes, enabling damage sensing, debris clearance, lipid metabolism, and inflammatory restraint. However, DAM-like states can be protective or harmful depending on disease stage and microenvironment context.</p>
+    </div>
+
+    <div class="card card-lipid">
+      <h3>Lipid Sensing &amp; Immunometabolism</h3>
+      <p>TREM2 is repeatedly tied to lipid sensing, sphingolipid/phospholipid metabolism, cholesterol handling, lipid droplet regulation, myelin/debris processing, mitochondrial fitness, oxidative metabolism, and fatty-acid adaptation. AD-associated TREM2 variants may produce systemic lipid and metabolic disturbances—in liver, plasma, and brain—before advanced neurodegeneration, offering early biomarker and intervention windows. TREM2-deficient microglia show impaired metabolic reprogramming and lysosomal lipid processing.</p>
+    </div>
+
+    <div class="card card-strem2">
+      <h3>Soluble TREM2 &amp; Shedding</h3>
+      <p>ADAM10/17-mediated ectodomain shedding generates soluble TREM2 (sTREM2), reducing membrane TREM2 signaling while releasing a potential functional mediator. Plasma or CSF sTREM2 associates with microglial activation, AD classification, tau-related injury, cognitive decline/resilience, lipidomic signatures, and therapeutic pharmacodynamics. TREM2-positive extracellular vesicles and emerging TREM2 PET tracers further expand biomarker and target-engagement monitoring capabilities. Membrane TREM2 and sTREM2 may have distinct, context-dependent roles that require separate pharmacodynamic interpretation.</p>
+    </div>
+
+    <div class="card card-apoe">
+      <h3>APOE–TREM2 Joint Risk Axis</h3>
+      <p>APOE and TREM2 are two of the most important late-onset AD risk loci, converging on microglial lipid sensing, phagocytosis, amyloid clearance, tau spread, neuroinflammation, and synaptic integrity. APOE4 and TREM2 variants may jointly impair lipid handling, microglial activation, mitochondrial integrity, and plaque responses. Structural modeling of the ApoE–TREM2 ligand interaction supports design of TREM2 agonists or mini-protein modulators, though Aβ/ApoE ligand competition at TREM2 may affect drug response.</p>
+    </div>
+
+    <div class="card card-signaling">
+      <h3>Downstream Signaling Network</h3>
+      <p>TREM2 signals through DAP12/TYROBP → SYK → PI3K/Akt, PLCG2, ERK/p38 MAPK, NF-κB, mTOR, NLRP3, BTK, and cGAS-STING. In many models, TREM2 restrains damaging inflammatory polarization and cytokine release; in others, excessive TREM2-linked activation may contribute to synaptic pruning, inflammatory injury, or tissue remodeling. Therapeutic agonists include antibodies, small molecules, peptides, vitamin D3/cholecalciferol, cystatin C, Sulfavant A, and dual agonist/anti-shedding modulators such as As48-like compounds.</p>
+    </div>
+
+    <div class="card card-gut">
+      <h3>Gut–Brain &amp; Environmental Modulation</h3>
+      <p>APP/PS1 microbiota dysbiosis downregulated TREM2 and dysregulated TREM2/SYK/NF-κB signaling, promoting M1 microglial polarization, cytokine release, synaptic protein loss, and cognitive impairment. Fecal microbiota transplantation reversed these changes, restoring TREM2 expression and microglial homeostasis. Environmental toxicants and metabolic insults can also alter TREM2-associated microglial states. These findings open non-pharmacological and combination intervention strategies for TREM2-linked AD biology.</p>
+    </div>
+
+  </div>
+
+  <!-- ===== ACTIONABLE TAKEAWAYS ===== -->
+  <h2 class="section-title">Actionable Takeaways</h2>
+  <div class="takeaways">
+    <ul>
+      <li><strong>Treat TREM2 as a precision immunomodulatory target, not a generic activation target.</strong> The goal is restoration of protective microglial functions—Aβ clearance, plaque containment, lipid/debris processing, lysosomal competence, metabolic fitness, inflammatory resolution—not indiscriminate TREM2 upregulation.</li>
+      <li><strong>Interpret the AL002 Phase 2 result as a refinement signal, not a dismissal of TREM2.</strong> Modality, epitope, shedding effects, dose, timing, patient stage, ARIA risk, and microglial-state specificity are likely decisive. Next-generation TREM2 programs should address these variables explicitly.</li>
+      <li><strong>Stratify patients by genotype and biological context.</strong> APOE ε4 status, TREM2 variants (R47H/R62H/H157Y/T96K), PLCG2 variants, MS4A haplotype, sex, amyloid/tau stage, vascular amyloid burden, and baseline microglial activation state may all influence TREM2 therapeutic response.</li>
+      <li><strong>Distinguish membrane TREM2 from soluble TREM2 biology.</strong> Anti-shedding strategies preserve full-length membrane TREM2 and DAP12/SYK signaling; other approaches may leverage beneficial sTREM2 Aβ-uptake effects. Both require separate pharmacodynamic monitoring.</li>
+      <li><strong>Use a rich biomarker panel to guide development and selection.</strong> CSF/plasma sTREM2, GFAP, YKL-40, osteopontin, p-tau, Aβ measures, NfL, TREM2-positive extracellular vesicles, lipidomic signatures, TSPO PET, and emerging TREM2 PET can track engagement, state, and response.</li>
+      <li><strong>Design CNS-selective therapeutic strategies.</strong> TREM2 has divergent roles in peripheral macrophages, tumors, allergic disease, vascular injury, and fibrosis. Systemic broad TREM2 activation could create off-target immunosuppressive, pro-tumoral, or profibrotic risks.</li>
+      <li><strong>Advance stage-specific trial designs.</strong> Early amyloid-positive or prodromal phases may be optimal for phagocytic enhancement and plaque-containment approaches. Later inflammatory or synapse-loss stages may require more cautious or selective TREM2 modulation to avoid worsening synaptic pruning or neuronal injury.</li>
+      <li><strong>Consider combination strategies.</strong> TREM2 modulation may synergize with amyloid-lowering therapies, APOE/lipid-targeted therapies, microbiome interventions, metabolic support, exercise, anti-inflammatory pathway tuning, and lysosomal/autophagic enhancement.</li>
+    </ul>
+  </div>
+
+  <!-- ===== VERDICT ===== -->
+  <div class="verdict">
+    <p class="verdict-label">TEP Verdict</p>
+    <p>
+      <strong>TREM2 is a high-priority, genetically and mechanistically validated AD therapeutic target with a precision-medicine mandate.</strong>
+      The desired therapeutic profile—"protective TREM2 signaling signature"—includes enhanced plaque/debris clearance, intact lysosomal degradation, improved lipid handling, reduced harmful cytokine output, preserved synapses, and measurable target engagement without ARIA-like or inflammatory toxicity. The AL002 Phase 2 result demonstrates that target engagement alone is insufficient and that next-generation TREM2 programs must optimize epitope, modality, shedding balance, patient genotype, disease stage, and CNS selectivity. TREM2 remains among the most compelling precision immunomodulatory targets in Alzheimer's disease.
+    </p>
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  TREAT-AD Target Enabling Package &nbsp;·&nbsp; TREM2 &nbsp;·&nbsp; AI-Assisted Gene Summary &nbsp;·&nbsp; For Research Use Only
+</footer>
+
+</body>
+</html>

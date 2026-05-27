@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRIN2B &amp; Alzheimer's Disease — TEP Summary</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sky-dark:  #0c4a6e;
+      --sky-mid:   #0369a1;
+      --sky-light: #e0f2fe;
+      --green:     #16a34a;
+      --red:       #b91c1c;
+      --purple:    #7c3aed;
+      --amber:     #d97706;
+      --teal:      #0d9488;
+      --slate:     #475569;
+      --gray-100:  #f1f5f9;
+      --gray-200:  #e2e8f0;
+      --gray-600:  #475569;
+      --text:      #1e293b;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      color: var(--text);
+      background: #fff;
+      line-height: 1.75;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--sky-dark) 0%, #062840 100%);
+      color: #fff;
+      padding: 48px 32px 40px;
+      text-align: center;
+    }
+    header .gene-chip {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 999px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      padding: 4px 14px;
+      margin-bottom: 16px;
+    }
+    .target-chip {
+      display: inline-block;
+      background: rgba(186,230,253,0.2);
+      border: 1px solid rgba(186,230,253,0.45);
+      border-radius: 999px;
+      font-family: sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      padding: 3px 12px;
+      margin-left: 10px;
+      color: #bae6fd;
+    }
+    header h1 { font-size: 2.4rem; font-weight: normal; letter-spacing: -0.02em; margin-bottom: 8px; }
+    header p.subtitle { font-size: 1rem; opacity: 0.75; font-style: italic; }
+
+    main { max-width: 900px; margin: 0 auto; padding: 48px 24px; }
+    section { margin-bottom: 52px; }
+    section h2 {
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--sky-mid);
+      border-bottom: 2px solid var(--sky-light);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    p { margin-bottom: 14px; }
+
+    .alert {
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+    .alert.key    { background: var(--sky-light); border: 1.5px solid var(--sky-mid); }
+    .alert.caution{ background: #fffbeb;           border: 1.5px solid var(--amber); }
+    .alert strong { color: var(--sky-dark); }
+    .alert.caution strong { color: #92400e; }
+
+    /* ── Figure ── */
+    .figure-wrap {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 32px 24px 20px;
+      margin-bottom: 52px;
+      overflow: hidden;
+    }
+    .figure-wrap figcaption {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--gray-600);
+      margin-top: 16px;
+      font-style: italic;
+    }
+    .figure-wrap svg { display: block; margin: 0 auto; max-width: 100%; }
+
+    /* ── Cards ── */
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 620px) { .cards { grid-template-columns: 1fr; } }
+    .card {
+      border-radius: 10px;
+      padding: 18px 20px;
+      border-left: 4px solid transparent;
+    }
+    .card.abeta   { background: var(--sky-light);  border-color: var(--sky-mid); }
+    .card.syn     { background: #f0fdf4;            border-color: var(--green); }
+    .card.tau     { background: #f5f3ff;            border-color: var(--purple); }
+    .card.auto    { background: #f0fdf4;            border-color: var(--teal); }
+    .card.network { background: #f8fafc;            border-color: var(--slate); }
+    .card.vasc    { background: #fffbeb;            border-color: var(--amber); }
+    .card.exsyn   { background: #fff1f2;            border-color: var(--red); }
+    .card.pharma  { background: #fffbeb;            border-color: #b45309; }
+
+    .card h3 { font-size: 0.9rem; font-family: sans-serif; font-weight: 700; margin-bottom: 6px; }
+    .card p  { font-size: 0.87rem; margin: 0; line-height: 1.55; }
+
+    ol.takeaways { padding-left: 20px; }
+    ol.takeaways li { margin-bottom: 12px; font-size: 0.95rem; }
+    ol.takeaways li strong { color: var(--sky-dark); }
+
+    .verdict {
+      background: linear-gradient(135deg, #062840 0%, var(--sky-dark) 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 28px 32px;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .verdict strong { color: #bae6fd; }
+
+    footer {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--gray-600);
+      padding: 24px;
+      border-top: 1px solid var(--gray-200);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <span class="gene-chip">Gene: GRIN2B &nbsp;|&nbsp; GluN2B NMDA Receptor Subunit</span>
+    <span class="target-chip">&#9670; A&beta;-Linked &nbsp;|&nbsp; Druggable &nbsp;|&nbsp; Precision Target</span>
+  </div>
+  <h1>GRIN2B &amp; Alzheimer's Disease</h1>
+  <p class="subtitle">Target Enabling Package — AI-Assisted Evidence Summary</p>
+</header>
+
+<main>
+
+  <!--
+    FIGURE — verified non-overlapping layout:
+    Canvas 860 × 545. Central hub cx=430, cy=288, r=62.
+    6 ellipses (rx=115, ry=38) on a ring of radius 180 px at 60° intervals.
+    Positions: Top(430,108) TR(586,198) BR(586,378) Bot(430,468) BL(274,378) TL(274,198).
+    All ellipse pairs separated by ≥16 px. No ellipse intersects the central circle
+    (nearest ellipse corner is ≥74 px from hub centre; hub r=62). Spokes drawn first.
+    Text: titles ≤24 chars at font-size 10; subtitles ≤26 chars at font-size 9.
+  -->
+  <figure class="figure-wrap">
+    <svg width="860" height="545" viewBox="0 0 860 545"
+         xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+
+      <!-- Background -->
+      <rect width="860" height="545" fill="#f8fafc" rx="8"/>
+
+      <!-- Title -->
+      <text x="430" y="22" text-anchor="middle"
+            fill="#0c4a6e" font-size="13" font-weight="bold">
+        GRIN2B — GluN2B NMDAR Subunit &amp; AD Relevance
+      </text>
+
+      <!-- ── Spokes drawn first so filled shapes render on top ── -->
+      <line x1="430" y1="288" x2="430" y2="108" stroke="#16a34a" stroke-width="2.2"/>
+      <line x1="430" y1="288" x2="586" y2="198" stroke="#0369a1" stroke-width="2.2"/>
+      <line x1="430" y1="288" x2="586" y2="378" stroke="#7c3aed" stroke-width="2"/>
+      <line x1="430" y1="288" x2="430" y2="468" stroke="#d97706" stroke-width="2"/>
+      <line x1="430" y1="288" x2="274" y2="378" stroke="#b91c1c" stroke-width="2"/>
+      <line x1="430" y1="288" x2="274" y2="198" stroke="#0d9488" stroke-width="2"/>
+
+      <!-- ── Central hub ── -->
+      <circle cx="430" cy="288" r="62"
+              fill="#0c4a6e" stroke="#bae6fd" stroke-width="3"/>
+      <text x="430" y="278" text-anchor="middle"
+            fill="#fff" font-size="20" font-weight="bold">GRIN2B</text>
+      <text x="430" y="294" text-anchor="middle"
+            fill="#bae6fd" font-size="9">GluN2B NMDAR Subunit</text>
+      <text x="430" y="308" text-anchor="middle"
+            fill="#7dd3fc" font-size="8">Syn &#8660; Extrasyn balance</text>
+
+      <!-- ── Node 1: TOP (430, 108) — Synaptic GluN2B ── -->
+      <!-- Bounds x:315–545  y:70–146  Gap to title bottom (~36 px): 34 px ✓ -->
+      <ellipse cx="430" cy="108" rx="115" ry="38" fill="#16a34a"/>
+      <text x="430" y="101" text-anchor="middle"
+            fill="#fff" font-size="10" font-weight="bold">Synaptic GluN2B</text>
+      <text x="430" y="116" text-anchor="middle"
+            fill="#dcfce7" font-size="9">LTP · CaMKII · memory</text>
+
+      <!-- ── Node 2: TOP-RIGHT (586, 198) — Aβ / AD Direct Evidence ── -->
+      <!-- Bounds x:471–701  y:160–236  Gap to Node 1 bottom (146): 14 px ✓ -->
+      <ellipse cx="586" cy="198" rx="115" ry="38" fill="#0369a1"/>
+      <text x="586" y="191" text-anchor="middle"
+            fill="#fff" font-size="10" font-weight="bold">A&beta; / AD Direct Evidence</text>
+      <text x="586" y="206" text-anchor="middle"
+            fill="#e0f2fe" font-size="9">Ca&#178;&#8314; overload · DAPK1</text>
+
+      <!-- ── Node 3: BOTTOM-RIGHT (586, 378) — Tau via NR2B ── -->
+      <!-- Bounds x:471–701  y:340–416  Gap to Node 2 bottom (236): 104 px ✓ -->
+      <ellipse cx="586" cy="378" rx="115" ry="38" fill="#7c3aed"/>
+      <text x="586" y="371" text-anchor="middle"
+            fill="#fff" font-size="10" font-weight="bold">Tau via NR2B Signaling</text>
+      <text x="586" y="386" text-anchor="middle"
+            fill="#ede9fe" font-size="9">CK2 · mislocalization</text>
+
+      <!-- ── Node 4: BOTTOM (430, 468) — Pharmacological Targets ── -->
+      <!-- Bounds x:315–545  y:430–506  Gap to Node 3 bottom (416): 14 px ✓ -->
+      <ellipse cx="430" cy="468" rx="115" ry="38" fill="#d97706"/>
+      <text x="430" y="461" text-anchor="middle"
+            fill="#fff" font-size="10" font-weight="bold">Pharmacological Targets</text>
+      <text x="430" y="476" text-anchor="middle"
+            fill="#fef3c7" font-size="9">Ifenprodil · NAMs · PET</text>
+
+      <!-- ── Node 5: BOTTOM-LEFT (274, 378) — Excitotoxicity ── -->
+      <!-- Bounds x:159–389  y:340–416
+           Gap to Node 4 left edge (315): 315–389 = x-overlap but y-ranges differ ✓ -->
+      <ellipse cx="274" cy="378" rx="115" ry="38" fill="#b91c1c"/>
+      <text x="274" y="371" text-anchor="middle"
+            fill="#fff" font-size="10" font-weight="bold">Excitotoxicity / Ca&#178;&#8314;</text>
+      <text x="274" y="386" text-anchor="middle"
+            fill="#fecaca" font-size="9">Extrasynaptic · ROS · mito</text>
+
+      <!-- ── Node 6: TOP-LEFT (274, 198) — Autophagy / Proteostasis ── -->
+      <!-- Bounds x:159–389  y:160–236
+           Gap to Node 5 top (340): 104 px ✓
+           Gap to Node 1 left (315): x-overlap but y-ranges differ ✓
+           Gap to Node 2 left (471): 471–389 = 82 px ✓ -->
+      <ellipse cx="274" cy="198" rx="115" ry="38" fill="#0d9488"/>
+      <text x="274" y="191" text-anchor="middle"
+            fill="#fff" font-size="10" font-weight="bold">Autophagy / Proteostasis</text>
+      <text x="274" y="206" text-anchor="middle"
+            fill="#ccfbf1" font-size="9">METTL3 · UBE2K · K1082</text>
+
+      <!-- ── Legend ── -->
+      <!-- Node 4 bottom edge: 506. Legend at y=525 → gap 19 px ✓ -->
+      <circle cx="44" cy="522" r="6" fill="#16a34a"/>
+      <text x="56" y="526" fill="#475569" font-size="8.5">Protective / synaptic</text>
+      <circle cx="175" cy="522" r="6" fill="#b91c1c"/>
+      <text x="187" y="526" fill="#475569" font-size="8.5">Harmful / extrasynaptic</text>
+      <circle cx="318" cy="522" r="6" fill="#0369a1"/>
+      <text x="330" y="526" fill="#475569" font-size="8.5">Direct AD evidence</text>
+      <circle cx="460" cy="522" r="6" fill="#d97706"/>
+      <text x="472" y="526" fill="#475569" font-size="8.5">Therapeutic</text>
+      <circle cx="565" cy="522" r="6" fill="#7c3aed"/>
+      <text x="577" y="526" fill="#475569" font-size="8.5">Tau / pathology</text>
+      <circle cx="662" cy="522" r="6" fill="#0d9488"/>
+      <text x="674" y="526" fill="#475569" font-size="8.5">Proteostasis</text>
+
+    </svg>
+    <figcaption>
+      <strong>Figure 1.</strong> GRIN2B/GluN2B as a context-dependent AD target.
+      Six biological domains arranged on a regular hexagonal ring (radius&nbsp;180&nbsp;px) around the central hub.
+      The <span style="color:#16a34a;font-weight:bold">green node</span> (synaptic GluN2B, protective)
+      and <span style="color:#b91c1c;font-weight:bold">red node</span> (excitotoxicity, harmful)
+      reflect the core synaptic&nbsp;vs.&nbsp;extrasynaptic dichotomy that governs therapeutic strategy.
+      Direct AD evidence (A&beta;-induced Ca&#178;&#8314; toxicity, NR2B mislocalization, GluN2B ubiquitination)
+      distinguishes GRIN2B from purely mechanistic AD candidates.
+    </figcaption>
+  </figure>
+
+  <!-- OVERVIEW -->
+  <section>
+    <h2>1. Overview</h2>
+
+    <div class="alert key">
+      <strong>Key Concept — Synaptic vs. Extrasynaptic:</strong> The central therapeutic challenge for
+      GRIN2B in AD is that <em>synaptic</em> GluN2B activity supports LTP, memory, CaMKII binding, and
+      dendritic spine stability, while <em>extrasynaptic</em> GluN2B activity — driven by glutamate
+      spillover, amyloid, or calcium overload — promotes excitotoxicity, tau accumulation, mitochondrial
+      dysfunction, and neuronal death. Therapy must selectively normalize pathological signaling
+      without impairing physiological plasticity.
+    </div>
+
+    <div class="alert caution">
+      <strong>Bidirectional Risk:</strong> Both excessive GluN2B activity (excitotoxicity,
+      calcium overload) and insufficient GluN2B function (degradation, synaptic loss, impaired LTP)
+      can be pathological in AD. Broad chronic blockade risks cognitive harm; broad enhancement
+      risks excitotoxicity. Precision modulation is required.
+    </div>
+
+    <p>
+      GRIN2B encodes the <strong>GluN2B/NR2B/NMDAR2B subunit</strong> of NMDA receptors, placing it at
+      the intersection of glutamatergic signaling, calcium influx, synaptic plasticity, learning and
+      memory, excitotoxicity, mitochondrial stress, oxidative injury, autophagy/proteostasis,
+      neuroinflammation, and neuronal survival. Direct AD evidence is heterogeneous but converges
+      on a core theme: GluN2B function is highly context-dependent, and its role in AD depends on
+      receptor localization, phosphorylation state, stoichiometry, and disease stage.
+    </p>
+    <p>
+      As a therapeutic target, GRIN2B is <strong>plausible and pharmacologically tractable</strong>,
+      with ifenprodil-site ligands, negative allosteric modulators, partial antagonists,
+      pH-sensitive inhibitors, and emerging PET radioligands already described. Memantine provides
+      clinical precedent for NMDA receptor modulation in AD, though GRIN2B-selective approaches
+      may offer finer control.
+    </p>
+  </section>
+
+  <!-- KEY INSIGHTS -->
+  <section>
+    <h2>2. Key Insights</h2>
+    <div class="cards">
+
+      <div class="card abeta">
+        <h3>A&beta;-Induced Excitotoxicity — Direct AD Evidence</h3>
+        <p>A&beta; oligomers activate NMDAR/NMDAR2B signaling, increase GluN2B phosphorylation, drive calcium overload, impair synaptic markers, and promote apoptosis. Inhibition of GluN2B, DAPK1, or NMDAR2B phosphorylation reduced A&beta;-induced calcium toxicity and neuronal death in cellular AD models.</p>
+      </div>
+
+      <div class="card syn">
+        <h3>Synaptic Dysfunction via GluN2B Mislocalization</h3>
+        <p>A&beta; exposure altered dendritic spines, reduced PSD-95, and mislocalized GluN2B-containing receptors in APP/PS1 and related AD models. Extrasynaptic redistribution of GluN2B was linked to A&beta;1-42 accumulation and memory dysfunction, with preservation of synaptic GluN2B critical for plasticity.</p>
+      </div>
+
+      <div class="card tau">
+        <h3>Tau Pathology via NR2B Mislocalization</h3>
+        <p>CK2-driven NR2B mislocalization disturbs the synaptic:extrasynaptic NR2B balance. Extrasynaptic NR2B activity promoted tau burden, while synaptic NR2B appeared protective. CK2 inhibition restored NR2B distribution and reduced tau accumulation in vitro — though combining CK2 inhibition with memantine had complex effects including increased tau aggregation in one study.</p>
+      </div>
+
+      <div class="card auto">
+        <h3>Autophagy &amp; GluN2B Degradation</h3>
+        <p>An AD mouse study identified a METTL3/m6A/circRIMS2/miR-3968/UBE2K pathway that promoted GluN2B ubiquitination at K1082 and degradation, causing synaptic and memory impairment. Blocking GluN2B ubiquitination or silencing METTL3 rescued synaptic dysfunction — suggesting that preserving synaptic GluN2B may be therapeutic where receptor loss dominates.</p>
+      </div>
+
+      <div class="card network">
+        <h3>AD &amp; MCI Network Analyses</h3>
+        <p>GRIN2B appeared in multi-biofluid metabolite-gene networks in MCI/AD, AD/delirium shared protein networks, AD-related tissue-expression analyses, Uncaria rhynchophylla AD network pharmacology, and Gsto1-centered neurodegeneration networks — supporting GRIN2B as a recurrent AD-relevant network node, though not always a validated causal driver.</p>
+      </div>
+
+      <div class="card vasc">
+        <h3>Metabolic &amp; Vascular Risk Links</h3>
+        <p>In type 2 diabetes dementia-risk imaging-transcriptomics, GRIN2B co-localized with gray matter atrophy and interacted with IRS1, AKT1, PPARG, and PRKAG2. In a 3xTg-AD cerebrovascular miRNA study, GRIN2B appeared as a downstream target in early AD vascular/endothelial miRNA networks.</p>
+      </div>
+
+      <div class="card exsyn">
+        <h3>Synaptic vs. Extrasynaptic — The Central Distinction</h3>
+        <p>Many AD-relevant mechanisms distinguish protective synaptic NMDA receptor signaling from harmful extrasynaptic GluN2B signaling. Extrasynaptic GluN2B activation drives glutamate spillover, calcium overload, mitochondrial dysfunction, ROS, autophagy impairment, apoptosis, and synaptic degeneration. Newer work cautions against oversimplification: subtype, stoichiometry, phosphorylation state, and disease stage all matter.</p>
+      </div>
+
+      <div class="card pharma">
+        <h3>Pharmacological Tractability</h3>
+        <p>Available modalities include ifenprodil-site ligands, GluN2B negative allosteric modulators, partial antagonists, pH- or activity-state-dependent inhibitors, disruption of toxic interactions (DAPK1-GluN2B, PSD95-nNOS), GluN2B PET radioligands for target engagement, and natural products (&beta;-asarone, senegenin, carnosic acid). Memantine provides clinical precedent.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ACTIONABLE TAKEAWAYS -->
+  <section>
+    <h2>3. Actionable Takeaways</h2>
+    <ol class="takeaways">
+      <li><strong>Treat GRIN2B as a precision AD target, not a global inhibition target.</strong> The therapeutic goal is normalization of pathological GluN2B signaling — especially excessive extrasynaptic, phosphorylated, mislocalized, or amyloid/tau-associated activity — while preserving synaptic NMDA receptor functions required for memory.</li>
+      <li><strong>Prioritize disease-stage and mechanism stratification.</strong> Characterize candidates for GluN2B expression, phosphorylation, synaptic vs. extrasynaptic localization, GluN2A:GluN2B balance, receptor trafficking, PSD-95/CaMKII coupling, calcium dysregulation, and amyloid/tau burden.</li>
+      <li><strong>Focus on selective modulation strategies.</strong> Promising approaches include GluN2B-selective negative allosteric modulators, partial antagonists, pH- or activity-state-dependent inhibitors, disruption of DAPK1-GluN2B or PSD95-nNOS interactions, correction of CK2-driven NR2B mislocalization, and inhibition of pathological GluN2B phosphorylation.</li>
+      <li><strong>Consider preserving or restoring synaptic GluN2B where it is deficient.</strong> Where GluN2B degradation, downregulation, or synaptic receptor loss dominates, blocking UBE2K-mediated K1082 ubiquitination, modulating METTL3/m6A/circRIMS2 signaling, or restoring receptor trafficking may be more appropriate than antagonism.</li>
+      <li><strong>Use imaging and biomarkers to support translation.</strong> Emerging GluN2B PET ligands can quantify receptor distribution, enable patient stratification, measure target engagement, and optimize dosing for GRIN2B-directed AD therapies.</li>
+      <li><strong>Avoid assuming one direction of therapy.</strong> Inhibition may help where amyloid-induced excitotoxicity, tau-linked extrasynaptic signaling, or neuroinflammatory hyperexcitability dominates. Preservation or support may help where synaptic plasticity failure or receptor degradation dominates.</li>
+      <li><strong>Validate GRIN2B interventions in AD-specific models.</strong> Much supporting evidence is mechanistic or from non-AD neurological models. AD validation should test effects on cognition, synaptic integrity, calcium homeostasis, mitochondrial function, autophagy, amyloid/tau pathology, and neuroinflammation.</li>
+    </ol>
+  </section>
+
+  <!-- VERDICT -->
+  <section>
+    <div class="verdict">
+      <strong>Overall Assessment &mdash;</strong>
+      GRIN2B is a <strong>plausible, pharmacologically tractable precision AD target</strong> with direct
+      evidence linking A&beta; to GluN2B-mediated calcium toxicity, synaptic dysfunction, and NR2B
+      mislocalization-associated tau pathology. Its central therapeutic challenge —
+      <strong>reducing harmful extrasynaptic GluN2B signaling while maintaining protective synaptic
+      NMDA receptor activity</strong> — demands compartment-aware, state-dependent modulation rather
+      than broad blockade. Selective GluN2B negative allosteric modulators, CK2 inhibition,
+      and METTL3/m6A pathway targeting represent the most mechanistically grounded near-term
+      AD research priorities.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  GRIN2B TEP Evidence Summary &mdash; AI-generated analysis &middot; For research use only
+</footer>
+
+</body>
+</html>
